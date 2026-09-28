@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5a800">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>FestBook | HoneyB Solutions</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+  <style>
+    :root{
+      --amber:#f5a800;--amber-dark:#c97d00;--amber-soft:#fff4cf;--ink:#1f2937;
+      --muted:#6b7280;--line:#e7e2d7;--paper:#fffdfa;--bg:#f7f5ef;--green:#16845b;
+      --red:#c43d3d;--blue:#2768bf;--purple:#7151ad;--shadow:0 12px 30px rgba(56,43,18,.09);
+      --radius:18px;--sidebar:252px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{min-height:100vh;display:grid;grid-template-columns:var(--sidebar) 1fr}
+    .sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:#20201e;color:#fff;padding:22px 14px;z-index:30;display:flex;flex-direction:column;box-shadow:6px 0 24px rgba(0,0,0,.12)}
+    .brand{display:flex;gap:12px;align-items:center;padding:4px 8px 22px;border-bottom:1px solid #3a3935}
+    .brand img{width:49px;height:49px;border-radius:14px;background:#fff;object-fit:cover}
+    .brand strong{display:block;font-size:23px;letter-spacing:.2px;color:#ffd35b}
+    .brand small{display:block;color:#cfcfc7;font-size:11px;margin-top:2px}
+    .nav{display:grid;gap:6px;margin-top:18px;overflow:auto}
+    .nav button{border:0;background:transparent;color:#e9e7df;text-align:left;padding:11px 12px;border-radius:12px;display:flex;gap:11px;align-items:center}
+    .nav button:hover,.nav button.active{background:#3a3528;color:#ffd35b}
+    .nav .ico{font-size:19px;width:25px;text-align:center}
+    .side-footer{margin-top:auto;padding:12px 10px 2px;color:#aaa89f;font-size:11px;line-height:1.5}
+    .main{grid-column:2;min-width:0}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(255,253,250,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);min-height:72px;padding:12px 24px;display:flex;align-items:center;gap:14px}
+    .menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:10px;width:42px;height:42px;font-size:20px}
+    .top-title{min-width:165px}
+    .top-title h1{font-size:21px;margin:0}
+    .top-title span{font-size:12px;color:var(--muted)}
+    .function-switch{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .function-switch label{font-size:12px;color:var(--muted)}
+    .function-switch select{min-width:230px;max-width:330px}
+    select,input,textarea{border:1px solid #d9d4c9;background:#fff;color:var(--ink);border-radius:10px;padding:10px 11px;outline:none;width:100%}
+    select:focus,input:focus,textarea:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,168,0,.15)}
+    textarea{resize:vertical;min-height:80px}
+    .content{padding:25px;max-width:1500px;margin:auto}
+    .view{display:none}.view.active{display:block}
+    .page-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:20px}
+    .page-head h2{font-size:27px;margin:0 0 5px}.page-head p{margin:0;color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{border:1px solid #d8d3c7;background:#fff;color:var(--ink);padding:10px 15px;border-radius:11px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,0,0,.07)}
+    .btn.primary{background:var(--amber);border-color:var(--amber);color:#2e2100}.btn.dark{background:#282722;color:#fff;border-color:#282722}
+    .btn.green{background:var(--green);border-color:var(--green);color:#fff}.btn.danger{background:#fff5f4;border-color:#efc1bd;color:var(--red)}
+    .btn.small{padding:7px 10px;font-size:12px;border-radius:8px}.btn.icon{width:36px;height:36px;padding:0}
+    .metric-grid{display:grid;grid-template-columns:repeat(6,minmax(145px,1fr));gap:13px;margin-bottom:20px}
+    .metric{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 14px rgba(69,54,23,.035);min-width:0}
+    .metric span{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.metric strong{font-size:21px;white-space:nowrap}
+    .metric.amber{border-top:4px solid var(--amber)}.metric.green{border-top:4px solid var(--green)}.metric.red{border-top:4px solid var(--red)}.metric.blue{border-top:4px solid var(--blue)}.metric.purple{border-top:4px solid var(--purple)}
+    .dashboard-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.8fr);gap:18px}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);min-width:0}
+    .card-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}.card-head h3{margin:0;font-size:17px}.card-head small{color:var(--muted)}
+    .bar-list{display:grid;gap:14px}.bar-row{display:grid;gap:6px}.bar-label{display:flex;justify-content:space-between;gap:15px;font-size:13px}.bar-track{height:9px;background:#eeeae0;border-radius:20px;overflow:hidden}.bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--amber),#ffca38)}
+    .notice{padding:16px;background:var(--amber-soft);border:1px solid #f0d474;border-radius:14px;color:#5b4300;line-height:1.5}
+    .notice h3{margin:0 0 6px}.empty{padding:38px 20px;text-align:center;color:var(--muted);border:1px dashed #d9d4c9;border-radius:14px;background:#fffcf5}.empty .big{font-size:36px;margin-bottom:8px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px;background:#fff}
+    table{border-collapse:collapse;width:100%;min-width:780px}th,td{padding:12px 13px;border-bottom:1px solid #ece8df;text-align:left;font-size:13px;vertical-align:top}th{position:sticky;top:0;background:#f4f1ea;color:#555047;font-size:11px;text-transform:uppercase;letter-spacing:.4px;z-index:1}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fffcf5}
+    .right{text-align:right}.center{text-align:center}.muted{color:var(--muted)}.nowrap{white-space:nowrap}
+    .badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:30px;font-size:11px;font-weight:700;background:#eee;color:#555}.badge.green{background:#dff5eb;color:#087049}.badge.amber{background:#fff0be;color:#805b00}.badge.red{background:#fee3e1;color:#a12626}.badge.blue{background:#e0edff;color:#1d5aa7}.badge.grey{background:#eee;color:#666}
+    .filterbar{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;margin-bottom:14px;align-items:end}.field label{display:block;font-size:12px;font-weight:650;color:#57534b;margin:0 0 6px}.help{font-size:11px;color:var(--muted);margin-top:5px}
+    .function-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:15px}
+    .function-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:0 5px 15px rgba(0,0,0,.04)}
+    .function-card.selected{border:2px solid var(--amber);padding:17px}.function-card h3{margin:4px 0 4px}.function-card .details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;font-size:12px}.function-card .details span{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}
+    .summary-line{display:flex;justify-content:space-between;gap:15px;padding:8px 0;border-bottom:1px solid #eeeae0;font-size:13px}.summary-line:last-child{border:0}
+    .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick-actions .btn{min-height:58px;flex-direction:column;gap:2px}.quick-actions small{font-weight:400;color:inherit;opacity:.7}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(23,22,18,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}.modal-backdrop.open{display:flex}
+    .modal{background:#fff;width:min(760px,100%);max-height:92vh;overflow:auto;border-radius:20px;box-shadow:0 25px 80px rgba(0,0,0,.28)}
+    .modal-head{position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid var(--line);padding:18px 21px;display:flex;align-items:center;justify-content:space-between}.modal-head h3{margin:0}.close{border:0;background:#f1eee7;border-radius:50%;width:36px;height:36px;font-size:19px}
+    .modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .span-2{grid-column:1/-1}.form-footer{display:flex;justify-content:flex-end;gap:9px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+    .toast{position:fixed;right:20px;bottom:20px;z-index:100;background:#272622;color:#fff;padding:13px 17px;border-radius:11px;box-shadow:0 10px 30px rgba(0,0,0,.25);transform:translateY(90px);opacity:0;transition:.25s}.toast.show{transform:translateY(0);opacity:1}.toast.error{background:#9e2828}
+    .btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+    .invitation-mobile-list{display:none}
+    .invite-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:16px;padding:15px;box-shadow:0 5px 16px rgba(0,0,0,.05)}
+    .invite-card.invited{border-left-color:var(--green)}
+    .invite-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .invite-card h3{margin:3px 0 5px;font-size:19px;line-height:1.25}.invite-card .entry-no{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px}
+    .invite-card-meta{color:var(--muted);font-size:13px;line-height:1.45;margin-top:4px}
+    .invite-card-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:13px 0}
+    .invite-stat{background:#f7f4ed;border-radius:11px;padding:10px 11px}.invite-stat span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.35px}.invite-stat strong{display:block;font-size:18px;margin-top:3px}
+    .invite-card-actions{display:grid;gap:8px}.invite-card-actions .btn{min-height:46px;width:100%;font-size:14px}
+    .invite-card-secondary{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .invite-person-box{background:#fff8df;border:1px solid #edd48a;border-radius:14px;padding:14px;margin-bottom:16px}.invite-person-box strong{display:block;font-size:21px;line-height:1.25}.invite-person-box span{display:block;color:var(--muted);font-size:13px;margin-top:5px}
+    .area-board-wrap{margin:0 0 16px}.area-board-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}.area-board-title h3{margin:0;font-size:16px}.area-board-title small{color:var(--muted)}
+    .area-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.area-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:left;min-width:0;box-shadow:0 3px 10px rgba(0,0,0,.035)}.area-card:hover{border-color:#d8b34f}.area-card.selected{border:2px solid var(--amber);padding:11px;background:#fffaf0}.area-card.completed{opacity:.66;background:#f7f7f4}.area-card-name{font-weight:800;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.area-card-count{font-size:12px;color:var(--muted);margin-top:4px;display:block}.area-card .progress{margin-top:8px}
+    .invite-workbar{position:sticky;top:72px;z-index:12;background:rgba(255,253,250,.97);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:15px;padding:11px 12px;margin:0 0 13px;box-shadow:0 8px 20px rgba(0,0,0,.06)}.invite-work-top{display:flex;align-items:center;gap:9px}.invite-work-name{min-width:0;flex:1}.invite-work-name b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.invite-work-name small{color:var(--muted)}.relation-chips{display:flex;gap:7px;overflow:auto;padding-top:9px}.relation-chip{border:1px solid #ddd6c7;background:#fff;border-radius:999px;padding:7px 10px;white-space:nowrap;font-size:12px;font-weight:700}.relation-chip.active{background:#2d2b26;color:#fff;border-color:#2d2b26}
+    .phone-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:7px}.phone-row a{text-decoration:none}.phone-text{font-weight:700;color:#3f3b34}.quick-expense-note{background:#edf8f2;border:1px solid #bfe2cf;color:#185c40;padding:12px 13px;border-radius:12px;margin-bottom:14px;line-height:1.45}.stage-tag{display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.25px;background:#fff0be;color:#805b00}.stage-tag.final{background:#dff5eb;color:#087049}.stage-tag.quick{background:#e0edff;color:#1d5aa7}
+    .qty-focus{font-size:22px!important;font-weight:800;text-align:center;min-height:54px}
+    .report-sheet{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}.report-title{text-align:center;padding-bottom:18px;border-bottom:2px solid #222;margin-bottom:18px}.report-title h2{margin:0}.report-title p{margin:5px 0 0;color:var(--muted)}
+    .report-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:15px 0}.report-summary>div{background:#f7f4ed;border-radius:9px;padding:11px}.report-summary span{display:block;color:var(--muted);font-size:10px}.report-summary strong{display:block;margin-top:4px;font-size:14px}
+    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.invitation-data-zone{border-color:#e8cf83;background:#fffdf6}.danger-zone{border-color:#edc2bf;background:#fffafa}.btn:disabled{opacity:.48;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+    .progress{height:7px;background:#ece8df;border-radius:10px;overflow:hidden;margin-top:10px}.progress div{height:100%;background:var(--amber)}
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
+    .install-tip{font-size:12px;background:#eef7ff;color:#24527d;padding:9px 12px;border-radius:9px;display:none}
+    @media(max-width:1180px){.metric-grid{grid-template-columns:repeat(3,1fr)}.report-summary{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:850px){
+      .app{display:block}.sidebar{transform:translateX(-105%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{grid-column:auto}.overlay.open{display:block}.menu-btn{display:block}.topbar{padding:10px 14px}.top-title span{display:none}.function-switch label{display:none}.function-switch select{min-width:0;width:min(38vw,250px)}.content{padding:17px}.dashboard-grid,.settings-grid{grid-template-columns:1fr}.page-head{align-items:center}.page-head h2{font-size:23px}.filterbar{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      .metric-grid{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric strong{font-size:17px}.top-title{min-width:auto}.top-title h1{font-size:18px}.function-switch{max-width:46vw}.content{padding:13px}.page-head{display:block}.page-head .actions{margin-top:13px}.form-grid{grid-template-columns:1fr}.form-grid .span-2{grid-column:auto}.filterbar{grid-template-columns:1fr}.quick-actions{grid-template-columns:1fr 1fr}.report-sheet{padding:15px}.report-summary{grid-template-columns:1fr 1fr}.modal-backdrop{padding:8px}.modal{max-height:96vh;border-radius:14px}
+      .invitation-desktop{display:none}.invitation-mobile-list{display:grid;gap:11px}.invite-card-secondary{grid-template-columns:1fr 1fr}.area-board{grid-template-columns:1fr 1fr}.invite-workbar{top:62px}.area-card{padding:10px}.area-card.selected{padding:9px}
+    }
+    @media print{
+      body{background:#fff}.sidebar,.topbar,.page-head,.filterbar,.no-print,.overlay,.toast{display:none!important}.app,.main{display:block!important}.content{padding:0;max-width:none}.view{display:none!important}#view-reports{display:block!important}.report-sheet{border:0;box-shadow:none;padding:0}.table-wrap{overflow:visible;border-color:#bbb}table{min-width:0}th,td{padding:7px 6px;font-size:10px}.report-summary{grid-template-columns:repeat(5,1fr)}@page{size:A4;margin:12mm}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><img src="icon-192.png" alt="HB"><div><strong>FestBook</strong><small>Function & Event Expense Manager</small></div></div>
+      <nav class="nav" id="nav">
+        <button class="active" data-view="dashboard"><span class="ico">⌂</span>Dashboard</button>
+        <button data-view="functions"><span class="ico">◆</span>Function Master</button>
+        <button data-view="invitations"><span class="ico">✉</span>Invitation Distribution</button>
+        <button data-view="expenses"><span class="ico">₹</span>Expense Entry</button>
+        <button data-view="payments"><span class="ico">✓</span>Payments</button>
+        <button data-view="heads"><span class="ico">▦</span>Expense Heads</button>
+        <button data-view="vendors"><span class="ico">♟</span>Vendors / Persons</button>
+        <button data-view="reports"><span class="ico">▤</span>Reports</button>
+        <button data-view="settings"><span class="ico">⚙</span>Settings / Backup</button>
+      </nav>
+      <div class="side-footer">Powered by <b>HoneyB Solutions</b><br>Innovation with Simplicity · v1.1.2</div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+        <div class="top-title"><h1 id="viewTitle">Dashboard</h1><span>FestBook · Offline</span></div>
+        <div class="function-switch"><label>Working function</label><select id="activeFunctionSelect" aria-label="Working function"></select></div>
+        <button class="btn primary small no-print" id="quickFunctionBtn">＋ Function</button>
+      </header>
+      <div class="content">
+        <section class="view active" id="view-dashboard">
+          <div class="page-head"><div><h2 id="dashGreeting">Function Overview</h2><p id="dashSubtitle">Budget and payment position at a glance.</p></div><div class="actions"><button class="btn" id="installBtn" style="display:none">⬇ Install App</button><button class="btn primary" onclick="openExpenseForm()">＋ Add Expense</button></div></div>
+          <div id="dashboardBody"></div>
+        </section>
+
+        <section class="view" id="view-functions">
+          <div class="page-head"><div><h2>Function Master</h2><p>Create weddings, birthdays, ceremonies, company events and other functions.</p></div><div class="actions"><button class="btn primary" onclick="openFunctionForm()">＋ New Function</button></div></div>
+          <div id="functionList"></div>
+        </section>
+
+        <section class="view" id="view-invitations">
+          <div class="page-head"><div><h2>Invitation Distribution</h2><p>Import your invitation list, track pending distribution and mark each person as invited.</p></div><div class="actions"><button class="btn" onclick="downloadInvitationTemplate()">▦ Excel Template</button><button class="btn" onclick="document.getElementById('invitationImportFile').click()">↥ Import Excel</button><button class="btn green" onclick="exportInvitationsExcel()">⇩ Export Excel</button><button class="btn primary" onclick="openInvitationForm()">＋ Add Name</button><input type="file" id="invitationImportFile" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden></div></div>
+          <div id="invitationMetrics" class="metric-grid"></div>
+          <div id="invitationAreaBoard" class="area-board-wrap"></div>
+          <div id="invitationAreaWorkbar"></div>
+          <div class="filterbar">
+            <div class="field"><label>Search</label><input id="invitationSearch" placeholder="Name, phone, area or related to"></div>
+            <div class="field"><label>Status</label><select id="invitationStatusFilter"><option value="Pending" selected>Pending</option><option value="Invited">Invited / Done</option><option value="">All status</option></select></div>
+            <div class="field"><label>Area / Location</label><select id="invitationAreaFilter"><option value="">All areas</option></select></div>
+            <div class="field"><label>Related to</label><select id="invitationRelatedFilter"><option value="">All relations</option></select></div>
+          </div>
+          <div id="invitationTable"></div>
+        </section>
+
+        <section class="view" id="view-expenses">
+          <div class="page-head"><div><h2>Expense Entry</h2><p>Plan major expenses, or enter small direct expenses without creating a vendor.</p></div><div class="actions"><button class="btn green" onclick="openQuickExpenseForm()">⚡ Quick Direct Expense</button><button class="btn primary" onclick="openExpenseForm()">＋ Planned Expense</button></div></div>
+          <div class="filterbar">
+            <div class="field"><label>Search</label><input id="expenseSearch" placeholder="Description or vendor"></div>
+            <div class="field"><label>Expense head</label><select id="expenseHeadFilter"></select></div>
+            <div class="field"><label>Status</label><select id="expenseStatusFilter"><option value="">All status</option><option>Expected</option><option>Confirmed</option><option>Cancelled</option></select></div>
+            <div class="field"><label>Balance</label><select id="expenseBalanceFilter"><option value="">All</option><option value="pending">Pending only</option><option value="paid">Fully paid</option></select></div>
+          </div>
+          <div id="expenseTable"></div>
+        </section>
+
+        <section class="view" id="view-payments">
+          <div class="page-head"><div><h2>Payments</h2><p>Record advances and later payments against an existing expense.</p></div><div class="actions"><button class="btn primary" onclick="openPaymentForm()">＋ Record Payment</button></div></div>
+          <div class="filterbar">
+            <div class="field"><label>Search</label><input id="paymentSearch" placeholder="Vendor, reference or account"></div>
+            <div class="field"><label>From date</label><input type="date" id="paymentFrom"></div>
+            <div class="field"><label>To date</label><input type="date" id="paymentTo"></div>
+            <div class="field"><label>Mode</label><select id="paymentModeFilter"><option value="">All modes</option><option>Cash</option><option>Bank Transfer</option><option>UPI</option><option>Cheque</option><option>Card</option><option>Other</option></select></div>
+          </div>
+          <div id="paymentTable"></div>
+        </section>
+
+        <section class="view" id="view-heads">
+          <div class="page-head"><div><h2>Expense Heads</h2><p>Use the built-in categories or add your own.</p></div><div class="actions"><button class="btn primary" onclick="openHeadForm()">＋ Add Head</button></div></div>
+          <div class="card"><div id="headTable"></div></div>
+        </section>
+
+        <section class="view" id="view-vendors">
+          <div class="page-head"><div><h2>Vendors / Persons</h2><p>Save halls, caterers, decorators, photographers and service persons.</p></div><div class="actions"><button class="btn primary" onclick="openVendorForm()">＋ Add Vendor</button></div></div>
+          <div class="filterbar" style="grid-template-columns:minmax(220px,420px)"><div class="field"><label>Search</label><input id="vendorSearch" placeholder="Name, type or phone"></div></div>
+          <div id="vendorTable"></div>
+        </section>
+
+        <section class="view" id="view-reports">
+          <div class="page-head"><div><h2>Function Statement</h2><p>Complete category, expense and payment report.</p></div><div class="actions"><button class="btn" onclick="exportCSV()">⇩ Export CSV</button><button class="btn dark" onclick="window.print()">⎙ Print</button></div></div>
+          <div class="filterbar no-print">
+            <div class="field"><label>Report function</label><select id="reportFunction"></select></div>
+            <div class="field"><label>Payment from</label><input type="date" id="reportFrom"></div>
+            <div class="field"><label>Payment to</label><input type="date" id="reportTo"></div>
+            <div class="field"><button class="btn primary" style="width:100%" onclick="renderReports()">Generate Report</button></div>
+          </div>
+          <div id="reportBody"></div>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="page-head"><div><h2>Settings & Backup</h2><p>Protect your offline records with regular backups.</p></div></div>
+          <div class="settings-grid">
+            <div class="card"><div class="card-head"><h3>App Settings</h3></div><form id="settingsForm" class="form-grid">
+              <div class="field span-2"><label>Owner / Family / Company name</label><input id="settingOwner" placeholder="Shown in printed reports"></div>
+              <div class="field"><label>Currency</label><select id="settingCurrency"><option value="INR">Indian Rupee (₹)</option><option value="USD">US Dollar ($)</option><option value="AED">UAE Dirham (AED)</option></select></div>
+              <div class="field"><label>Default payment account</label><input id="settingAccount" placeholder="Cash / bank name"></div>
+              <div class="span-2"><button class="btn primary" type="submit">Save Settings</button></div>
+            </form></div>
+            <div class="card"><div class="card-head"><h3>Backup & Restore</h3></div><p class="muted">FestBook stores data on this device. Download a backup regularly and keep it safely.</p><div class="actions"><button class="btn green" onclick="downloadBackup()">⇩ Download Backup</button><button class="btn" onclick="document.getElementById('restoreFile').click()">↥ Restore Backup</button><input type="file" id="restoreFile" accept="application/json,.json" hidden></div><div class="notice" style="margin-top:16px"><b>Important:</b> data does not automatically sync between devices. Restore the same backup on another device only when needed.</div></div>
+            <div class="card"><div class="card-head"><h3>Install FestBook</h3></div><p class="muted">Install from Chrome/Edge on Windows or Android. On iPhone, use Safari → Share → Add to Home Screen.</p><button class="btn primary" id="settingsInstallBtn">⬇ Install / Show Instructions</button></div>
+            <div class="card invitation-data-zone"><div class="card-head"><h3>Invitation List Data</h3></div><p class="muted">Clear only the invitation distribution list for the currently selected function. Expenses, payments, vendors and every other FestBook record will remain unchanged.</p><div class="notice" style="margin:14px 0"><b id="invitationClearFunction">No function selected</b><br><span id="invitationClearCount">Select a function to manage its invitation list.</span></div><button class="btn danger" id="clearInvitationBtn" onclick="clearInvitationData()">🗑 Clear Invitation List Only</button></div>
+            <div class="card danger-zone"><div class="card-head"><h3>Reset App Data</h3></div><p class="muted">This permanently removes every function, expense, payment and master from this device.</p><button class="btn danger" onclick="resetAllData()">Delete All Data</button></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle"></h3><button class="close" onclick="closeModal()">×</button></div><div class="modal-body" id="modalBody"></div></div></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="jszip.min.js"></script>
+  <script>
+  "use strict";
+  const DB_NAME="HoneyBFestBookDB", DB_VERSION=2;
+  const STORES=["functions","heads","vendors","expenses","payments","invitations","settings"];
+  const DEFAULT_HEADS=["Hall / Venue","Catering","Decoration","Photography","Invitation","Travel","Gifts","Clothing","Priest / Service","Music","Accommodation","Jewellery","Makeup / Beauty","Printing","Miscellaneous"];
+  const state={functions:[],heads:[],vendors:[],expenses:[],payments:[],invitations:[],settings:{},activeFunctionId:null,currentView:"dashboard"};
+  let db, deferredInstallPrompt=null;
+
+  const $=s=>document.querySelector(s);
+  const $$=s=>[...document.querySelectorAll(s)];
+  const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+  const today=()=>new Date().toISOString().slice(0,10);
+  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+  const num=v=>Number(v)||0;
+  const activeFunction=()=>state.functions.find(f=>f.id===state.activeFunctionId)||null;
+  const byId=(list,id)=>list.find(x=>x.id===id);
+  const signedPayment=p=>p.type==="Refund"?-num(p.amount):num(p.amount);
+  const paymentTotalFor=expenseId=>state.payments.filter(p=>p.expenseId===expenseId).reduce((s,p)=>s+signedPayment(p),0);
+  const expenseBase=e=>num(e.finalAmount)>0?num(e.finalAmount):num(e.estimatedAmount);
+  const expenseStage=e=>e.entryType==="Quick"?"Quick":num(e.finalAmount)>0?"Final":"Estimate";
+  const phoneDigits=v=>String(v||"").replace(/\D/g,"");
+  const whatsappPhone=v=>{const d=phoneDigits(v);return d.length===10?"91"+d:d};
+  const encArg=v=>encodeURIComponent(String(v??"")).replace(/'/g,"%27");
+  const money=v=>new Intl.NumberFormat("en-IN",{style:"currency",currency:state.settings.currency||"INR",maximumFractionDigits:2}).format(num(v));
+  const fmtDate=v=>v?new Intl.DateTimeFormat("en-IN",{day:"2-digit",month:"short",year:"numeric"}).format(new Date(v+"T00:00:00")):"—";
+  const code=(prefix,list,id)=>prefix+"-"+String(Math.max(1,list.findIndex(x=>x.id===id)+1)).padStart(4,"0");
+
+  function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const d=r.result;STORES.forEach(s=>{if(!d.objectStoreNames.contains(s))d.createObjectStore(s,{keyPath:"id"})})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+  function dbAll(store){return new Promise((resolve,reject)=>{const r=db.transaction(store).objectStore(store).getAll();r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+  function dbPut(store,value){return new Promise((resolve,reject)=>{const r=db.transaction(store,"readwrite").objectStore(store).put(value);r.onsuccess=()=>resolve(value);r.onerror=()=>reject(r.error)})}
+  function dbRemove(store,id){return new Promise((resolve,reject)=>{const r=db.transaction(store,"readwrite").objectStore(store).delete(id);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+  function dbClear(store){return new Promise((resolve,reject)=>{const r=db.transaction(store,"readwrite").objectStore(store).clear();r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+
+  async function initialise(){
+    db=await openDB();
+    if((await dbAll("heads")).length===0) for(const name of DEFAULT_HEADS) await dbPut("heads",{id:uid(),name,active:true,builtIn:true,createdAt:new Date().toISOString()});
+    await reloadState(); bindUI(); renderAll();
+    if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+  }
+
+  async function reloadState(){
+    const [functions,heads,vendors,expenses,payments,invitations,settings]=await Promise.all(STORES.map(dbAll));
+    state.functions=functions.sort((a,b)=>(b.eventDate||"").localeCompare(a.eventDate||""));
+    state.heads=heads.sort((a,b)=>a.name.localeCompare(b.name));state.vendors=vendors.sort((a,b)=>a.name.localeCompare(b.name));
+    state.expenses=expenses.sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||""));
+    state.payments=payments.sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.createdAt||"").localeCompare(a.createdAt||""));
+    state.invitations=invitations.sort((a,b)=>(a.status===b.status?String(a.name||"").localeCompare(String(b.name||"")):a.status==="Pending"?-1:1));
+    state.settings=settings.find(x=>x.id==="app")||{id:"app",currency:"INR",ownerName:"",defaultAccount:""};
+    const saved=localStorage.getItem("festbook.activeFunctionId");
+    if(!state.activeFunctionId) state.activeFunctionId=saved;
+    if(!state.functions.some(f=>f.id===state.activeFunctionId)) state.activeFunctionId=state.functions.find(f=>f.status!=="Closed")?.id||state.functions[0]?.id||null;
+    if(state.activeFunctionId)localStorage.setItem("festbook.activeFunctionId",state.activeFunctionId);
+  }
+
+  function bindUI(){
+    $$("#nav button").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+    $("#menuBtn").onclick=()=>toggleMenu(true);$("#overlay").onclick=()=>toggleMenu(false);
+    $("#activeFunctionSelect").onchange=e=>setActiveFunction(e.target.value);
+    $("#quickFunctionBtn").onclick=()=>openFunctionForm();
+    ["expenseSearch","expenseHeadFilter","expenseStatusFilter","expenseBalanceFilter"].forEach(id=>$("#"+id).addEventListener("input",renderExpenses));
+    ["paymentSearch","paymentFrom","paymentTo","paymentModeFilter"].forEach(id=>$("#"+id).addEventListener("input",renderPayments));
+    ["invitationSearch","invitationAreaFilter","invitationRelatedFilter","invitationStatusFilter"].forEach(id=>$("#"+id).addEventListener("input",renderInvitations));
+    $("#invitationImportFile").addEventListener("change",handleInvitationImport);
+    $("#vendorSearch").addEventListener("input",renderVendors);
+    $("#reportFunction").onchange=renderReports;$("#reportFrom").onchange=renderReports;$("#reportTo").onchange=renderReports;
+    $("#settingsForm").onsubmit=saveSettings;$("#restoreFile").onchange=restoreBackup;
+    $("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+    window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;$("#installBtn").style.display="inline-flex"});
+    $("#installBtn").onclick=installApp;$("#settingsInstallBtn").onclick=installApp;
+  }
+
+  function toggleMenu(open){$("#sidebar").classList.toggle("open",open);$("#overlay").classList.toggle("open",open)}
+  function showView(name){
+    state.currentView=name;$$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
+    $$('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+    const titles={dashboard:"Dashboard",functions:"Function Master",invitations:"Invitation Distribution",expenses:"Expense Entry",payments:"Payments",heads:"Expense Heads",vendors:"Vendors / Persons",reports:"Reports",settings:"Settings / Backup"};
+    $("#viewTitle").textContent=titles[name];toggleMenu(false);
+    if(name==="reports")renderReports();
+    if(name==="invitations")renderInvitations();
+  }
+  function setActiveFunction(id){state.activeFunctionId=id||null;if(id)localStorage.setItem("festbook.activeFunctionId",id);renderAll()}
+  function toast(message,error=false){const t=$("#toast");t.textContent=message;t.className="toast show"+(error?" error":"");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.className="toast",2600)}
+  function openModal(title,html){$("#modalTitle").textContent=title;$("#modalBody").innerHTML=html;$("#modalBackdrop").classList.add("open");setTimeout(()=>$("#modalBody input, #modalBody select")?.focus(),50)}
+  function closeModal(){$("#modalBackdrop").classList.remove("open")}
+  function options(list,value,label="name"){return list.map(x=>`<option value="${esc(x.id)}" ${x.id===value?"selected":""}>${esc(x[label])}</option>`).join("")}
+
+  function renderAll(){
+    renderSelectors();renderDashboard();renderFunctions();renderInvitations();renderExpenses();renderPayments();renderHeads();renderVendors();renderReports();renderSettings();
+  }
+  function renderSelectors(){
+    const activeSel=$("#activeFunctionSelect"), reportSel=$("#reportFunction");
+    const opts=state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===state.activeFunctionId?"selected":""}>${esc(f.name)} · ${fmtDate(f.eventDate)}</option>`).join("");
+    activeSel.innerHTML=state.functions.length?opts:'<option value="">No function created</option>';
+    reportSel.innerHTML=state.functions.length?state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===(reportSel.value||state.activeFunctionId)?"selected":""}>${esc(f.name)}</option>`).join(""):'<option value="">No function</option>';
+    $("#expenseHeadFilter").innerHTML='<option value="">All heads</option>'+options(state.heads,$("#expenseHeadFilter").value);
+  }
+  function functionStats(functionId){
+    const ex=state.expenses.filter(e=>e.functionId===functionId&&e.status!=="Cancelled");
+    const estimated=ex.filter(e=>e.entryType!=="Quick").reduce((s,e)=>s+num(e.estimatedAmount),0);
+    const currentForecast=ex.reduce((s,e)=>s+expenseBase(e),0);
+    const finalised=ex.filter(e=>num(e.finalAmount)>0).reduce((s,e)=>s+num(e.finalAmount),0);
+    const paid=state.payments.filter(p=>p.functionId===functionId).reduce((s,p)=>s+signedPayment(p),0);
+    const balance=Math.max(0,currentForecast-paid),f=byId(state.functions,functionId),budget=num(f?.budget);
+    return{estimated,currentForecast,committed:currentForecast,finalised,paid,balance,budget,remaining:budget-currentForecast,variance:currentForecast-estimated,expenses:ex};
+  }
+
+  function renderDashboard(){
+    const f=activeFunction(),box=$("#dashboardBody");
+    if(!f){$("#dashGreeting").textContent="Welcome to FestBook";$("#dashSubtitle").textContent="Create the first function to begin.";box.innerHTML=`<div class="empty"><div class="big">🎉</div><h3>No function created yet</h3><p>Create a function, fix its budget, then start entering planned and confirmed expenses.</p><button class="btn primary" onclick="openFunctionForm()">Create First Function</button></div>`;return}
+    $("#dashGreeting").textContent=f.name;$("#dashSubtitle").textContent=`${f.type||"Function"} · ${fmtDate(f.eventDate)} · ${f.venue||"Venue not set"}`;
+    const st=functionStats(f.id),grouped=state.heads.map(h=>({name:h.name,value:st.expenses.filter(e=>e.headId===h.id).reduce((a,e)=>a+expenseBase(e),0)})).filter(x=>x.value>0).sort((a,b)=>b.value-a.value),max=Math.max(1,...grouped.map(x=>x.value));
+    const recent=state.payments.filter(p=>p.functionId===f.id).slice(0,6),varianceText=st.variance===0?"matches the original estimate":`${money(Math.abs(st.variance))} ${st.variance>0?"above":"below"} the original estimate`;
+    box.innerHTML=`
+      <div class="metric-grid">
+        <div class="metric amber"><span>Total Budget</span><strong>${money(st.budget)}</strong></div>
+        <div class="metric blue"><span>Original Estimate</span><strong>${money(st.estimated)}</strong></div>
+        <div class="metric purple"><span>Current Forecast</span><strong>${money(st.currentForecast)}</strong></div>
+        <div class="metric green"><span>Paid</span><strong>${money(st.paid)}</strong></div>
+        <div class="metric red"><span>Balance to Pay</span><strong>${money(st.balance)}</strong></div>
+        <div class="metric ${st.remaining<0?'red':'green'}"><span>Budget Remaining</span><strong>${money(st.remaining)}</strong></div>
+      </div>
+      <div class="notice" style="margin-bottom:18px"><b>Current Forecast:</b> a final amount replaces its estimate. Expenses not finalised still use the estimate, and Quick Direct Expenses are added at their actual amount. The forecast ${varianceText}.</div>
+      ${st.remaining<0?`<div class="notice" style="margin-bottom:18px"><b>Budget alert:</b> current forecast exceeds the budget by ${money(Math.abs(st.remaining))}.</div>`:""}
+      <div class="dashboard-grid">
+        <div class="card"><div class="card-head"><div><h3>Category-wise current forecast</h3><small>Final amount where available; otherwise estimate; includes quick direct expenses</small></div><button class="btn small" onclick="showView('expenses')">View All</button></div>
+          ${grouped.length?`<div class="bar-list">${grouped.map(x=>`<div class="bar-row"><div class="bar-label"><span>${esc(x.name)}</span><b>${money(x.value)}</b></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(2,x.value/max*100)}%"></div></div></div>`).join("")}</div>`:`<div class="empty">No expenses yet.</div>`}
+        </div>
+        <div style="display:grid;gap:18px">
+          <div class="card"><div class="card-head"><h3>Quick Actions</h3></div><div class="quick-actions"><button class="btn green" onclick="openQuickExpenseForm()">⚡ Quick Expense<small>Petrol, toll, tips...</small></button><button class="btn primary" onclick="openExpenseForm()">＋ Planned Expense<small>Estimate / final</small></button><button class="btn green" onclick="openPaymentForm()">＋ Payment<small>Advance or balance</small></button><button class="btn" onclick="showView('invitations')">✉ Invitations<small>Pending / invited</small></button><button class="btn" onclick="showView('reports')">▤ Report<small>Print or export</small></button></div></div>
+          <div class="card"><div class="card-head"><h3>Recent Payments</h3><button class="btn small" onclick="showView('payments')">View All</button></div>${recent.length?recent.map(p=>{const e=byId(state.expenses,p.expenseId),v=byId(state.vendors,e?.vendorId);return`<div class="summary-line"><div><b>${esc(v?.name||e?.description||"Expense")}</b><br><span class="muted">${fmtDate(p.date)} · ${esc(p.mode)}${e?.entryType==="Quick"?" · Quick":""}</span></div><b class="${p.type==='Refund'?'muted':''}">${p.type==='Refund'?'-':''}${money(p.amount)}</b></div>`}).join(""):'<div class="empty">No payment recorded.</div>'}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderFunctions(){
+    const box=$("#functionList");if(!state.functions.length){box.innerHTML=`<div class="empty"><div class="big">◆</div><h3>No functions</h3><button class="btn primary" onclick="openFunctionForm()">Create Function</button></div>`;return}
+    box.innerHTML=`<div class="function-cards">${state.functions.map(f=>{const st=functionStats(f.id);return`<article class="function-card ${f.id===state.activeFunctionId?'selected':''}"><div style="display:flex;justify-content:space-between;gap:12px"><div><span class="badge ${f.status==='Closed'?'grey':f.status==='Upcoming'?'blue':'green'}">${esc(f.status)}</span><h3>${esc(f.name)}</h3><div class="muted">${esc(f.type||"Function")}</div></div><b>${money(f.budget)}</b></div><div class="details"><div><span>DATE</span><b>${fmtDate(f.eventDate)}</b></div><div><span>VENUE</span><b>${esc(f.venue||"—")}</b></div><div><span>CURRENT FORECAST</span><b>${money(st.currentForecast)}</b></div><div><span>BALANCE TO PAY</span><b>${money(st.balance)}</b></div></div><div class="progress"><div style="width:${Math.min(100,st.budget?st.currentForecast/st.budget*100:0)}%"></div></div><div class="actions" style="margin-top:14px"><button class="btn small primary" onclick="setActiveFunction('${f.id}');showView('dashboard')">Open</button><button class="btn small" onclick="openFunctionForm('${f.id}')">Edit</button><button class="btn small danger" onclick="deleteFunction('${f.id}')">Delete</button></div></article>`}).join("")}</div>`;
+  }
+
+  function invitationListForActive(){return state.invitations.filter(x=>x.functionId===state.activeFunctionId)}
+  function invitationFilteredList(){
+    const fid=state.activeFunctionId;if(!fid)return[];
+    const q=(document.querySelector("#invitationSearch")?.value||"").trim().toLowerCase(),area=document.querySelector("#invitationAreaFilter")?.value||"",related=document.querySelector("#invitationRelatedFilter")?.value||"",status=document.querySelector("#invitationStatusFilter")?.value||"";
+    return state.invitations.filter(x=>x.functionId===fid).filter(x=>{const areaMatch=!area||(area==="__NO_AREA__"?!String(x.area||"").trim():x.area===area);return(!q||`${x.name||""} ${x.phone||""} ${x.area||""} ${x.relatedTo||""}`.toLowerCase().includes(q))&&areaMatch&&(!related||x.relatedTo===related)&&(!status||x.status===status)});
+  }
+
+  function invitationFilterOptions(){
+    const fid=state.activeFunctionId,areaSel=$("#invitationAreaFilter"),relSel=$("#invitationRelatedFilter");if(!areaSel||!relSel)return;
+    const oldArea=areaSel.value,oldRel=relSel.value,list=state.invitations.filter(x=>x.functionId===fid);
+    const areas=[...new Set(list.map(x=>(x.area||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),hasNoArea=list.some(x=>!String(x.area||"").trim());
+    const rels=[...new Set(list.map(x=>(x.relatedTo||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    areaSel.innerHTML='<option value="">All areas</option>'+areas.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("")+(hasNoArea?'<option value="__NO_AREA__">No Area</option>':'');
+    relSel.innerHTML='<option value="">All relations</option>'+rels.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+    if(areas.includes(oldArea)||(oldArea==="__NO_AREA__"&&hasNoArea))areaSel.value=oldArea;if(rels.includes(oldRel))relSel.value=oldRel;
+  }
+  function selectInvitationArea(encoded){const area=decodeURIComponent(encoded);$("#invitationAreaFilter").value=area;$("#invitationRelatedFilter").value="";renderInvitations();setTimeout(()=>$("#invitationAreaWorkbar")?.scrollIntoView({behavior:"smooth",block:"start"}),30)}
+  function clearInvitationArea(){$("#invitationAreaFilter").value="";$("#invitationRelatedFilter").value="";renderInvitations()}
+  function selectInvitationRelation(encoded){$("#invitationRelatedFilter").value=decodeURIComponent(encoded);renderInvitations()}
+  function invitationAreaStats(){
+    const all=invitationListForActive(),map=new Map();for(const x of all){const area=(x.area||"").trim(),key=area||"__NO_AREA__";if(!map.has(key))map.set(key,{area,value:key,total:0,pending:0,invited:0});const a=map.get(key);a.total++;if(x.status==="Invited")a.invited++;else a.pending++}
+    return [...map.values()].sort((a,b)=>(b.pending>0)-(a.pending>0)||b.pending-a.pending||String(a.area||"ZZZ").localeCompare(String(b.area||"ZZZ")));
+  }
+  function moveInvitationArea(dir){const areas=invitationAreaStats().filter(a=>a.pending>0),current=$("#invitationAreaFilter").value,idx=areas.findIndex(a=>a.value===current);if(!areas.length)return;const next=areas[(idx<0?0:(idx+dir+areas.length)%areas.length)];selectInvitationArea(encArg(next.value))}
+
+  function renderInvitations(){
+    const metrics=$("#invitationMetrics"),box=$("#invitationTable"),board=$("#invitationAreaBoard"),work=$("#invitationAreaWorkbar");if(!metrics||!box)return;
+    const fid=state.activeFunctionId;if(!fid){metrics.innerHTML="";if(board)board.innerHTML="";if(work)work.innerHTML="";box.innerHTML='<div class="empty">Create or select a function first.</div>';return}
+    invitationFilterOptions();
+    const all=invitationListForActive(),list=invitationFilteredList(),pending=all.filter(x=>x.status!=="Invited"),invited=all.filter(x=>x.status==="Invited"),cards=all.reduce((s,x)=>s+num(x.invitationQty),0),persons=all.reduce((s,x)=>s+num(x.expectedPersonQty),0),selectedArea=$("#invitationAreaFilter")?.value||"";
+    metrics.innerHTML=`<div class="metric amber"><span>Total Names</span><strong>${all.length}</strong></div><div class="metric red"><span>Pending</span><strong>${pending.length}</strong></div><div class="metric green"><span>Invited / Done</span><strong>${invited.length}</strong></div><div class="metric blue"><span>Invitation Qty</span><strong>${cards}</strong></div><div class="metric purple"><span>Expected Persons</span><strong>${persons}</strong></div>`;
+    if(!all.length){if(board)board.innerHTML="";if(work)work.innerHTML="";box.innerHTML='<div class="empty"><div class="big">✉</div><h3>No invitation list yet</h3><p>Download the Excel template, fill the names, and import it here.</p><div class="actions" style="justify-content:center"><button class="btn" onclick="downloadInvitationTemplate()">▦ Excel Template</button><button class="btn primary" onclick="document.getElementById(\'invitationImportFile\').click()">↥ Import Excel</button></div></div>';return}
+    const areaStats=invitationAreaStats();if(board)board.innerHTML=`<div class="area-board-title"><div><h3>Pending Area Board</h3><small>Tap an area and work through it. Completed areas move to the end.</small></div>${selectedArea?'<button class="btn small" onclick="clearInvitationArea()">Show All Areas</button>':''}</div><div class="area-board">${areaStats.map(a=>{const pct=a.total?Math.round(a.invited/a.total*100):0,selected=a.value===selectedArea;return`<button class="area-card ${a.pending?'':'completed'} ${selected?'selected':''}" onclick="selectInvitationArea('${encArg(a.value)}')"><span class="area-card-name">${a.area?esc(a.area):'No Area'}</span><span class="area-card-count">${a.pending?`<b>${a.pending}</b> pending · ${a.invited} invited`:`✓ Completed · ${a.invited} invited`}</span><div class="progress"><div style="width:${pct}%"></div></div></button>`}).join("")}</div>`;
+    if(work){if(selectedArea){const areaAll=all.filter(x=>selectedArea==="__NO_AREA__"?!String(x.area||"").trim():x.area===selectedArea),areaPending=areaAll.filter(x=>x.status!=="Invited").length,status=$("#invitationStatusFilter")?.value||"",rels=[...new Set(areaAll.filter(x=>!status||x.status===status).map(x=>(x.relatedTo||"").trim()).filter(Boolean))].sort(),currentRel=$("#invitationRelatedFilter")?.value||"",areaLabel=selectedArea==="__NO_AREA__"?"No Area":selectedArea;work.innerHTML=`<div class="invite-workbar"><div class="invite-work-top"><button class="btn small" onclick="clearInvitationArea()">← Areas</button><div class="invite-work-name"><b>${esc(areaLabel)}</b><small>${areaPending} pending · ${areaAll.length-areaPending} invited</small></div><button class="btn small" onclick="moveInvitationArea(-1)">‹ Prev</button><button class="btn small primary" onclick="moveInvitationArea(1)">Next ›</button></div><div class="relation-chips"><button class="relation-chip ${!currentRel?'active':''}" onclick="selectInvitationRelation('')">All</button>${rels.map(r=>{const count=areaAll.filter(x=>(!status||x.status===status)&&x.relatedTo===r).length;return`<button class="relation-chip ${currentRel===r?'active':''}" onclick="selectInvitationRelation('${encArg(r)}')">${esc(r)} ${count}</button>`}).join("")}</div></div>`}else work.innerHTML=""}
+    if(!list.length){box.innerHTML='<div class="empty">No invitation entries match the selected filters.</div>';return}
+    const contact=x=>x.phone?`<div class="phone-row"><span class="phone-text">☎ ${esc(x.phone)}</span><a class="btn small" href="tel:${esc(phoneDigits(x.phone))}">Call</a>${whatsappPhone(x.phone)?`<a class="btn small green" target="_blank" rel="noopener" href="https://wa.me/${esc(whatsappPhone(x.phone))}">WhatsApp</a>`:""}</div>`:"";
+    const desktop=`<div class="table-wrap invitation-desktop"><table style="min-width:1240px"><thead><tr><th>#</th><th>Name / Phone</th><th>Location / Area</th><th>Related To</th><th class="center">Invitation Qty</th><th class="center">Expected Persons</th><th>Status</th><th>Invited On</th><th class="center">Actions</th></tr></thead><tbody>${list.map((x,i)=>`<tr><td class="center"><b>${i+1}</b></td><td><b>${esc(x.name)}</b>${x.phone?`<br><span class="muted">☎ ${esc(x.phone)}</span>`:""}${x.notes?`<br><span class="muted">${esc(x.notes)}</span>`:""}</td><td>${esc(x.area||"—")}</td><td>${esc(x.relatedTo||"—")}</td><td class="center"><b>${num(x.invitationQty)}</b></td><td class="center"><b>${num(x.expectedPersonQty)}</b></td><td><span class="badge ${x.status==="Invited"?"green":"amber"}">${x.status==="Invited"?"Invited / Done":"Pending"}</span></td><td class="nowrap">${x.invitedAt?fmtDate(String(x.invitedAt).slice(0,10)):"—"}</td><td class="center nowrap">${x.status==="Invited"?`<button class="btn small blue" onclick="openExpectedPersonsEdit('${x.id}')">👥 Edit Persons</button> <button class="btn small" onclick="setInvitationStatus('${x.id}','Pending')">↶ Pending</button>`:`<button class="btn small green" onclick="openInviteConfirm('${x.id}')">✓ Review & Invite</button>`} <button class="btn small" onclick="openInvitationForm('${x.id}')">Edit</button> <button class="btn small danger" onclick="deleteInvitation('${x.id}')">Delete</button></td></tr>`).join("")}</tbody></table></div>`;
+    const mobile=`<div class="invitation-mobile-list">${list.map((x,i)=>`<article class="invite-card ${x.status==="Invited"?"invited":""}"><div class="invite-card-top"><div><div class="entry-no">ENTRY ${i+1}</div><h3>${esc(x.name)}</h3><div class="invite-card-meta">${esc(x.area||"No area")} · ${esc(x.relatedTo||"No relation")}${x.notes?`<br>${esc(x.notes)}`:""}</div>${contact(x)}</div><span class="badge ${x.status==="Invited"?"green":"amber"}">${x.status==="Invited"?"Invited / Done":"Pending"}</span></div><div class="invite-card-stats"><div class="invite-stat"><span>Invitation Qty</span><strong>${num(x.invitationQty)}</strong></div><div class="invite-stat"><span>Expected Persons</span><strong>${num(x.expectedPersonQty)}</strong></div></div><div class="invite-card-actions">${x.status==="Invited"?`<button class="btn blue" onclick="openExpectedPersonsEdit('${x.id}')">👥 Edit Expected Persons</button><button class="btn" onclick="setInvitationStatus('${x.id}','Pending')">↶ Move Back to Pending</button>`:`<button class="btn green" onclick="openInviteConfirm('${x.id}')">✓ Review & Mark Invited</button>`}<div class="invite-card-secondary"><button class="btn" onclick="openInvitationForm('${x.id}')">Edit Details</button><button class="btn danger" onclick="deleteInvitation('${x.id}')">Delete</button></div></div></article>`).join("")}</div>`;
+    box.innerHTML=desktop+mobile;
+  }
+
+  function openInvitationForm(id=null){
+    if(!state.activeFunctionId){toast("Create or select a function first",true);return}
+    const x=id?byId(state.invitations,id):null;
+    openModal(x?"Edit Invitation Entry":"Add Invitation Entry",`<form id="invitationForm"><div class="form-grid"><div class="field span-2"><label>Name *</label><input name="name" required value="${esc(x?.name||"")}" placeholder="Person / family name"></div><div class="field"><label>Phone Number</label><input name="phone" inputmode="tel" value="${esc(x?.phone||"")}" placeholder="e.g. 9876543210"></div><div class="field"><label>Location / Area</label><input name="area" value="${esc(x?.area||"")}" placeholder="e.g. Peelamedu"></div><div class="field"><label>Related To</label><input name="relatedTo" value="${esc(x?.relatedTo||"")}" placeholder="Family, office, friends..."></div><div class="field"><label>Invitation Qty</label><input name="invitationQty" type="number" min="0" step="1" value="${num(x?.invitationQty||1)}"></div><div class="field"><label>Expected Person Qty</label><input name="expectedPersonQty" type="number" min="0" step="1" value="${num(x?.expectedPersonQty||1)}"></div><div class="field span-2"><label>Notes</label><textarea name="notes">${esc(x?.notes||"")}</textarea></div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save</button></div></form>`);
+    $("#invitationForm").onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));await dbPut("invitations",{...x,id:x?.id||uid(),functionId:state.activeFunctionId,name:d.name.trim(),phone:d.phone.trim(),area:d.area.trim(),relatedTo:d.relatedTo.trim(),invitationQty:Math.max(0,Math.round(num(d.invitationQty))),expectedPersonQty:Math.max(0,Math.round(num(d.expectedPersonQty))),notes:d.notes.trim(),status:x?.status||"Pending",invitedAt:x?.invitedAt||"",createdAt:x?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});await reloadState();closeModal();renderAll();toast(x?"Invitation entry updated":"Invitation entry added")};
+  }
+
+  function openInviteConfirm(id){
+    const x=byId(state.invitations,id);if(!x)return;
+    openModal("Review & Mark Invited",`<div class="invite-person-box"><strong>${esc(x.name)}</strong><span>${esc(x.area||"No area")} · ${esc(x.relatedTo||"No relation")}${x.phone?` · ☎ ${esc(x.phone)}`:""}</span></div><form id="inviteConfirmForm"><div class="field"><label>Expected Persons</label><input class="qty-focus" id="inviteExpectedQty" name="expectedPersonQty" type="number" min="0" step="1" inputmode="numeric" value="${num(x.expectedPersonQty)}"><div class="help">Check or update the expected count before marking this name as invited.</div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn green">✓ Save & Mark Invited</button></div></form>`);
+    setTimeout(()=>{const el=$("#inviteExpectedQty");if(el){el.focus();el.select()}},80);
+    $("#inviteConfirmForm").onsubmit=async e=>{e.preventDefault();const qty=Math.max(0,Math.round(num(new FormData(e.target).get("expectedPersonQty"))));await dbPut("invitations",{...x,expectedPersonQty:qty,status:"Invited",invitedAt:today(),updatedAt:new Date().toISOString()});await reloadState();closeModal();renderInvitations();toast(`✓ ${x.name} marked invited · Expected persons: ${qty}`)};
+  }
+
+  function openExpectedPersonsEdit(id){
+    const x=byId(state.invitations,id);if(!x)return;
+    openModal("Edit Expected Persons",`<div class="invite-person-box"><strong>${esc(x.name)}</strong><span>${x.status==="Invited"?"Invited / Done":"Pending"}${x.invitedAt?` · ${fmtDate(String(x.invitedAt).slice(0,10))}`:""}</span></div><form id="expectedPersonsForm"><div class="field"><label>Expected Persons</label><input class="qty-focus" id="editExpectedQty" name="expectedPersonQty" type="number" min="0" step="1" inputmode="numeric" value="${num(x.expectedPersonQty)}"><div class="help">This updates the expected count without changing the invitation status.</div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save Qty</button></div></form>`);
+    setTimeout(()=>{const el=$("#editExpectedQty");if(el){el.focus();el.select()}},80);
+    $("#expectedPersonsForm").onsubmit=async e=>{e.preventDefault();const qty=Math.max(0,Math.round(num(new FormData(e.target).get("expectedPersonQty"))));await dbPut("invitations",{...x,expectedPersonQty:qty,updatedAt:new Date().toISOString()});await reloadState();closeModal();renderInvitations();toast(`${x.name} · Expected persons updated to ${qty}`)};
+  }
+  async function setInvitationStatus(id,status){const x=byId(state.invitations,id);if(!x)return;await dbPut("invitations",{...x,status,invitedAt:status==="Invited"?today():"",updatedAt:new Date().toISOString()});await reloadState();renderInvitations();toast(status==="Invited"?`${x.name} marked as invited / done`:`${x.name} moved back to pending`)}
+  async function deleteInvitation(id){if(!confirm("Delete this invitation entry?"))return;await dbRemove("invitations",id);await reloadState();renderInvitations();toast("Invitation entry deleted")}
+
+  function xmlEsc(v){return String(v??"").replace(/[<>&'\"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;","'":"&apos;",'\"':"&quot;"}[c]))}
+  function excelCol(n){let s="";for(n++;n;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s;return s}
+  function excelSheetXml(rows){
+    const rowXml=rows.map((row,ri)=>`<row r="${ri+1}">${row.map((v,ci)=>{const ref=excelCol(ci)+(ri+1),style=ri===0?' s="1"':'';if(typeof v==="number"&&Number.isFinite(v))return`<c r="${ref}"${style}><v>${v}</v></c>`;return`<c r="${ref}" t="inlineStr"${style}><is><t xml:space="preserve">${xmlEsc(v)}</t></is></c>`}).join("")}</row>`).join("");
+    const last=excelCol(Math.max(0,(rows[0]?.length||1)-1))+(rows.length||1);
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="28" customWidth="1"/><col min="2" max="2" width="18" customWidth="1"/><col min="3" max="4" width="22" customWidth="1"/><col min="5" max="6" width="17" customWidth="1"/><col min="7" max="9" width="16" customWidth="1"/></cols><sheetData>${rowXml}</sheetData><autoFilter ref="A1:${last}"/></worksheet>`;
+  }
+  async function buildXlsx(rows,fileName){
+    if(typeof JSZip==="undefined"){toast("Excel component is not available. Reload the app once.",true);return}
+    const zip=new JSZip();
+    zip.file("[Content_Types].xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/></Types>`);
+    zip.folder("_rels").file(".rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/></Relationships>`);
+    zip.folder("docProps").file("core.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:creator>FestBook - HoneyB Solutions</dc:creator><cp:lastModifiedBy>FestBook</cp:lastModifiedBy><dcterms:created xsi:type="dcterms:W3CDTF">${new Date().toISOString()}</dcterms:created></cp:coreProperties>`).file("app.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"><Application>FestBook</Application></Properties>`);
+    const xl=zip.folder("xl");xl.file("workbook.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Invitation Distribution" sheetId="1" r:id="rId1"/></sheets></workbook>`);
+    xl.folder("_rels").file("workbook.xml.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+    xl.file("styles.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><color rgb="FF2E2100"/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF5A800"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFE7E2D7"/></left><right style="thin"><color rgb="FFE7E2D7"/></right><top style="thin"><color rgb="FFE7E2D7"/></top><bottom style="thin"><color rgb="FFE7E2D7"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`);
+    xl.folder("worksheets").file("sheet1.xml",excelSheetXml(rows));
+    const blob=await zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",compression:"DEFLATE"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fileName;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1200);
+  }
+  function downloadInvitationTemplate(){buildXlsx([["Name","Phone Number","Location / Area","Related To","Invitation Qty","Expected Person Qty"]],"FestBook_Invitation_Distribution_Template.xlsx").then(()=>toast("Excel template downloaded"))}
+  function safeFilePart(v){return String(v||"FestBook").trim().replace(/[^a-z0-9]+/gi,"_").replace(/^_+|_+$/g,"")||"FestBook"}
+  function exportInvitationsExcel(){
+    const f=activeFunction();if(!f){toast("Select a function first",true);return}const list=invitationFilteredList();if(!list.length){toast("No invitation entries to export",true);return}
+    const rows=[["Name","Phone Number","Location / Area","Related To","Invitation Qty","Expected Person Qty","Status","Invited On","Notes"],...list.map(x=>[x.name||"",x.phone||"",x.area||"",x.relatedTo||"",num(x.invitationQty),num(x.expectedPersonQty),x.status==="Invited"?"Invited":"Pending",x.invitedAt?String(x.invitedAt).slice(0,10):"",x.notes||""])];
+    buildXlsx(rows,`FestBook_Invitations_${safeFilePart(f.name)}_${today()}.xlsx`).then(()=>toast("Invitation list exported to Excel"));
+  }
+  function csvToRows(text){const rows=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'&&text[i+1]==='"'){cell+='"';i++}else if(c==='"')quoted=false;else cell+=c}else if(c==='"')quoted=true;else if(c===','){row.push(cell);cell=""}else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=""}else if(c!=='\r')cell+=c}row.push(cell);if(row.some(v=>String(v).trim()!==""))rows.push(row);return rows}
+  function cellColIndex(ref){const m=String(ref||"").match(/[A-Z]+/i);if(!m)return 0;let n=0;for(const c of m[0].toUpperCase())n=n*26+c.charCodeAt(0)-64;return n-1}
+  async function xlsxToRows(buffer){
+    if(typeof JSZip==="undefined")throw new Error("Excel component unavailable");const zip=await JSZip.loadAsync(buffer),files=Object.keys(zip.files).filter(n=>/^xl\/worksheets\/sheet\d+\.xml$/i.test(n)).sort((a,b)=>num(a.match(/sheet(\d+)/i)?.[1])-num(b.match(/sheet(\d+)/i)?.[1]));if(!files.length)throw new Error("No worksheet found in Excel file");
+    let shared=[];const ss=zip.file("xl/sharedStrings.xml");if(ss){const doc=new DOMParser().parseFromString(await ss.async("text"),"application/xml");shared=[...doc.getElementsByTagNameNS("*","si")].map(si=>[...si.getElementsByTagNameNS("*","t")].map(t=>t.textContent||"").join(""))}
+    const doc=new DOMParser().parseFromString(await zip.file(files[0]).async("text"),"application/xml");if(doc.getElementsByTagName("parsererror").length)throw new Error("Excel worksheet could not be read");const out=[];
+    for(const r of [...doc.getElementsByTagNameNS("*","row")]){const arr=[];for(const c of [...r.getElementsByTagNameNS("*","c")]){const idx=cellColIndex(c.getAttribute("r")),t=c.getAttribute("t");let v="";if(t==="inlineStr")v=[...c.getElementsByTagNameNS("*","t")].map(x=>x.textContent||"").join("");else{const vn=c.getElementsByTagNameNS("*","v")[0],raw=vn?vn.textContent||"":"";v=t==="s"?(shared[num(raw)]??""):raw}arr[idx]=v}out.push(arr.map(v=>v??""))}return out;
+  }
+  function normHeader(v){return String(v||"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"")}
+  function headerIndex(headers,aliases){for(const a of aliases){const i=headers.indexOf(a);if(i>=0)return i}return-1}
+  function invitationRecordsFromRows(rows){
+    const clean=rows.filter(r=>r.some(v=>String(v??"").trim()!==""));if(!clean.length)throw new Error("The file is empty");const headers=clean[0].map(normHeader),idx={name:headerIndex(headers,["name","personname","guestname","person"]),phone:headerIndex(headers,["phonenumber","phone","mobile","mobilenumber","contact","contactnumber"]),area:headerIndex(headers,["locationarea","area","location","place"]),relatedTo:headerIndex(headers,["relatedto","related","relation","group","side"]),invitationQty:headerIndex(headers,["invitationqty","invitationquantity","inviteqty","cardqty","cards"]),expectedPersonQty:headerIndex(headers,["expectedpersonqty","expectedpersons","expectedpersonquantity","personqty","expectedqty","pax"]),status:headerIndex(headers,["status","invitationstatus"]),invitedAt:headerIndex(headers,["invitedon","inviteddate","dateinvited"]),notes:headerIndex(headers,["notes","remarks","remark"])};if(idx.name<0)throw new Error('Required column "Name" was not found. Please use the FestBook Excel template.');
+    return clean.slice(1).map(r=>({name:String(r[idx.name]??"").trim(),phone:idx.phone>=0?String(r[idx.phone]??"").trim():"",area:idx.area>=0?String(r[idx.area]??"").trim():"",relatedTo:idx.relatedTo>=0?String(r[idx.relatedTo]??"").trim():"",invitationQty:idx.invitationQty>=0?Math.max(0,Math.round(num(r[idx.invitationQty]))):1,expectedPersonQty:idx.expectedPersonQty>=0?Math.max(0,Math.round(num(r[idx.expectedPersonQty]))):1,status:idx.status>=0&&/^(invited|done|distributed|yes)$/i.test(String(r[idx.status]??"").trim())?"Invited":"Pending",invitedAt:idx.invitedAt>=0?String(r[idx.invitedAt]??"").trim():"",notes:idx.notes>=0?String(r[idx.notes]??"").trim():""})).filter(x=>x.name);
+  }
+
+  async function handleInvitationImport(e){
+    const file=e.target.files?.[0];e.target.value="";if(!file)return;if(!state.activeFunctionId){toast("Create or select a function before importing",true);return}
+    try{let rows;if(/\.csv$/i.test(file.name))rows=csvToRows(await file.text());else rows=await xlsxToRows(await file.arrayBuffer());const records=invitationRecordsFromRows(rows);if(!records.length)throw new Error("No names were found in the file");const f=activeFunction();if(!confirm(`Import ${records.length} invitation record(s) into “${f?.name||"selected function"}”?\n\nMatching existing names are updated without changing their current Pending/Invited status.`))return;
+      const existing=state.invitations.filter(x=>x.functionId===state.activeFunctionId),key=x=>`${String(x.name||"").trim().toLowerCase()}|${String(x.area||"").trim().toLowerCase()}|${String(x.relatedTo||"").trim().toLowerCase()}`,map=new Map(existing.map(x=>[key(x),x]));let added=0,updated=0;
+      for(const r of records){const k=key(r),old=map.get(k),rec={...old,id:old?.id||uid(),functionId:state.activeFunctionId,...r,status:old?.status||r.status||"Pending",invitedAt:old?.status==="Invited"?(old.invitedAt||today()):(r.status==="Invited"?(r.invitedAt||today()):""),createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};await dbPut("invitations",rec);if(old)updated++;else{added++;map.set(k,rec)}}await reloadState();renderAll();toast(`Import complete: ${added} added, ${updated} updated`)
+    }catch(err){console.error(err);toast("Import failed: "+err.message,true)}
+  }
+
+  function renderExpenses(){
+    const box=$("#expenseTable"),fid=state.activeFunctionId;if(!fid){box.innerHTML='<div class="empty">Create or select a function first.</div>';return}
+    const q=$("#expenseSearch")?.value.toLowerCase()||"",head=$("#expenseHeadFilter")?.value||"",status=$("#expenseStatusFilter")?.value||"",balance=$("#expenseBalanceFilter")?.value||"";
+    const list=state.expenses.filter(e=>e.functionId===fid).filter(e=>{const v=byId(state.vendors,e.vendorId),h=byId(state.heads,e.headId),paid=paymentTotalFor(e.id),due=Math.max(0,expenseBase(e)-paid);return(!q||`${e.description} ${v?.name||''} ${h?.name||''}`.toLowerCase().includes(q))&&(!head||e.headId===head)&&(!status||e.status===status)&&(!balance||(balance==="pending"?due>0:due<=0))});
+    if(!list.length){box.innerHTML='<div class="empty">No matching expenses. Use Planned Expense or Quick Direct Expense to add one.</div>';return}
+    box.innerHTML=`<div class="table-wrap"><table style="min-width:980px"><thead><tr><th>Expense</th><th>Head / Vendor</th><th>Stage / Status</th><th class="right">Original Estimate</th><th class="right">Current Cost</th><th class="right">Paid</th><th class="right">Balance</th><th>Due</th><th class="center">Actions</th></tr></thead><tbody>${list.map(e=>{const v=byId(state.vendors,e.vendorId),h=byId(state.heads,e.headId),paid=paymentTotalFor(e.id),bal=Math.max(0,expenseBase(e)-paid),stage=expenseStage(e);return`<tr><td><b>${esc(e.description)}</b><br><span class="muted">${code('EXP',state.expenses,e.id)}</span></td><td>${esc(h?.name||'—')}<br><span class="muted">${e.entryType==="Quick"?'Direct / no vendor':esc(v?.name||'No vendor')}</span></td><td><span class="badge ${e.status==='Confirmed'?'green':e.status==='Cancelled'?'red':'amber'}">${esc(e.status)}</span><br><span class="stage-tag ${stage==='Final'?'final':stage==='Quick'?'quick':''}">${stage==='Quick'?'QUICK DIRECT':stage.toUpperCase()}</span></td><td class="right">${e.entryType==="Quick"?'—':money(e.estimatedAmount)}</td><td class="right"><b>${money(expenseBase(e))}</b></td><td class="right">${money(paid)}</td><td class="right"><b>${money(bal)}</b></td><td class="nowrap">${e.entryType==="Quick"?fmtDate(e.expenseDate):fmtDate(e.dueDate)}</td><td class="center nowrap">${e.entryType==="Quick"?`<button class="btn small blue" onclick="openQuickExpenseForm('${e.id}')">Edit Quick</button>`:`<button class="btn small green" onclick="openPaymentForm(null,'${e.id}')">Pay</button> <button class="btn small" onclick="openExpenseForm('${e.id}')">Edit</button>`} <button class="btn small danger" onclick="deleteExpense('${e.id}')">Delete</button></td></tr>`}).join("")}</tbody></table></div>`;
+  }
+
+  function renderPayments(){
+    const box=$("#paymentTable"),fid=state.activeFunctionId;if(!fid){box.innerHTML='<div class="empty">Create or select a function first.</div>';return}
+    const q=$("#paymentSearch")?.value.toLowerCase()||"",from=$("#paymentFrom")?.value||"",to=$("#paymentTo")?.value||"",mode=$("#paymentModeFilter")?.value||"";
+    const list=state.payments.filter(p=>p.functionId===fid).filter(p=>{const e=byId(state.expenses,p.expenseId),v=byId(state.vendors,e?.vendorId);return(!q||`${e?.description||''} ${v?.name||''} ${p.reference||''} ${p.account||''}`.toLowerCase().includes(q))&&(!from||p.date>=from)&&(!to||p.date<=to)&&(!mode||p.mode===mode)});
+    if(!list.length){box.innerHTML='<div class="empty">No matching payments. Record an advance, payment, or Quick Direct Expense to begin.</div>';return}
+    box.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Expense / Vendor</th><th>Type</th><th>Mode / Account</th><th>Reference</th><th class="right">Amount</th><th class="center">Actions</th></tr></thead><tbody>${list.map(p=>{const e=byId(state.expenses,p.expenseId),v=byId(state.vendors,e?.vendorId),quick=e?.entryType==="Quick"||p.quickExpense;return`<tr><td class="nowrap">${fmtDate(p.date)}</td><td><b>${esc(e?.description||'Removed expense')}</b><br><span class="muted">${quick?'Quick direct · No vendor':esc(v?.name||'No vendor')}</span></td><td><span class="badge ${p.type==='Refund'?'red':quick?'blue':'green'}">${quick?'Direct Expense':esc(p.type)}</span></td><td>${esc(p.mode)}<br><span class="muted">${esc(p.account||'—')}</span></td><td>${esc(p.reference||'—')}</td><td class="right"><b>${p.type==='Refund'?'-':''}${money(p.amount)}</b></td><td class="center nowrap">${quick&&e?`<button class="btn small blue" onclick="openQuickExpenseForm('${e.id}')">Edit Quick</button> <button class="btn small danger" onclick="deleteExpense('${e.id}')">Delete Quick</button>`:`<button class="btn small" onclick="openPaymentForm('${p.id}')">Edit</button> <button class="btn small danger" onclick="deletePayment('${p.id}')">Delete</button>`}</td></tr>`}).join("")}</tbody></table></div>`;
+  }
+
+  function renderHeads(){
+    const counts={};state.expenses.forEach(e=>counts[e.headId]=(counts[e.headId]||0)+1);
+    $("#headTable").innerHTML=`<div class="table-wrap"><table style="min-width:600px"><thead><tr><th>Expense Head</th><th>Type</th><th class="center">Entries</th><th class="center">Actions</th></tr></thead><tbody>${state.heads.map(h=>`<tr><td><b>${esc(h.name)}</b></td><td>${h.builtIn?'Default':'Custom'}</td><td class="center">${counts[h.id]||0}</td><td class="center"><button class="btn small" onclick="openHeadForm('${h.id}')">Edit</button> <button class="btn small danger" onclick="deleteHead('${h.id}')" ${counts[h.id]?'disabled title="Used by expenses"':''}>Delete</button></td></tr>`).join("")}</tbody></table></div>`;
+  }
+  function renderVendors(){
+    const q=$("#vendorSearch")?.value.toLowerCase()||"",list=state.vendors.filter(v=>!q||`${v.name} ${v.type||''} ${v.phone||''}`.toLowerCase().includes(q));
+    if(!list.length){$("#vendorTable").innerHTML='<div class="empty">No vendors or persons saved.</div>';return}
+    $("#vendorTable").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Phone</th><th>Address</th><th class="right">Committed</th><th class="right">Paid</th><th class="center">Actions</th></tr></thead><tbody>${list.map(v=>{const ex=state.expenses.filter(e=>e.vendorId===v.id&&e.functionId===state.activeFunctionId&&e.status!=="Cancelled"),comm=ex.filter(e=>e.status==="Confirmed").reduce((s,e)=>s+expenseBase(e),0),paid=state.payments.filter(p=>ex.some(e=>e.id===p.expenseId)).reduce((s,p)=>s+signedPayment(p),0);return`<tr><td><b>${esc(v.name)}</b></td><td>${esc(v.type||'—')}</td><td>${esc(v.phone||'—')}</td><td>${esc(v.address||'—')}</td><td class="right">${money(comm)}</td><td class="right">${money(paid)}</td><td class="center nowrap"><button class="btn small" onclick="openVendorForm('${v.id}')">Edit</button> <button class="btn small danger" onclick="deleteVendor('${v.id}')">Delete</button></td></tr>`}).join("")}</tbody></table></div>`;
+  }
+
+  function renderReports(){
+    if(!state.functions.length){$("#reportBody").innerHTML='<div class="empty">Create a function to generate a report.</div>';return}
+    const fid=$("#reportFunction").value||state.activeFunctionId||state.functions[0].id,f=byId(state.functions,fid);if(!f)return;
+    const from=$("#reportFrom").value,to=$("#reportTo").value,ex=state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled"),payments=state.payments.filter(p=>p.functionId===fid&&(!from||p.date>=from)&&(!to||p.date<=to)),st=functionStats(fid);
+    const heads=state.heads.map(h=>{const hx=ex.filter(e=>e.headId===h.id);return{name:h.name,estimated:hx.filter(e=>e.entryType!=="Quick").reduce((a,e)=>a+num(e.estimatedAmount),0),forecast:hx.reduce((a,e)=>a+expenseBase(e),0),paid:payments.filter(p=>hx.some(e=>e.id===p.expenseId)).reduce((a,p)=>a+signedPayment(p),0)}}).filter(h=>h.estimated||h.forecast||h.paid);
+    $("#reportBody").innerHTML=`<div class="report-sheet"><div class="report-title"><h2>${esc(f.name)}</h2><p>${esc(f.type||'Function')} · ${fmtDate(f.eventDate)} · ${esc(f.venue||'Venue not set')}</p>${state.settings.ownerName?`<p><b>${esc(state.settings.ownerName)}</b></p>`:''}</div>
+      <div class="report-summary"><div><span>BUDGET</span><strong>${money(st.budget)}</strong></div><div><span>ORIGINAL ESTIMATE</span><strong>${money(st.estimated)}</strong></div><div><span>CURRENT FORECAST</span><strong>${money(st.currentForecast)}</strong></div><div><span>PAID</span><strong>${money(st.paid)}</strong></div><div><span>BALANCE</span><strong>${money(st.balance)}</strong></div></div>
+      <div class="notice" style="margin-bottom:18px"><b>Forecast rule:</b> Final amount replaces estimate. If final is not available, estimate is used. Quick Direct Expenses use actual amount.</div>
+      <h3>Category Summary</h3>${heads.length?`<div class="table-wrap"><table style="min-width:600px"><thead><tr><th>Expense Head</th><th class="right">Original Estimate</th><th class="right">Current Forecast</th><th class="right">Paid</th><th class="right">Balance</th></tr></thead><tbody>${heads.map(h=>`<tr><td>${esc(h.name)}</td><td class="right">${money(h.estimated)}</td><td class="right">${money(h.forecast)}</td><td class="right">${money(h.paid)}</td><td class="right">${money(Math.max(0,h.forecast-h.paid))}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">No expenses.</p>'}
+      <h3 style="margin-top:24px">Expense Details</h3>${ex.length?`<div class="table-wrap"><table><thead><tr><th>Description</th><th>Head</th><th>Type</th><th>Vendor</th><th>Stage</th><th class="right">Estimate</th><th class="right">Current Cost</th><th class="right">Paid</th><th class="right">Balance</th></tr></thead><tbody>${ex.map(e=>{const paid=paymentTotalFor(e.id),stage=expenseStage(e);return`<tr><td>${esc(e.description)}</td><td>${esc(byId(state.heads,e.headId)?.name||'—')}</td><td>${e.entryType==="Quick"?'Quick Direct':'Planned'}</td><td>${e.entryType==="Quick"?'—':esc(byId(state.vendors,e.vendorId)?.name||'—')}</td><td>${stage}</td><td class="right">${e.entryType==="Quick"?'—':money(e.estimatedAmount)}</td><td class="right">${money(expenseBase(e))}</td><td class="right">${money(paid)}</td><td class="right">${money(Math.max(0,expenseBase(e)-paid))}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted">No expenses.</p>'}
+      <h3 style="margin-top:24px">Payment History ${from||to?`<small class="muted">(${fmtDate(from)} to ${fmtDate(to)})</small>`:''}</h3>${payments.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Expense</th><th>Vendor</th><th>Type</th><th>Mode</th><th>Reference</th><th class="right">Amount</th></tr></thead><tbody>${payments.map(p=>{const e=byId(state.expenses,p.expenseId);return`<tr><td>${fmtDate(p.date)}</td><td>${esc(e?.description||'—')}</td><td>${e?.entryType==="Quick"?'—':esc(byId(state.vendors,e?.vendorId)?.name||'—')}</td><td>${e?.entryType==="Quick"?'Direct Expense':esc(p.type)}</td><td>${esc(p.mode)}</td><td>${esc(p.reference||'—')}</td><td class="right">${p.type==='Refund'?'-':''}${money(p.amount)}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted">No payments in the selected period.</p>'}
+      <p style="text-align:center;margin-top:24px;color:#777;font-size:10px">Generated by FestBook · Powered by HoneyB Solutions · ${new Date().toLocaleString('en-IN')}</p></div>`;
+  }
+
+  function renderSettings(){
+    $("#settingOwner").value=state.settings.ownerName||"";$("#settingCurrency").value=state.settings.currency||"INR";$("#settingAccount").value=state.settings.defaultAccount||"";
+    const f=activeFunction(),list=f?state.invitations.filter(x=>x.functionId===f.id):[],nameEl=$("#invitationClearFunction"),countEl=$("#invitationClearCount"),btn=$("#clearInvitationBtn");
+    if(nameEl)nameEl.textContent=f?f.name:"No function selected";
+    if(countEl)countEl.textContent=f?`${list.length} invitation ${list.length===1?"entry":"entries"} currently saved for this function.`:"Select a function to manage its invitation list.";
+    if(btn)btn.disabled=!f||!list.length;
+  }
+
+  function openFunctionForm(id=null){
+    const f=id?byId(state.functions,id):null;
+    openModal(f?"Edit Function":"Create Function",`<form id="functionForm"><div class="form-grid">
+      <div class="field span-2"><label>Function / Event name *</label><input name="name" required value="${esc(f?.name||'')}" placeholder="e.g. Priya Wedding"></div>
+      <div class="field"><label>Function type</label><select name="type"><option ${f?.type==='Wedding'?'selected':''}>Wedding</option><option ${f?.type==='Birthday'?'selected':''}>Birthday</option><option ${f?.type==='Housewarming'?'selected':''}>Housewarming</option><option ${f?.type==='Temple Function'?'selected':''}>Temple Function</option><option ${f?.type==='Company Event'?'selected':''}>Company Event</option><option ${f?.type==='Family Function'?'selected':''}>Family Function</option><option ${f?.type==='Other'?'selected':''}>Other</option></select></div>
+      <div class="field"><label>Status</label><select name="status"><option ${f?.status==='Upcoming'?'selected':''}>Upcoming</option><option ${f?.status==='In Progress'?'selected':''}>In Progress</option><option ${f?.status==='Closed'?'selected':''}>Closed</option></select></div>
+      <div class="field"><label>Function date *</label><input type="date" name="eventDate" required value="${esc(f?.eventDate||today())}"></div>
+      <div class="field"><label>Venue</label><input name="venue" value="${esc(f?.venue||'')}" placeholder="Hall / place"></div>
+      <div class="field"><label>Total budget *</label><input type="number" min="0" step="0.01" name="budget" required value="${num(f?.budget)||''}" placeholder="0.00"></div>
+      <div class="field"><label>Start planning date</label><input type="date" name="startDate" value="${esc(f?.startDate||today())}"></div>
+      <div class="field span-2"><label>Notes</label><textarea name="notes" placeholder="Important details">${esc(f?.notes||'')}</textarea></div>
+    </div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" type="submit">${f?'Save Changes':'Create Function'}</button></div></form>`);
+    $("#functionForm").onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));await dbPut("functions",{...f,id:f?.id||uid(),...d,budget:num(d.budget),createdAt:f?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});await reloadState();if(!f)state.activeFunctionId=state.functions.find(x=>x.name===d.name&&x.eventDate===d.eventDate)?.id||state.activeFunctionId;closeModal();renderAll();toast(f?"Function updated":"Function created")};
+  }
+
+  function openExpenseForm(id=null){
+    if(!state.functions.length){toast("Create a function first",true);openFunctionForm();return}const e=id?byId(state.expenses,id):null;if(e?.entryType==="Quick"){openQuickExpenseForm(id);return}
+    openModal(e?"Edit Planned Expense":"New Planned Expense",`<form id="expenseForm"><div class="quick-expense-note"><b>Planned / major expense:</b> use this for Hall, Catering, Decor, Music, Dance and other items where you may have an estimate first and a final quote later. When Final is entered, it replaces the estimate in the Current Forecast.</div><div class="form-grid">
+      <div class="field"><label>Function *</label><select name="functionId" required>${options(state.functions,e?.functionId||state.activeFunctionId)}</select></div>
+      <div class="field"><label>Expense head *</label><select name="headId" required><option value="">Choose head</option>${options(state.heads,e?.headId)}</select></div>
+      <div class="field span-2"><label>Expense description *</label><input name="description" required value="${esc(e?.description||'')}" placeholder="e.g. Marriage hall booking"></div>
+      <div class="field"><label>Vendor / Person</label><select name="vendorId"><option value="">No vendor selected</option>${options(state.vendors,e?.vendorId)}</select><div class="help"><a href="#" id="quickVendorLink">＋ Add a vendor first</a></div></div>
+      <div class="field"><label>Status *</label><select name="status"><option ${e?.status==='Expected'?'selected':''}>Expected</option><option ${e?.status==='Confirmed'?'selected':''}>Confirmed</option><option ${e?.status==='Cancelled'?'selected':''}>Cancelled</option></select></div>
+      <div class="field"><label>Original estimated amount *</label><input type="number" min="0" step="0.01" name="estimatedAmount" required value="${num(e?.estimatedAmount)||''}"><div class="help">Your first planned/expected amount.</div></div>
+      <div class="field"><label>Final / agreed amount</label><input type="number" min="0" step="0.01" name="finalAmount" value="${num(e?.finalAmount)||''}"><div class="help">When entered, this replaces the estimate in Current Forecast.</div></div>
+      <div class="field"><label>Booking / order date</label><input type="date" name="expenseDate" value="${esc(e?.expenseDate||today())}"></div>
+      <div class="field"><label>Payment due date</label><input type="date" name="dueDate" value="${esc(e?.dueDate||'')}"></div>
+      <div class="field span-2"><label>Remarks</label><textarea name="notes">${esc(e?.notes||'')}</textarea></div>
+    </div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" type="submit">${e?'Save Changes':'Add Planned Expense'}</button></div></form>`);
+    $("#quickVendorLink").onclick=ev=>{ev.preventDefault();openVendorForm(null,true)};
+    $("#expenseForm").onsubmit=async ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(ev.target)),finalAmount=num(d.finalAmount),status=d.status==="Cancelled"?"Cancelled":finalAmount>0?"Confirmed":d.status;await dbPut("expenses",{...e,id:e?.id||uid(),...d,status,entryType:"Planned",estimatedAmount:num(d.estimatedAmount),finalAmount,createdAt:e?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});state.activeFunctionId=d.functionId;await reloadState();closeModal();renderAll();toast(e?"Planned expense updated":"Planned expense added")};
+  }
+
+  function openQuickExpenseForm(id=null){
+    if(!state.functions.length){toast("Create a function first",true);openFunctionForm();return}const e=id?byId(state.expenses,id):null;if(e&&e.entryType!=="Quick"){toast("This is a planned expense",true);openExpenseForm(id);return}const oldPayment=e?(state.payments.find(p=>p.expenseId===e.id&&p.quickExpense)||state.payments.find(p=>p.expenseId===e.id)):null;
+    openModal(e?"Edit Quick Direct Expense":"Quick Direct Expense",`<form id="quickExpenseForm"><div class="quick-expense-note"><b>No vendor required.</b> Use this for petrol, toll, parking, tips, tea/snacks and other small one-time expenses. Choose only the Expense Head, description and actual payment details.</div><div class="form-grid">
+      <div class="field"><label>Function *</label><select name="functionId" required>${options(state.functions,e?.functionId||state.activeFunctionId)}</select></div>
+      <div class="field"><label>Expense head *</label><select name="headId" required><option value="">Choose head</option>${options(state.heads,e?.headId)}</select></div>
+      <div class="field span-2"><label>Description *</label><input name="description" required value="${esc(e?.description||'')}" placeholder="e.g. Petrol - hall visit"></div>
+      <div class="field"><label>Amount paid *</label><input type="number" min="0.01" step="0.01" name="amount" required value="${num(e?.finalAmount)||num(oldPayment?.amount)||''}"></div>
+      <div class="field"><label>Date *</label><input type="date" name="date" required value="${esc(oldPayment?.date||e?.expenseDate||today())}"></div>
+      <div class="field"><label>Payment mode *</label><select name="mode"><option ${oldPayment?.mode==='Cash'?'selected':''}>Cash</option><option ${oldPayment?.mode==='Bank Transfer'?'selected':''}>Bank Transfer</option><option ${oldPayment?.mode==='UPI'?'selected':''}>UPI</option><option ${oldPayment?.mode==='Cheque'?'selected':''}>Cheque</option><option ${oldPayment?.mode==='Card'?'selected':''}>Card</option><option ${oldPayment?.mode==='Other'?'selected':''}>Other</option></select></div>
+      <div class="field"><label>Account / Bank</label><input name="account" value="${esc(oldPayment?.account||state.settings.defaultAccount||'')}"></div>
+      <div class="field"><label>Reference</label><input name="reference" value="${esc(oldPayment?.reference||'')}"></div>
+      <div class="field span-2"><label>Remarks</label><textarea name="notes">${esc(e?.notes||oldPayment?.notes||'')}</textarea></div>
+    </div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn green" type="submit">${e?'Save Quick Expense':'Save Direct Expense'}</button></div></form>`);
+    $("#quickExpenseForm").onsubmit=async ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(ev.target)),amount=num(d.amount),expenseId=e?.id||uid(),created=e?.createdAt||new Date().toISOString();const expense={...e,id:expenseId,functionId:d.functionId,headId:d.headId,description:d.description.trim(),vendorId:"",status:"Confirmed",entryType:"Quick",estimatedAmount:0,finalAmount:amount,expenseDate:d.date,dueDate:d.date,notes:d.notes.trim(),createdAt:created,updatedAt:new Date().toISOString()};await dbPut("expenses",expense);const payment={...oldPayment,id:oldPayment?.id||uid(),functionId:d.functionId,expenseId,date:d.date,type:"Final Payment",amount,mode:d.mode,account:d.account.trim(),reference:d.reference.trim(),notes:d.notes.trim(),quickExpense:true,createdAt:oldPayment?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};await dbPut("payments",payment);state.activeFunctionId=d.functionId;await reloadState();closeModal();renderAll();toast(e?"Quick expense updated":"Quick direct expense saved")};
+  }
+  function openPaymentForm(id=null,expenseId=null){
+    const p=id?byId(state.payments,id):null,editingExpense=p?byId(state.expenses,p.expenseId):null;if(editingExpense?.entryType==="Quick"||p?.quickExpense){openQuickExpenseForm(editingExpense?.id);return}
+    const available=state.expenses.filter(e=>e.functionId===state.activeFunctionId&&e.status!=="Cancelled"&&e.entryType!=="Quick");if(!available.length&&!id){toast("Add a planned expense before recording a payment. For petrol, toll, tips, etc. use Quick Direct Expense.",true);showView("expenses");return}const selected=p?.expenseId||expenseId||available[0]?.id;
+    const expenseOpts=available.map(e=>{const v=byId(state.vendors,e.vendorId),bal=Math.max(0,expenseBase(e)-paymentTotalFor(e.id)+(p?.expenseId===e.id?signedPayment(p):0));return`<option value="${e.id}" ${e.id===selected?'selected':''}>${esc(e.description)} · ${esc(v?.name||'No vendor')} · Bal ${money(bal)}</option>`}).join('');
+    openModal(p?"Edit Payment":"Record Payment",`<form id="paymentForm"><div class="form-grid">
+      <div class="field span-2"><label>Expense *</label><select name="expenseId" id="paymentExpense" required>${expenseOpts}</select><div class="help" id="paymentBalanceHelp"></div></div>
+      <div class="field"><label>Payment date *</label><input type="date" name="date" required value="${esc(p?.date||today())}"></div>
+      <div class="field"><label>Payment type *</label><select name="type"><option ${p?.type==='Advance'?'selected':''}>Advance</option><option ${p?.type==='Part Payment'?'selected':''}>Part Payment</option><option ${p?.type==='Final Payment'?'selected':''}>Final Payment</option><option ${p?.type==='Refund'?'selected':''}>Refund</option></select></div>
+      <div class="field"><label>Amount *</label><input type="number" min="0.01" step="0.01" name="amount" required value="${num(p?.amount)||''}"></div>
+      <div class="field"><label>Payment mode *</label><select name="mode"><option ${p?.mode==='Cash'?'selected':''}>Cash</option><option ${p?.mode==='Bank Transfer'?'selected':''}>Bank Transfer</option><option ${p?.mode==='UPI'?'selected':''}>UPI</option><option ${p?.mode==='Cheque'?'selected':''}>Cheque</option><option ${p?.mode==='Card'?'selected':''}>Card</option><option ${p?.mode==='Other'?'selected':''}>Other</option></select></div>
+      <div class="field"><label>Account / Bank</label><input name="account" value="${esc(p?.account||state.settings.defaultAccount||'')}"></div>
+      <div class="field"><label>Reference / Cheque no.</label><input name="reference" value="${esc(p?.reference||'')}"></div>
+      <div class="field span-2"><label>Remarks</label><textarea name="notes">${esc(p?.notes||'')}</textarea></div>
+    </div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn green" type="submit">${p?'Save Changes':'Record Payment'}</button></div></form>`);
+    const updateHelp=()=>{const e=byId(state.expenses,$("#paymentExpense").value),paid=paymentTotalFor(e?.id)+(p&&p.expenseId===e?.id?-signedPayment(p):0);$("#paymentBalanceHelp").textContent=`Current cost: ${money(expenseBase(e||{}))} · Already paid: ${money(paid)} · Balance: ${money(Math.max(0,expenseBase(e||{})-paid))}`};$("#paymentExpense").onchange=updateHelp;updateHelp();
+    $("#paymentForm").onsubmit=async ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(ev.target)),e=byId(state.expenses,d.expenseId);await dbPut("payments",{...p,id:p?.id||uid(),...d,functionId:e.functionId,amount:num(d.amount),createdAt:p?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});await reloadState();closeModal();renderAll();toast(p?"Payment updated":"Payment recorded")};
+  }
+
+  function openHeadForm(id=null){const h=id?byId(state.heads,id):null;openModal(h?"Edit Expense Head":"Add Expense Head",`<form id="headForm"><div class="field"><label>Expense head name *</label><input name="name" required value="${esc(h?.name||'')}" placeholder="e.g. Flower decoration"></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save</button></div></form>`);$("#headForm").onsubmit=async e=>{e.preventDefault();const name=new FormData(e.target).get('name').trim();if(state.heads.some(x=>x.name.toLowerCase()===name.toLowerCase()&&x.id!==h?.id)){toast("This expense head already exists",true);return}await dbPut("heads",{...h,id:h?.id||uid(),name,active:true,builtIn:h?.builtIn||false,createdAt:h?.createdAt||new Date().toISOString()});await reloadState();closeModal();renderAll();toast("Expense head saved")}}
+  function openVendorForm(id=null,returnToExpense=false){const v=id?byId(state.vendors,id):null;openModal(v?"Edit Vendor / Person":"Add Vendor / Person",`<form id="vendorForm"><div class="form-grid"><div class="field"><label>Name *</label><input name="name" required value="${esc(v?.name||'')}"></div><div class="field"><label>Type</label><select name="type"><option ${v?.type==='Vendor'?'selected':''}>Vendor</option><option ${v?.type==='Person'?'selected':''}>Person</option><option ${v?.type==='Hall / Venue'?'selected':''}>Hall / Venue</option><option ${v?.type==='Caterer'?'selected':''}>Caterer</option><option ${v?.type==='Service Provider'?'selected':''}>Service Provider</option></select></div><div class="field"><label>Phone</label><input name="phone" inputmode="tel" value="${esc(v?.phone||'')}"></div><div class="field"><label>GST / Reference</label><input name="reference" value="${esc(v?.reference||'')}"></div><div class="field span-2"><label>Address</label><textarea name="address">${esc(v?.address||'')}</textarea></div><div class="field span-2"><label>Notes</label><textarea name="notes">${esc(v?.notes||'')}</textarea></div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save Vendor</button></div></form>`);$("#vendorForm").onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),record={...v,id:v?.id||uid(),...d,createdAt:v?.createdAt||new Date().toISOString()};await dbPut("vendors",record);await reloadState();closeModal();renderAll();toast("Vendor saved");if(returnToExpense)setTimeout(()=>openExpenseForm(),150)}}
+
+  async function deleteFunction(id){const f=byId(state.functions,id);if(!confirm(`Delete “${f.name}” and all its expenses, payments and invitation entries? This cannot be undone.`))return;for(const p of state.payments.filter(x=>x.functionId===id))await dbRemove("payments",p.id);for(const e of state.expenses.filter(x=>x.functionId===id))await dbRemove("expenses",e.id);for(const x of state.invitations.filter(x=>x.functionId===id))await dbRemove("invitations",x.id);await dbRemove("functions",id);state.activeFunctionId=null;await reloadState();renderAll();toast("Function deleted")}
+  async function deleteExpense(id){const count=state.payments.filter(p=>p.expenseId===id).length;if(!confirm(`Delete this expense${count?` and its ${count} payment(s)`:''}?`))return;for(const p of state.payments.filter(x=>x.expenseId===id))await dbRemove("payments",p.id);await dbRemove("expenses",id);await reloadState();renderAll();toast("Expense deleted")}
+  async function deletePayment(id){if(!confirm("Delete this payment entry?"))return;await dbRemove("payments",id);await reloadState();renderAll();toast("Payment deleted")}
+  async function deleteHead(id){if(state.expenses.some(e=>e.headId===id)){toast("This head is in use and cannot be deleted",true);return}if(!confirm("Delete this expense head?"))return;await dbRemove("heads",id);await reloadState();renderAll();toast("Expense head deleted")}
+  async function deleteVendor(id){if(state.expenses.some(e=>e.vendorId===id)){toast("This vendor is used in an expense. Edit it instead.",true);return}if(!confirm("Delete this vendor/person?"))return;await dbRemove("vendors",id);await reloadState();renderAll();toast("Vendor deleted")}
+
+  async function saveSettings(e){e.preventDefault();await dbPut("settings",{id:"app",ownerName:$("#settingOwner").value.trim(),currency:$("#settingCurrency").value,defaultAccount:$("#settingAccount").value.trim(),updatedAt:new Date().toISOString()});await reloadState();renderAll();toast("Settings saved")}
+  function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+  function downloadBackup(){const data={app:"FestBook",version:"1.2.0",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
+  async function restoreBackup(e){const file=e.target.files[0];e.target.value="";if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.app!=="FestBook"||!obj.data)throw new Error("Not a FestBook backup");if(!confirm("Restore this backup? Existing FestBook data on this device will be replaced."))return;for(const s of STORES)await dbClear(s);for(const s of STORES)for(const item of(obj.data[s]||[]))await dbPut(s,item);state.activeFunctionId=null;await reloadState();renderAll();toast("Backup restored successfully")}catch(err){toast("Restore failed: "+err.message,true)}}
+  async function clearInvitationData(){
+    const f=activeFunction();if(!f){toast("Select a function first",true);return}
+    const list=state.invitations.filter(x=>x.functionId===f.id);if(!list.length){toast("There is no invitation list to clear",true);return}
+    if(!confirm(`Clear all ${list.length} invitation entr${list.length===1?"y":"ies"} for “${f.name}”?\n\nOnly the Invitation Distribution list for this function will be deleted. Expenses, payments, vendors, settings and other functions will NOT be affected.\n\nThis cannot be undone unless you have a backup.`))return;
+    for(const x of list)await dbRemove("invitations",x.id);
+    await reloadState();renderAll();toast(`Invitation list cleared for ${f.name}`);
+  }
+  async function resetAllData(){if(!confirm("Permanently delete ALL FestBook data from this device?"))return;if(!confirm("Please confirm again. This cannot be undone unless you have a backup."))return;for(const s of STORES)await dbClear(s);for(const name of DEFAULT_HEADS)await dbPut("heads",{id:uid(),name,active:true,builtIn:true,createdAt:new Date().toISOString()});localStorage.removeItem("festbook.activeFunctionId");state.activeFunctionId=null;await reloadState();renderAll();toast("All data deleted")}
+
+  function exportCSV(){
+    const fid=$("#reportFunction").value||state.activeFunctionId,f=byId(state.functions,fid);if(!f){toast("Select a function",true);return}
+    const rows=[["Function",f.name],["Event Date",f.eventDate],["Venue",f.venue||""],[],["Expense Code","Description","Expense Head","Type","Vendor","Status","Original Estimate","Current Cost","Paid","Balance","Due / Date","Notes"]];
+    state.expenses.filter(e=>e.functionId===fid).forEach(e=>{const paid=paymentTotalFor(e.id);rows.push([code('EXP',state.expenses,e.id),e.description,byId(state.heads,e.headId)?.name||"",e.entryType==="Quick"?"Quick Direct":"Planned",e.entryType==="Quick"?"":byId(state.vendors,e.vendorId)?.name||"",e.status,e.entryType==="Quick"?"":e.estimatedAmount,expenseBase(e),paid,Math.max(0,expenseBase(e)-paid),e.entryType==="Quick"?(e.expenseDate||""):(e.dueDate||""),e.notes||""])});
+    rows.push([],["Payment Date","Expense","Vendor","Type","Mode","Account","Reference","Amount","Remarks"]);state.payments.filter(p=>p.functionId===fid).forEach(p=>{const e=byId(state.expenses,p.expenseId);rows.push([p.date,e?.description||"",e?.entryType==="Quick"?"":byId(state.vendors,e?.vendorId)?.name||"",e?.entryType==="Quick"?"Direct Expense":p.type,p.mode,p.account||"",p.reference||"",p.type==='Refund'?-p.amount:p.amount,p.notes||""])});
+    const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');download(`FestBook_${f.name.replace(/[^a-z0-9]+/gi,'_')}_${today()}.csv`,csv,"text/csv;charset=utf-8");toast("CSV report exported")
+  }
+
+  async function installApp(){if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;$("#installBtn").style.display="none"}else alert("Install FestBook:\n\nAndroid / Windows: open browser menu and choose Install app or Add to Home screen.\n\niPhone / iPad: open in Safari, tap Share, then Add to Home Screen.")}
+
+  initialise().catch(err=>{console.error(err);document.body.innerHTML=`<div style="padding:30px;font-family:Arial"><h2>FestBook could not start</h2><p>${esc(err.message)}</p><p>Please open this app in Chrome, Edge, or Safari.</p></div>`});
+  </script>
+</body>
+</html>
