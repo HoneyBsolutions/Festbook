@@ -153,7 +153,7 @@
         </section>
 
         <section class="view" id="view-invitations">
-          <div class="page-head"><div><h2>Invitation Distribution</h2><p>Import your invitation list, track pending distribution and mark each person as invited.</p></div><div class="actions"><button class="btn" onclick="downloadInvitationTemplate()">▦ Excel Template</button><button class="btn" onclick="document.getElementById('invitationImportFile').click()">↥ Import Excel</button><button class="btn green" onclick="exportInvitationsExcel()">⇩ Export Excel</button><button class="btn primary" onclick="openInvitationForm()">＋ Add Name</button><input type="file" id="invitationImportFile" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden></div></div>
+          <div class="page-head"><div><h2>Invitation Distribution</h2><p>Import your invitation list, track pending distribution and mark each person as invited.</p></div><div class="actions"><button class="btn" onclick="downloadInvitationTemplate()">▦ Excel Template</button><button class="btn" onclick="document.getElementById('invitationImportFile').click()">↥ Import Excel</button><button class="btn green" onclick="exportInvitationsExcel()">⇩ Export Excel</button><button class="btn dark" onclick="openInvitationPdfExport()">▤ PDF / Share</button><button class="btn primary" onclick="openInvitationForm()">＋ Add Name</button><input type="file" id="invitationImportFile" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden></div></div>
           <div id="invitationMetrics" class="metric-grid"></div>
           <div id="invitationAreaBoard" class="area-board-wrap"></div>
           <div id="invitationAreaWorkbar"></div>
@@ -463,6 +463,58 @@
     const rows=[["Name","Phone Number","Location / Area","Related To","Invitation Qty","Expected Person Qty","Status","Invited On","Notes"],...list.map(x=>[x.name||"",x.phone||"",x.area||"",x.relatedTo||"",num(x.invitationQty),num(x.expectedPersonQty),x.status==="Invited"?"Invited":"Pending",x.invitedAt?String(x.invitedAt).slice(0,10):"",x.notes||""])];
     buildXlsx(rows,`FestBook_Invitations_${safeFilePart(f.name)}_${today()}.xlsx`).then(()=>toast("Invitation list exported to Excel"));
   }
+
+
+  function invitationPdfMeta(){
+    const f=activeFunction(),status=$("#invitationStatusFilter")?.value||"",area=$("#invitationAreaFilter")?.value||"",related=$("#invitationRelatedFilter")?.value||"",search=($("#invitationSearch")?.value||"").trim();
+    return{functionName:f?.name||"Function",status:status||"All status",area:area?(area==="__NO_AREA__"?"No Area":area):"All areas",related:related||"All relations",search,areaValue:area};
+  }
+  function pdfAscii(v){return String(v??"").normalize("NFKD").replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,"-").replace(/…/g,"...").replace(/₹/g,"Rs.").replace(/[^\x20-\x7E]/g,"?")}
+  function pdfEsc(v){return pdfAscii(v).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)")}
+  function pdfFit(v,width,size=8){const t=pdfAscii(v),max=Math.max(3,Math.floor(width/(size*.52)));return t.length<=max?t:t.slice(0,Math.max(1,max-3))+"..."}
+  function pdfText(x,y,text,size=8,bold=false){return`BT /F${bold?2:1} ${size} Tf 1 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)} Tm (${pdfEsc(text)}) Tj ET\n`}
+  function pdfLine(x1,y1,x2,y2,grey=.82){return`${grey} G ${x1.toFixed(1)} ${y1.toFixed(1)} m ${x2.toFixed(1)} ${y2.toFixed(1)} l S\n`}
+  function pdfFillRect(x,y,w,h,r=.95,g=.95,b=.95){return`${r} ${g} ${b} rg ${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)} re f 0 0 0 rg\n`}
+  function pdfStrokeRect(x,y,w,h,grey=.82){return`${grey} G ${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)} re S\n`}
+
+  function invitationPdfLogicalRows(list){
+    const groups=new Map();
+    list.slice().sort((a,b)=>{const aa=(a.area||"").trim()||"No Area",bb=(b.area||"").trim()||"No Area";return aa.localeCompare(bb)||String(a.name||"").localeCompare(String(b.name||""))}).forEach(x=>{const a=(x.area||"").trim()||"No Area";if(!groups.has(a))groups.set(a,[]);groups.get(a).push(x)});
+    const rows=[];for(const [area,items] of groups){rows.push({type:"group",area,items});items.forEach((x,i)=>rows.push({type:"item",x,index:i+1}))}return rows;
+  }
+  function invitationPdfPages(rows,maxRows=22){
+    const pages=[];let page=[],currentGroup=null;for(let i=0;i<rows.length;i++){const row=rows[i];if(row.type==="group")currentGroup=row;if(row.type==="group"&&page.length>maxRows-2){pages.push(page);page=[]}if(page.length>=maxRows){pages.push(page);page=[];if(row.type==="item"&&currentGroup)page.push({...currentGroup,continued:true})}page.push(row)}if(page.length)pages.push(page);return pages;
+  }
+  function createInvitationsPdf(){
+    const f=activeFunction();if(!f){toast("Select a function first",true);return null}const raw=invitationFilteredList();if(!raw.length){toast("No invitation entries in the current filter",true);return null}
+    const meta=invitationPdfMeta(),list=raw.slice(),totalCards=list.reduce((s,x)=>s+num(x.invitationQty),0),totalPersons=list.reduce((s,x)=>s+num(x.expectedPersonQty),0),logical=invitationPdfLogicalRows(list),pages=invitationPdfPages(logical),W=842,H=595,M=28,tableW=W-M*2,rowH=18,tableTop=486;
+    const cols=[{key:"no",label:"#",w:28,align:"center"},{key:"name",label:"Name",w:225},{key:"phone",label:"Phone",w:92},{key:"related",label:"Related To",w:108},{key:"cards",label:"Inv Qty",w:60,align:"center"},{key:"persons",label:"Persons",w:65,align:"center"},{key:"status",label:"Status",w:78},{key:"date",label:"Invited On",w:80}];
+    const used=cols.reduce((s,c)=>s+c.w,0);cols[1].w+=Math.max(0,tableW-used);
+    function xPositions(){let x=M;return cols.map(c=>{const o={...c,x};x+=c.w;return o})}
+    const cp=xPositions(),contents=[];
+    pages.forEach((pageRows,pageIndex)=>{
+      let c="",y=H-31;c+=pdfText(M,y,"FestBook - Invitation Distribution",17,true);c+=pdfText(W-M-165,y,`Page ${pageIndex+1} of ${pages.length}`,8,true);y-=20;c+=pdfText(M,y,`Function: ${meta.functionName}`,10,true);c+=pdfText(W-M-165,y,`Generated: ${new Date().toLocaleDateString("en-IN")}`,8);y-=16;
+      const filterParts=[`Status: ${meta.status}`,`Area: ${meta.area}`,`Related: ${meta.related}`];if(meta.search)filterParts.push(`Search: ${meta.search}`);c+=pdfText(M,y,pdfFit(filterParts.join("  |  "),tableW,8),8);y-=16;c+=pdfText(M,y,`Names: ${list.length}   |   Invitation Qty: ${totalCards}   |   Expected Persons: ${totalPersons}`,9,true);y-=23;
+      c+=pdfFillRect(M,y-rowH,tableW,rowH,.93,.93,.93);c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.72);for(let i=1;i<cp.length;i++)c+=pdfLine(cp[i].x,y-rowH,cp[i].x,y,.72);for(const col of cp){const tx=col.align==="center"?col.x+col.w/2-((col.label.length*7*.26)):col.x+4;c+=pdfText(tx,y-12,col.label,7,true)}y-=rowH;
+      for(const row of pageRows){
+        if(row.type==="group"){
+          const cards=row.items.reduce((s,x)=>s+num(x.invitationQty),0),persons=row.items.reduce((s,x)=>s+num(x.expectedPersonQty),0);c+=pdfFillRect(M,y-rowH,tableW,rowH,1,.96,.80);c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.76);c+=pdfText(M+5,y-12,pdfFit(`${row.area}${row.continued?" (continued)":""} - ${row.items.length} names | ${cards} invitations | ${persons} persons`,tableW-10,8),8,true);y-=rowH;continue;
+        }
+        const x=row.x,vals={no:String(row.index),name:x.name||"",phone:x.phone||"",related:x.relatedTo||"",cards:String(num(x.invitationQty)),persons:String(num(x.expectedPersonQty)),status:x.status==="Invited"?"Invited":"Pending",date:x.invitedAt?String(x.invitedAt).slice(0,10):"-"};c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.86);for(let i=1;i<cp.length;i++)c+=pdfLine(cp[i].x,y-rowH,cp[i].x,y,.86);for(const col of cp){const val=pdfFit(vals[col.key],col.w-8,7),tx=col.align==="center"?col.x+col.w/2-(val.length*7*.25):col.x+4;c+=pdfText(tx,y-12,val,7,col.key==="name")}y-=rowH;
+      }
+      c+=pdfText(M,17,"Generated by FestBook - HoneyB Solutions",7);c+=pdfText(W-M-190,17,`Filter export - ${list.length} entr${list.length===1?"y":"ies"}`,7);contents.push(c);
+    });
+    const objects=[];objects[1]="<< /Type /Catalog /Pages 2 0 R >>";objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";objects[4]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";const kids=[];
+    contents.forEach((content,i)=>{const pageId=5+i*2,contentId=6+i*2;kids.push(`${pageId} 0 R`);objects[pageId]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;objects[contentId]=`<< /Length ${content.length} >>\nstream\n${content}endstream`});objects[2]=`<< /Type /Pages /Kids [${kids.join(" ")}] /Count ${contents.length} >>`;
+    let pdf="%PDF-1.4\n",offsets=[0];for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=`${i} 0 obj\n${objects[i]}\nendobj\n`}const xref=pdf.length;pdf+=`xref\n0 ${objects.length}\n0000000000 65535 f \n`;for(let i=1;i<objects.length;i++)pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";pdf+=`trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+    const areaPart=meta.areaValue?(meta.areaValue==="__NO_AREA__"?"No_Area":safeFilePart(meta.area)):"All_Areas",statusPart=safeFilePart(meta.status),fileName=`FestBook_Invitations_${safeFilePart(f.name)}_${areaPart}_${statusPart}_${today()}.pdf`;return{blob:new Blob([pdf],{type:"application/pdf"}),fileName,list,meta};
+  }
+  function downloadInvitationPdfBlob(blob,fileName){const a=document.createElement("a"),url=URL.createObjectURL(blob);a.href=url;a.download=fileName;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},3000)}
+  function openInvitationPdfExport(){
+    const out=createInvitationsPdf();if(!out)return;const cards=out.list.reduce((s,x)=>s+num(x.invitationQty),0),persons=out.list.reduce((s,x)=>s+num(x.expectedPersonQty),0);window.__festbookInvitationPdf=out;openModal("Invitation PDF",`<div class="invite-person-box"><strong>${esc(out.meta.area)} · ${esc(out.meta.status)}</strong><span>${out.list.length} names · ${cards} invitations · ${persons} expected persons${out.meta.related!=="All relations"?` · ${esc(out.meta.related)}`:""}</span></div><div class="notice" style="margin-top:14px">The PDF uses your <b>current invitation filters</b>. If All Areas is selected, the PDF is grouped area-wise.</div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button type="button" class="btn" onclick="previewInvitationsPDF()">View PDF</button><button type="button" class="btn primary" onclick="shareInvitationsPDF()">Share / Save PDF</button></div>`)
+  }
+  function previewInvitationsPDF(){const out=window.__festbookInvitationPdf||createInvitationsPdf();if(!out)return;const url=URL.createObjectURL(out.blob),w=window.open(url,"_blank");if(!w){downloadInvitationPdfBlob(out.blob,out.fileName);toast("PDF downloaded because preview was blocked")}else toast("PDF opened with the current filters");closeModal();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+  async function shareInvitationsPDF(){const out=window.__festbookInvitationPdf||createInvitationsPdf();if(!out)return;const file=new File([out.blob],out.fileName,{type:"application/pdf"});try{if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:`FestBook Invitations - ${out.meta.area}`,text:`${out.meta.status} invitation list · ${out.list.length} names`,files:[file]});closeModal();return}}catch(err){if(err?.name==="AbortError")return}downloadInvitationPdfBlob(out.blob,out.fileName);closeModal();toast("PDF downloaded - you can share it from Files")}
   function csvToRows(text){const rows=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'&&text[i+1]==='"'){cell+='"';i++}else if(c==='"')quoted=false;else cell+=c}else if(c==='"')quoted=true;else if(c===','){row.push(cell);cell=""}else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=""}else if(c!=='\r')cell+=c}row.push(cell);if(row.some(v=>String(v).trim()!==""))rows.push(row);return rows}
   function cellColIndex(ref){const m=String(ref||"").match(/[A-Z]+/i);if(!m)return 0;let n=0;for(const c of m[0].toUpperCase())n=n*26+c.charCodeAt(0)-64;return n-1}
   async function xlsxToRows(buffer){

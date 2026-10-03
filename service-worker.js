@@ -1,4 +1,4 @@
-const CACHE_NAME = "festbook-v1.2.0-area-board-quick-expense";
+const CACHE_NAME = "festbook-v1.2.1-invitation-pdf-export";
 const APP_SHELL = [
   "./",
   "./index.html",
