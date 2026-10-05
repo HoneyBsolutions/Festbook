@@ -106,6 +106,7 @@
     .report-sheet{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}.report-title{text-align:center;padding-bottom:18px;border-bottom:2px solid #222;margin-bottom:18px}.report-title h2{margin:0}.report-title p{margin:5px 0 0;color:var(--muted)}
     .report-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:15px 0}.report-summary>div{background:#f7f4ed;border-radius:9px;padding:11px}.report-summary span{display:block;color:var(--muted);font-size:10px}.report-summary strong{display:block;margin-top:4px;font-size:14px}
     .ledger-card-list{display:none;gap:10px}.ledger-card{border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px}.ledger-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}.ledger-card-top b{font-size:15px}.ledger-card-top span{font-size:11px;color:var(--muted)}.ledger-card-values{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ledger-card-values>div{background:#f7f4ed;border-radius:9px;padding:9px}.ledger-card-values small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.25px}.ledger-card-values strong{display:block;margin-top:3px;font-size:13px}.ledger-total-row td{font-weight:800;background:#f7f4ed}.ledger-balance{font-weight:800}.ledger-balance.due{color:#a6382f}.ledger-balance.clear{color:#087049}
+    .report-builder{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 5px 16px rgba(0,0,0,.035)}.report-builder .filterbar{margin:0}.report-placeholder{background:#fff;border:1px dashed #d7d0c2;border-radius:16px;padding:34px 18px;text-align:center;color:var(--muted)}.report-placeholder b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}.report-selected{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:2px 0 16px;padding:13px 14px;background:#f7f4ed;border-radius:12px}.report-selected strong{display:block;font-size:17px}.report-selected span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.tally-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.tally-summary>div{background:#f7f4ed;border-radius:9px;padding:11px}.tally-summary span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.25px}.tally-summary strong{display:block;margin-top:4px;font-size:14px}.tally-balance.dr{color:#a6382f;font-weight:800}.tally-balance.cr{color:#087049;font-weight:800}.tally-ledger tr.opening td,.tally-ledger tr.closing td{font-weight:800;background:#f7f4ed}.report-actions-note{font-size:11px;color:var(--muted);margin-top:7px}
     .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.invitation-data-zone{border-color:#e8cf83;background:#fffdf6}.danger-zone{border-color:#edc2bf;background:#fffafa}.btn:disabled{opacity:.48;cursor:not-allowed;transform:none!important;box-shadow:none!important}
     .progress{height:7px;background:#ece8df;border-radius:10px;overflow:hidden;margin-top:10px}.progress div{height:100%;background:var(--amber)}
     .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
@@ -115,7 +116,7 @@
       .app{display:block}.sidebar{transform:translateX(-105%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{grid-column:auto}.overlay.open{display:block}.menu-btn{display:block}.topbar{padding:10px 14px}.top-title span{display:none}.function-switch label{display:none}.function-switch select{min-width:0;width:min(38vw,250px)}.content{padding:17px}.dashboard-grid,.settings-grid{grid-template-columns:1fr}.page-head{align-items:center}.page-head h2{font-size:23px}.filterbar{grid-template-columns:1fr 1fr}
     }
     @media(max-width:560px){
-      .metric-grid{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric strong{font-size:17px}.inv-summary-grid{grid-template-columns:1fr;gap:9px}.inv-summary-card{padding:13px}.inv-summary-card.expected{grid-column:auto}.inv-summary-title strong{font-size:23px}.top-title{min-width:auto}.top-title h1{font-size:18px}.function-switch{max-width:46vw}.content{padding:13px}.page-head{display:block}.page-head .actions{margin-top:13px}.form-grid{grid-template-columns:1fr}.form-grid .span-2{grid-column:auto}.filterbar{grid-template-columns:1fr}.quick-actions{grid-template-columns:1fr 1fr}.report-sheet{padding:15px}.report-summary{grid-template-columns:1fr 1fr}.modal-backdrop{padding:8px}.modal{max-height:96vh;border-radius:14px}
+      .metric-grid{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric strong{font-size:17px}.inv-summary-grid{grid-template-columns:1fr;gap:9px}.inv-summary-card{padding:13px}.inv-summary-card.expected{grid-column:auto}.inv-summary-title strong{font-size:23px}.top-title{min-width:auto}.top-title h1{font-size:18px}.function-switch{max-width:46vw}.content{padding:13px}.page-head{display:block}.page-head .actions{margin-top:13px}.form-grid{grid-template-columns:1fr}.form-grid .span-2{grid-column:auto}.filterbar{grid-template-columns:1fr}.quick-actions{grid-template-columns:1fr 1fr}.report-sheet{padding:15px}.report-summary{grid-template-columns:1fr 1fr}.tally-summary{grid-template-columns:1fr 1fr}.report-selected{display:block}.modal-backdrop{padding:8px}.modal{max-height:96vh;border-radius:14px}
       .invitation-desktop{display:none}.invitation-mobile-list{display:grid;gap:11px}.invite-card-secondary{grid-template-columns:1fr 1fr}.area-board{grid-template-columns:1fr 1fr}.invite-workbar{top:62px}.area-card{padding:10px}.area-card.selected{padding:9px}.workflow-steps{grid-template-columns:1fr}.quote-summary{grid-template-columns:1fr 1fr}.awaiting-quote{align-items:flex-start;flex-direction:column}.ledger-table{display:none}.ledger-card-list{display:grid}
     }
     @media print{
@@ -212,12 +213,18 @@
         </section>
 
         <section class="view" id="view-reports">
-          <div class="page-head"><div><h2>Function Ledger & Statement</h2><p>Vendor-wise, expense-head-wise, expense and payment summary.</p></div><div class="actions"><button class="btn" onclick="exportCSV()">⇩ Export CSV</button><button class="btn dark" onclick="window.print()">⎙ Print</button></div></div>
-          <div class="filterbar no-print">
-            <div class="field"><label>Report function</label><select id="reportFunction"></select></div>
-            <div class="field"><label>Payment from</label><input type="date" id="reportFrom"></div>
-            <div class="field"><label>Payment to</label><input type="date" id="reportTo"></div>
-            <div class="field"><button class="btn primary" style="width:100%" onclick="renderReports()">Generate Report</button></div>
+          <div class="page-head"><div><h2>Ledger & Report Builder</h2><p>Select Vendor-wise or Expense Head-wise, choose one ledger, then generate a summary or Tally-style ledger.</p></div><div class="actions"><button class="btn" onclick="exportCSV()">⇩ Export CSV</button><button class="btn dark" onclick="openLedgerPdfExport()">▤ Ledger PDF / Share</button><button class="btn dark" onclick="window.print()">⎙ Print</button></div></div>
+          <div class="report-builder no-print">
+            <div class="filterbar" style="grid-template-columns:repeat(3,minmax(170px,1fr))">
+              <div class="field"><label>Report function</label><select id="reportFunction"></select></div>
+              <div class="field"><label>View report by</label><select id="reportGrouping"><option value="vendor">Vendor / Person wise</option><option value="head">Expense Head wise</option></select></div>
+              <div class="field"><label id="reportItemLabel">Select Vendor / Person</label><select id="reportItem"><option value="">Choose vendor / person</option></select></div>
+              <div class="field"><label>Report format</label><select id="reportOutput"><option value="summary">Summary Report</option><option value="ledger">Ledger Entries (Tally Style)</option></select></div>
+              <div class="field"><label>From date <small>(optional)</small></label><input type="date" id="reportFrom"></div>
+              <div class="field"><label>To date <small>(optional)</small></label><input type="date" id="reportTo"></div>
+            </div>
+            <div class="actions" style="margin-top:12px"><button class="btn primary" onclick="renderReports(true)">Generate Report</button></div>
+            <div class="report-actions-note">Leave the dates blank to show the full ledger. In Ledger mode, a date range automatically carries the earlier balance as Opening Balance.</div>
           </div>
           <div id="reportBody"></div>
         </section>
@@ -251,7 +258,7 @@
   const STORES=["functions","heads","vendors","expenses","payments","invitations","settings"];
   const DEFAULT_HEADS=["Hall / Venue","Catering","Decoration","Photography","Invitation","Travel","Gifts","Clothing","Priest / Service","Music","Accommodation","Jewellery","Makeup / Beauty","Printing","Miscellaneous"];
   const state={functions:[],heads:[],vendors:[],expenses:[],payments:[],invitations:[],settings:{},activeFunctionId:null,currentView:"dashboard"};
-  let db, deferredInstallPrompt=null;
+  let db, deferredInstallPrompt=null, reportGenerated=false;
 
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
@@ -319,7 +326,11 @@
     ["invitationSearch","invitationAreaFilter","invitationRelatedFilter","invitationStatusFilter"].forEach(id=>$("#"+id).addEventListener("input",renderInvitations));
     $("#invitationImportFile").addEventListener("change",handleInvitationImport);
     $("#vendorSearch").addEventListener("input",renderVendors);
-    $("#reportFunction").onchange=renderReports;$("#reportFrom").onchange=renderReports;$("#reportTo").onchange=renderReports;
+    $("#reportFunction").onchange=()=>{populateReportItems();reportGenerated=false;renderReports()};
+    $("#reportGrouping").onchange=()=>{populateReportItems();reportGenerated=false;renderReports()};
+    $("#reportItem").onchange=()=>{reportGenerated=false;renderReports()};
+    $("#reportOutput").onchange=()=>{reportGenerated=false;renderReports()};
+    $("#reportFrom").onchange=()=>{if(reportGenerated)renderReports()};$("#reportTo").onchange=()=>{if(reportGenerated)renderReports()};
     $("#settingsForm").onsubmit=saveSettings;$("#restoreFile").onchange=restoreBackup;
     $("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
@@ -351,6 +362,7 @@
     activeSel.innerHTML=state.functions.length?opts:'<option value="">No function created</option>';
     reportSel.innerHTML=state.functions.length?state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===(reportSel.value||state.activeFunctionId)?"selected":""}>${esc(f.name)}</option>`).join(""):'<option value="">No function</option>';
     $("#expenseHeadFilter").innerHTML='<option value="">All heads</option>'+options(state.heads,$("#expenseHeadFilter").value);
+    populateReportItems();
   }
   function functionStats(functionId){
     const ex=state.expenses.filter(e=>e.functionId===functionId&&e.status!=="Cancelled");
@@ -614,49 +626,104 @@
     $("#vendorTable").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Phone</th><th>Address</th><th class="right">Committed</th><th class="right">Paid</th><th class="center">Actions</th></tr></thead><tbody>${list.map(v=>{const ex=state.expenses.filter(e=>e.vendorId===v.id&&e.functionId===state.activeFunctionId&&e.status!=="Cancelled"),comm=ex.filter(e=>e.entryType!=="Quick"&&num(e.finalAmount)>0).reduce((s,e)=>s+expenseBase(e),0),paid=state.payments.filter(p=>ex.some(e=>e.id===p.expenseId)).reduce((s,p)=>s+signedPayment(p),0);return`<tr><td><b>${esc(v.name)}</b></td><td>${esc(v.type||'—')}</td><td>${esc(v.phone||'—')}</td><td>${esc(v.address||'—')}</td><td class="right">${money(comm)}</td><td class="right">${money(paid)}</td><td class="center nowrap"><button class="btn small" onclick="openVendorForm('${v.id}')">Edit</button> <button class="btn small danger" onclick="deleteVendor('${v.id}')">Delete</button></td></tr>`}).join("")}</tbody></table></div>`;
   }
 
-  function renderReports(){
-    if(!state.functions.length){$("#reportBody").innerHTML='<div class="empty">Create a function to generate a report.</div>';return}
-    const fid=$("#reportFunction").value||state.activeFunctionId||state.functions[0].id,f=byId(state.functions,fid);if(!f)return;
-    const from=$("#reportFrom").value,to=$("#reportTo").value;
-    const ex=state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled");
-    const allPayments=state.payments.filter(p=>p.functionId===fid);
-    const payments=allPayments.filter(p=>(!from||p.date>=from)&&(!to||p.date<=to));
-    const st=functionStats(fid);
+  function populateReportItems(){
+    const sel=$("#reportItem"),label=$("#reportItemLabel"),group=$("#reportGrouping")?.value||"vendor",fid=$("#reportFunction")?.value||state.activeFunctionId;
+    if(!sel||!label)return;
+    const previous=sel.value,ex=state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled");
+    if(group==="vendor"){
+      label.textContent="Select Vendor / Person";
+      const keys=new Map();
+      ex.filter(e=>e.entryType!=="Quick").forEach(e=>{const key=e.vendorId||"__unassigned__",v=e.vendorId?byId(state.vendors,e.vendorId):null;keys.set(key,v?.name||"No Vendor / Unassigned")});
+      const rows=[...keys.entries()].sort((a,b)=>a[1].localeCompare(b[1]));
+      sel.innerHTML='<option value="">Choose vendor / person</option>'+rows.map(([id,name])=>`<option value="${esc(id)}">${esc(name)}</option>`).join('');
+    }else{
+      label.textContent="Select Expense Head";
+      const used=new Set(ex.map(e=>e.headId));
+      const rows=state.heads.filter(h=>used.has(h.id)).sort((a,b)=>a.name.localeCompare(b.name));
+      sel.innerHTML='<option value="">Choose expense head</option>'+rows.map(h=>`<option value="${esc(h.id)}">${esc(h.name)}</option>`).join('');
+    }
+    if([...sel.options].some(o=>o.value===previous))sel.value=previous;
+  }
 
-    const heads=state.heads.map(h=>{
-      const hx=ex.filter(e=>e.headId===h.id),paid=hx.reduce((a,e)=>a+paymentTotalFor(e.id),0);
-      return{name:h.name,entries:hx.length,estimated:hx.filter(e=>e.entryType!=="Quick").reduce((a,e)=>a+num(e.estimatedAmount),0),forecast:hx.reduce((a,e)=>a+expenseBase(e),0),paid,balance:Math.max(0,hx.reduce((a,e)=>a+expenseBase(e),0)-paid)}
-    }).filter(h=>h.entries||h.estimated||h.forecast||h.paid).sort((a,b)=>b.forecast-a.forecast||a.name.localeCompare(b.name));
+  function reportSelection(){
+    const fid=$("#reportFunction")?.value||state.activeFunctionId||state.functions[0]?.id||"",f=byId(state.functions,fid),group=$("#reportGrouping")?.value||"vendor",itemId=$("#reportItem")?.value||"",output=$("#reportOutput")?.value||"summary",from=$("#reportFrom")?.value||"",to=$("#reportTo")?.value||"";
+    const all=state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled");
+    const expenses=group==="vendor"?all.filter(e=>e.entryType!=="Quick"&&(itemId==="__unassigned__"?!e.vendorId:e.vendorId===itemId)):all.filter(e=>e.headId===itemId);
+    const title=group==="vendor"?(itemId==="__unassigned__"?"No Vendor / Unassigned":byId(state.vendors,itemId)?.name||""):(byId(state.heads,itemId)?.name||"");
+    return{fid,f,group,itemId,output,from,to,expenses,title};
+  }
 
-    const vendorMap=new Map();
-    ex.filter(e=>e.entryType!=="Quick").forEach(e=>{
-      const key=e.vendorId||"__unassigned__",v=e.vendorId?byId(state.vendors,e.vendorId):null;
-      if(!vendorMap.has(key))vendorMap.set(key,{name:v?.name||"No Vendor / Unassigned",type:v?.type||"Unassigned",entries:0,cost:0,paid:0,balance:0});
-      const row=vendorMap.get(key),paid=paymentTotalFor(e.id),cost=expenseBase(e);
-      row.entries+=1;row.cost+=cost;row.paid+=paid;row.balance+=Math.max(0,cost-paid);
+  function ledgerTransactions(expenses){
+    const tx=[];
+    expenses.forEach(e=>{
+      const expCode=code('EXP',state.expenses,e.id),head=byId(state.heads,e.headId)?.name||'Expense',vendor=e.vendorId?byId(state.vendors,e.vendorId)?.name||'Vendor':'No Vendor',baseDate=e.expenseDate||String(e.createdAt||'').slice(0,10)||today();
+      if(e.entryType==="Quick"){
+        const amount=num(e.finalAmount)||expenseBase(e);if(amount)tx.push({date:baseDate,order:1,particular:`Quick Expense · ${e.description}`,sub:head,ref:expCode,debit:amount,credit:0});
+      }else{
+        const estimate=num(e.estimatedAmount);if(estimate)tx.push({date:baseDate,order:1,particular:`Expense Estimate · ${e.description}`,sub:head+' · '+vendor,ref:expCode,debit:estimate,credit:0});
+        const final=num(e.finalAmount);if(final>0){const diff=final-estimate;if(Math.abs(diff)>.005)tx.push({date:e.finalQuoteDate||baseDate,order:2,particular:`Final Quote Adjustment · ${e.description}`,sub:`Final ${money(final)} vs Estimate ${money(estimate)}`,ref:expCode,debit:diff>0?diff:0,credit:diff<0?-diff:0})}
+      }
     });
-    const vendors=[...vendorMap.values()].sort((a,b)=>b.balance-a.balance||b.cost-a.cost||a.name.localeCompare(b.name));
+    const ids=new Set(expenses.map(e=>e.id));
+    state.payments.filter(p=>ids.has(p.expenseId)).forEach(p=>{const e=byId(state.expenses,p.expenseId),signed=signedPayment(p),payCode=code('PAY',state.payments,p.id);tx.push({date:p.date||today(),order:3,particular:`${p.type==='Refund'?'Refund':'Payment'} · ${e?.description||'Expense'}`,sub:`${p.mode||''}${p.account?' · '+p.account:''}`,ref:p.reference||payCode,debit:signed<0?-signed:0,credit:signed>0?signed:0})});
+    return tx.sort((a,b)=>(a.date||'').localeCompare(b.date||'')||a.order-b.order||a.particular.localeCompare(b.particular));
+  }
+  function ledgerBalanceText(v){return Math.abs(v)<.005?money(0):`${money(Math.abs(v))} ${v>0?'Dr':'Cr'}`}
+  function ledgerBalanceClass(v){return v>0.005?'dr':v<-.005?'cr':''}
 
-    const headTotals={entries:heads.reduce((s,x)=>s+x.entries,0),estimated:heads.reduce((s,x)=>s+x.estimated,0),forecast:heads.reduce((s,x)=>s+x.forecast,0),paid:heads.reduce((s,x)=>s+x.paid,0),balance:heads.reduce((s,x)=>s+x.balance,0)};
-    const vendorTotals={entries:vendors.reduce((s,x)=>s+x.entries,0),cost:vendors.reduce((s,x)=>s+x.cost,0),paid:vendors.reduce((s,x)=>s+x.paid,0),balance:vendors.reduce((s,x)=>s+x.balance,0)};
-    const balanceClass=v=>num(v)>0.005?"ledger-balance due":"ledger-balance clear";
 
-    const vendorCards=vendors.map(v=>`<div class="ledger-card"><div class="ledger-card-top"><div><b>${esc(v.name)}</b><br><span>${esc(v.type)} · ${v.entries} entr${v.entries===1?'y':'ies'}</span></div><span class="${balanceClass(v.balance)}">${v.balance>0?'TO PAY':'PAID'}</span></div><div class="ledger-card-values"><div><small>Total Expense</small><strong>${money(v.cost)}</strong></div><div><small>Payments</small><strong>${money(v.paid)}</strong></div><div><small>Balance</small><strong class="${balanceClass(v.balance)}">${money(v.balance)}</strong></div><div><small>Entries</small><strong>${v.entries}</strong></div></div></div>`).join('');
-    const headCards=heads.map(h=>`<div class="ledger-card"><div class="ledger-card-top"><div><b>${esc(h.name)}</b><br><span>${h.entries} entr${h.entries===1?'y':'ies'}</span></div><span class="${balanceClass(h.balance)}">${h.balance>0?'TO PAY':'PAID'}</span></div><div class="ledger-card-values"><div><small>Current Expense</small><strong>${money(h.forecast)}</strong></div><div><small>Payments</small><strong>${money(h.paid)}</strong></div><div><small>Balance</small><strong class="${balanceClass(h.balance)}">${money(h.balance)}</strong></div><div><small>Original Estimate</small><strong>${money(h.estimated)}</strong></div></div></div>`).join('');
+  function createLedgerPdf(){
+    const r=reportSelection();if(!r.f||!r.itemId){toast("Select a vendor/person or expense head first",true);return null}if(!r.expenses.length){toast("No ledger entries for this selection",true);return null}
+    const allTx=ledgerTransactions(r.expenses),before=r.from?allTx.filter(x=>x.date<r.from):[],period=allTx.filter(x=>(!r.from||x.date>=r.from)&&(!r.to||x.date<=r.to)),opening=before.reduce((s,x)=>s+x.debit-x.credit,0);let running=opening;
+    const rows=period.map(x=>{running+=x.debit-x.credit;return{...x,balance:running}}),debit=period.reduce((s,x)=>s+x.debit,0),credit=period.reduce((s,x)=>s+x.credit,0),closing=opening+debit-credit;
+    const W=842,H=595,M=28,tableW=W-M*2,rowH=19,rowsPerPage=19,pages=[];for(let i=0;i<rows.length;i+=rowsPerPage)pages.push(rows.slice(i,i+rowsPerPage));if(!pages.length)pages.push([]);
+    const cols=[{key:"date",label:"Date",w:72},{key:"particular",label:"Particulars",w:300},{key:"ref",label:"Reference",w:105},{key:"debit",label:"Debit",w:90,align:"right"},{key:"credit",label:"Credit",w:90,align:"right"},{key:"balance",label:"Balance",w:105,align:"right"}],used=cols.reduce((a,c)=>a+c.w,0);cols[1].w+=Math.max(0,tableW-used);let cx=M;const cp=cols.map(c=>{const o={...c,x:cx};cx+=c.w;return o});
+    const vendor=r.group==="vendor"&&r.itemId!=="__unassigned__"?byId(state.vendors,r.itemId):null,partyLine=r.group==="vendor"?`Party: ${r.title}${vendor?.phone?`  |  Phone: ${vendor.phone}`:""}${vendor?.reference?`  |  Ref: ${vendor.reference}`:""}`:`Expense Head: ${r.title}`;
+    const periodText=r.from||r.to?`${r.from?fmtDate(r.from):"Beginning"} to ${r.to?fmtDate(r.to):"Today"}`:"All dates",contents=[];
+    pages.forEach((pageRows,pageIndex)=>{
+      let c="",y=H-30;c+=pdfText(M,y,"FestBook - Ledger Statement",17,true);c+=pdfText(W-M-145,y,`Page ${pageIndex+1} of ${pages.length}`,8,true);y-=20;c+=pdfText(M,y,pdfFit(`Function: ${r.f.name}`,tableW*.62,10),10,true);c+=pdfText(W-M-190,y,`Generated: ${new Date().toLocaleDateString("en-IN")}`,8);y-=15;
+      c+=pdfText(M,y,pdfFit(partyLine,tableW,9),9,true);y-=14;c+=pdfText(M,y,pdfFit(`Report: ${r.group==="vendor"?"Vendor / Person Ledger":"Expense Head Ledger"}  |  Period: ${periodText}`,tableW,8),8);y-=21;
+      const summaryY=y-34,boxGap=8,boxW=(tableW-boxGap*3)/4,summary=[['Opening',ledgerBalanceText(opening)],['Expense / Debit',money(debit)],['Payment / Credit',money(credit)],['Closing',ledgerBalanceText(closing)]];summary.forEach((it,i)=>{const x=M+i*(boxW+boxGap);c+=pdfFillRect(x,summaryY,boxW,34,.965,.955,.93);c+=pdfStrokeRect(x,summaryY,boxW,34,.82);c+=pdfText(x+6,summaryY+21,it[0].toUpperCase(),6.5,true);c+=pdfText(x+6,summaryY+8,pdfFit(it[1],boxW-12,9),9,true)});y=summaryY-14;
+      c+=pdfFillRect(M,y-rowH,tableW,rowH,.92,.92,.92);c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.72);for(let i=1;i<cp.length;i++)c+=pdfLine(cp[i].x,y-rowH,cp[i].x,y,.72);for(const col of cp){const tx=col.align==="right"?col.x+col.w-(col.label.length*7*.48)-5:col.x+4;c+=pdfText(tx,y-13,col.label,7,true)}y-=rowH;
+      if(pageIndex===0&&r.from){c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.84);c+=pdfText(M+4,y-13,fmtDate(r.from),7);c+=pdfText(cp[1].x+4,y-13,"Opening Balance",7,true);c+=pdfText(cp[5].x+4,y-13,pdfFit(ledgerBalanceText(opening),cp[5].w-8,7),7,true);y-=rowH}
+      for(const x of pageRows){const part=x.sub?`${x.particular} - ${x.sub}`:x.particular,vals={date:fmtDate(x.date),particular:part,ref:x.ref||"-",debit:x.debit?money(x.debit):"-",credit:x.credit?money(x.credit):"-",balance:ledgerBalanceText(x.balance)};c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.86);for(let i=1;i<cp.length;i++)c+=pdfLine(cp[i].x,y-rowH,cp[i].x,y,.86);for(const col of cp){const val=pdfFit(vals[col.key],col.w-8,7),tx=col.align==="right"?col.x+col.w-(val.length*7*.47)-5:col.x+4;c+=pdfText(Math.max(col.x+4,tx),y-13,val,7,col.key==="particular")}y-=rowH}
+      if(pageIndex===pages.length-1){c+=pdfFillRect(M,y-rowH,tableW,rowH,.96,.95,.90);c+=pdfStrokeRect(M,y-rowH,tableW,rowH,.72);c+=pdfText(M+4,y-13,fmtDate(r.to||today()),7);c+=pdfText(cp[1].x+4,y-13,"Closing Balance",7,true);c+=pdfText(cp[3].x+4,y-13,pdfFit(money(debit),cp[3].w-8,7),7,true);c+=pdfText(cp[4].x+4,y-13,pdfFit(money(credit),cp[4].w-8,7),7,true);c+=pdfText(cp[5].x+4,y-13,pdfFit(ledgerBalanceText(closing),cp[5].w-8,7),7,true)}
+      c+=pdfText(M,29,"Expense / charge = Debit    |    Payment = Credit",7);c+=pdfText(M,17,"Generated by FestBook - HoneyB Solutions",7);c+=pdfText(W-M-245,17,"Please verify and report any discrepancy in this statement.",7);contents.push(c);
+    });
+    const objects=[];objects[1]="<< /Type /Catalog /Pages 2 0 R >>";objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";objects[4]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";const kids=[];contents.forEach((content,i)=>{const pageId=5+i*2,contentId=6+i*2;kids.push(`${pageId} 0 R`);objects[pageId]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;objects[contentId]=`<< /Length ${content.length} >>\nstream\n${content}endstream`});objects[2]=`<< /Type /Pages /Kids [${kids.join(" ")}] /Count ${contents.length} >>`;
+    let pdf="%PDF-1.4\n",offsets=[0];for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=`${i} 0 obj\n${objects[i]}\nendobj\n`}const xref=pdf.length;pdf+=`xref\n0 ${objects.length}\n0000000000 65535 f \n`;for(let i=1;i<objects.length;i++)pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";pdf+=`trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+    const fileName=`FestBook_Ledger_${safeFilePart(r.f.name)}_${safeFilePart(r.title)}_${today()}.pdf`;return{blob:new Blob([pdf],{type:"application/pdf"}),fileName,r,opening,debit,credit,closing,count:rows.length};
+  }
+  function openLedgerPdfExport(){
+    const out=createLedgerPdf();if(!out)return;window.__festbookLedgerPdf=out;openModal("Ledger PDF / Share",`<div class="invite-person-box"><strong>${esc(out.r.title)}</strong><span>${esc(out.r.f.name)} · ${out.count} ledger entr${out.count===1?"y":"ies"} · Closing ${esc(ledgerBalanceText(out.closing))}</span></div><div class="notice" style="margin-top:14px">This creates a clean <b>Tally-style PDF ledger</b> for the selected Vendor / Person or Expense Head, including Opening Balance, Debit / Expense, Credit / Payment, running balance and Closing Balance. It uses the selected From / To dates and is suitable for sending to a party for verification.</div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button type="button" class="btn" onclick="previewLedgerPDF()">View PDF</button><button type="button" class="btn primary" onclick="shareLedgerPDF()">Share / Save PDF</button></div>`)
+  }
+  function previewLedgerPDF(){const out=window.__festbookLedgerPdf||createLedgerPdf();if(!out)return;const url=URL.createObjectURL(out.blob),w=window.open(url,"_blank");if(!w){downloadInvitationPdfBlob(out.blob,out.fileName);toast("PDF downloaded because preview was blocked")}else toast("Ledger PDF opened");closeModal();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+  async function shareLedgerPDF(){const out=window.__festbookLedgerPdf||createLedgerPdf();if(!out)return;const file=new File([out.blob],out.fileName,{type:"application/pdf"});try{if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:`FestBook Ledger - ${out.r.title}`,text:`Ledger statement for ${out.r.title} · Closing ${ledgerBalanceText(out.closing)}`,files:[file]});closeModal();return}}catch(err){if(err?.name==="AbortError")return}downloadInvitationPdfBlob(out.blob,out.fileName);closeModal();toast("Ledger PDF downloaded - you can share it from Files")}
 
-    $("#reportBody").innerHTML=`<div class="report-sheet"><div class="report-title"><h2>${esc(f.name)}</h2><p>${esc(f.type||'Function')} · ${fmtDate(f.eventDate)} · ${esc(f.venue||'Venue not set')}</p>${state.settings.ownerName?`<p><b>${esc(state.settings.ownerName)}</b></p>`:''}</div>
-      <div class="report-summary"><div><span>BUDGET</span><strong>${money(st.budget)}</strong></div><div><span>ORIGINAL ESTIMATE</span><strong>${money(st.estimated)}</strong></div><div><span>CURRENT FORECAST</span><strong>${money(st.currentForecast)}</strong></div><div><span>PAID</span><strong>${money(st.paid)}</strong></div><div><span>BALANCE</span><strong>${money(st.balance)}</strong></div></div>
-      <div class="notice" style="margin-bottom:18px"><b>Ledger rule:</b> Final amount replaces estimate. If final is not available, estimate is used. Quick Direct Expenses use actual amount. Ledger summaries below use all recorded payments so the outstanding balance is always current; the date filter applies only to Payment History.</div>
-
-      <h3>Vendor / Person Ledger Summary</h3>
-      ${vendors.length?`<div class="ledger-card-list">${vendorCards}</div><div class="table-wrap ledger-table"><table style="min-width:720px"><thead><tr><th>Vendor / Person</th><th>Type</th><th class="center">Entries</th><th class="right">Total Expense</th><th class="right">Payments Made</th><th class="right">Balance to Pay</th></tr></thead><tbody>${vendors.map(v=>`<tr><td><b>${esc(v.name)}</b></td><td>${esc(v.type)}</td><td class="center">${v.entries}</td><td class="right">${money(v.cost)}</td><td class="right">${money(v.paid)}</td><td class="right ${balanceClass(v.balance)}">${money(v.balance)}</td></tr>`).join('')}<tr class="ledger-total-row"><td colspan="2">PLANNED EXPENSE TOTAL</td><td class="center">${vendorTotals.entries}</td><td class="right">${money(vendorTotals.cost)}</td><td class="right">${money(vendorTotals.paid)}</td><td class="right">${money(vendorTotals.balance)}</td></tr></tbody></table></div><p class="muted" style="font-size:11px;margin-top:8px">Quick Direct Expenses are not shown in the vendor ledger because no vendor is required. They are included in the Expense Head summary and overall totals.</p>`:'<p class="muted">No planned vendor expenses.</p>'}
-
-      <h3 style="margin-top:24px">Expense Head Ledger Summary</h3>
-      ${heads.length?`<div class="ledger-card-list">${headCards}</div><div class="table-wrap ledger-table"><table style="min-width:760px"><thead><tr><th>Expense Head</th><th class="center">Entries</th><th class="right">Original Estimate</th><th class="right">Current Expense</th><th class="right">Payments Made</th><th class="right">Balance to Pay</th></tr></thead><tbody>${heads.map(h=>`<tr><td><b>${esc(h.name)}</b></td><td class="center">${h.entries}</td><td class="right">${money(h.estimated)}</td><td class="right">${money(h.forecast)}</td><td class="right">${money(h.paid)}</td><td class="right ${balanceClass(h.balance)}">${money(h.balance)}</td></tr>`).join('')}<tr class="ledger-total-row"><td>FUNCTION TOTAL</td><td class="center">${headTotals.entries}</td><td class="right">${money(headTotals.estimated)}</td><td class="right">${money(headTotals.forecast)}</td><td class="right">${money(headTotals.paid)}</td><td class="right">${money(headTotals.balance)}</td></tr></tbody></table></div>`:'<p class="muted">No expenses.</p>'}
-
-      <h3 style="margin-top:24px">Expense Details</h3>${ex.length?`<div class="table-wrap"><table><thead><tr><th>Description</th><th>Head</th><th>Type</th><th>Vendor</th><th>Workflow</th><th class="right">Estimate</th><th class="right">Current Cost</th><th class="right">Paid</th><th class="right">Balance</th></tr></thead><tbody>${ex.map(e=>{const paid=paymentTotalFor(e.id);return`<tr><td>${esc(e.description)}</td><td>${esc(byId(state.heads,e.headId)?.name||'—')}</td><td>${e.entryType==="Quick"?'Quick Direct':'Planned'}</td><td>${e.entryType==="Quick"?'—':esc(byId(state.vendors,e.vendorId)?.name||'—')}</td><td>${esc(expenseWorkflowStatus(e))}</td><td class="right">${e.entryType==="Quick"?'—':money(e.estimatedAmount)}</td><td class="right">${money(expenseBase(e))}</td><td class="right">${money(paid)}</td><td class="right">${money(Math.max(0,expenseBase(e)-paid))}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted">No expenses.</p>'}
-      <h3 style="margin-top:24px">Payment History ${from||to?`<small class="muted">(${fmtDate(from)} to ${fmtDate(to)})</small>`:''}</h3>${payments.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Expense</th><th>Vendor</th><th>Type</th><th>Mode</th><th>Reference</th><th class="right">Amount</th></tr></thead><tbody>${payments.map(p=>{const e=byId(state.expenses,p.expenseId);return`<tr><td>${fmtDate(p.date)}</td><td>${esc(e?.description||'—')}</td><td>${e?.entryType==="Quick"?'—':esc(byId(state.vendors,e?.vendorId)?.name||'—')}</td><td>${e?.entryType==="Quick"?'Direct Expense':esc(p.type)}</td><td>${esc(p.mode)}</td><td>${esc(p.reference||'—')}</td><td class="right">${p.type==='Refund'?'-':''}${money(p.amount)}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted">No payments in the selected period.</p>'}
-      <p style="text-align:center;margin-top:24px;color:#777;font-size:10px">Generated by FestBook · Powered by HoneyB Solutions · ${new Date().toLocaleString('en-IN')}</p></div>`;
+  function renderReports(force=false){
+    if(force)reportGenerated=true;
+    if(!state.functions.length){$("#reportBody").innerHTML='<div class="empty">Create a function to generate a report.</div>';return}
+    populateReportItems();
+    const r=reportSelection();
+    if(!reportGenerated){$("#reportBody").innerHTML='<div class="report-placeholder"><b>Select a ledger and generate the report</b>Choose Vendor / Person wise or Expense Head wise, select the name below it, then choose Summary or Ledger Entries.</div>';return}
+    if(!r.f||!r.itemId){$("#reportBody").innerHTML='<div class="report-placeholder"><b>Please select a ledger</b>Select a Vendor / Person or Expense Head, then tap Generate Report.</div>';if(force)toast("Select a vendor/person or expense head",true);return}
+    if(!r.expenses.length){$("#reportBody").innerHTML='<div class="report-placeholder"><b>No entries found</b>There are no expense entries for this selection.</div>';return}
+    const st=functionStats(r.fid),allPaid=r.expenses.reduce((a,e)=>a+paymentTotalFor(e.id),0),cost=r.expenses.reduce((a,e)=>a+expenseBase(e),0),estimated=r.expenses.filter(e=>e.entryType!=="Quick").reduce((a,e)=>a+num(e.estimatedAmount),0),balance=cost-allPaid;
+    const typeLabel=r.group==="vendor"?"Vendor / Person Ledger":"Expense Head Ledger",selectedMeta=r.group==="vendor"?(r.itemId==="__unassigned__"?"Unassigned planned expenses":(byId(state.vendors,r.itemId)?.type||"Vendor / Person")):`${r.expenses.length} expense entr${r.expenses.length===1?'y':'ies'}`;
+    const header=`<div class="report-title"><h2>${esc(r.f.name)}</h2><p>${esc(r.f.type||'Function')} · ${fmtDate(r.f.eventDate)} · ${esc(r.f.venue||'Venue not set')}</p>${state.settings.ownerName?`<p><b>${esc(state.settings.ownerName)}</b></p>`:''}</div><div class="report-selected"><div><strong>${esc(r.title)}</strong><span>${typeLabel} · ${esc(selectedMeta)}</span></div><div><b>${r.output==='ledger'?'LEDGER ENTRIES':'SUMMARY REPORT'}</b>${r.from||r.to?`<span>${fmtDate(r.from)} to ${fmtDate(r.to)}</span>`:'<span>All dates</span>'}</div></div>`;
+    if(r.output==="summary"){
+      const ids=new Set(r.expenses.map(e=>e.id)),payments=state.payments.filter(p=>ids.has(p.expenseId)&&(!r.from||p.date>=r.from)&&(!r.to||p.date<=r.to));
+      $("#reportBody").innerHTML=`<div class="report-sheet">${header}<div class="report-summary"><div><span>${r.group==='head'?'ORIGINAL ESTIMATE':'ENTRIES'}</span><strong>${r.group==='head'?money(estimated):r.expenses.length}</strong></div><div><span>CURRENT EXPENSE</span><strong>${money(cost)}</strong></div><div><span>PAYMENTS MADE</span><strong>${money(allPaid)}</strong></div><div><span>BALANCE TO PAY</span><strong class="${balance>0.005?'ledger-balance due':'ledger-balance clear'}">${money(Math.max(0,balance))}</strong></div><div><span>FUNCTION FORECAST</span><strong>${money(st.currentForecast)}</strong></div></div>
+        <h3>Expense Details</h3><div class="table-wrap"><table><thead><tr><th>Description</th><th>Head</th><th>Type</th><th>Vendor</th><th>Workflow</th><th class="right">Estimate</th><th class="right">Current Cost</th><th class="right">Paid</th><th class="right">Balance</th></tr></thead><tbody>${r.expenses.map(e=>{const paid=paymentTotalFor(e.id);return`<tr><td>${esc(e.description)}</td><td>${esc(byId(state.heads,e.headId)?.name||'—')}</td><td>${e.entryType==='Quick'?'Quick Direct':'Planned'}</td><td>${e.entryType==='Quick'?'—':esc(byId(state.vendors,e.vendorId)?.name||'—')}</td><td>${esc(expenseWorkflowStatus(e))}</td><td class="right">${e.entryType==='Quick'?'—':money(e.estimatedAmount)}</td><td class="right">${money(expenseBase(e))}</td><td class="right">${money(paid)}</td><td class="right">${money(Math.max(0,expenseBase(e)-paid))}</td></tr>`}).join('')}</tbody></table></div>
+        <h3 style="margin-top:24px">Payment History ${r.from||r.to?`<small class="muted">(${fmtDate(r.from)} to ${fmtDate(r.to)})</small>`:''}</h3>${payments.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Expense</th><th>Type</th><th>Mode</th><th>Account</th><th>Reference</th><th class="right">Amount</th></tr></thead><tbody>${payments.map(p=>{const e=byId(state.expenses,p.expenseId);return`<tr><td>${fmtDate(p.date)}</td><td>${esc(e?.description||'—')}</td><td>${e?.entryType==='Quick'?'Direct Expense':esc(p.type)}</td><td>${esc(p.mode||'—')}</td><td>${esc(p.account||'—')}</td><td>${esc(p.reference||'—')}</td><td class="right">${p.type==='Refund'?'-':''}${money(p.amount)}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted">No payments in the selected period.</p>'}
+        <p style="text-align:center;margin-top:24px;color:#777;font-size:10px">Generated by FestBook · Powered by HoneyB Solutions · ${new Date().toLocaleString('en-IN')}</p></div>`;
+      return;
+    }
+    const allTx=ledgerTransactions(r.expenses),before=r.from?allTx.filter(x=>x.date<r.from):[],period=allTx.filter(x=>(!r.from||x.date>=r.from)&&(!r.to||x.date<=r.to)),opening=before.reduce((s,x)=>s+x.debit-x.credit,0);let running=opening;const rows=period.map(x=>{running+=x.debit-x.credit;return{...x,balance:running}}),debit=period.reduce((s,x)=>s+x.debit,0),credit=period.reduce((s,x)=>s+x.credit,0),closing=opening+debit-credit;
+    $("#reportBody").innerHTML=`<div class="report-sheet">${header}<div class="tally-summary"><div><span>OPENING BALANCE</span><strong class="tally-balance ${ledgerBalanceClass(opening)}">${ledgerBalanceText(opening)}</strong></div><div><span>DEBIT / EXPENSE</span><strong>${money(debit)}</strong></div><div><span>CREDIT / PAYMENT</span><strong>${money(credit)}</strong></div><div><span>CLOSING BALANCE</span><strong class="tally-balance ${ledgerBalanceClass(closing)}">${ledgerBalanceText(closing)}</strong></div></div>
+      <div class="notice" style="margin-bottom:16px"><b>Tally-style ledger:</b> Expense/estimate is shown as Debit, payments as Credit, and Final Quote difference is posted as an adjustment so the closing balance matches the current outstanding. A negative balance is shown as Credit (advance).</div>
+      <div class="table-wrap ledger-table" style="display:block"><table class="tally-ledger" style="min-width:820px"><thead><tr><th>Date</th><th>Particulars</th><th>Reference</th><th class="right">Debit</th><th class="right">Credit</th><th class="right">Balance</th></tr></thead><tbody>${r.from?`<tr class="opening"><td>${fmtDate(r.from)}</td><td colspan="4">Opening Balance</td><td class="right tally-balance ${ledgerBalanceClass(opening)}">${ledgerBalanceText(opening)}</td></tr>`:''}${rows.map(x=>`<tr><td>${fmtDate(x.date)}</td><td><b>${esc(x.particular)}</b><br><span class="muted" style="font-size:10px">${esc(x.sub||'')}</span></td><td>${esc(x.ref||'—')}</td><td class="right">${x.debit?money(x.debit):'—'}</td><td class="right">${x.credit?money(x.credit):'—'}</td><td class="right tally-balance ${ledgerBalanceClass(x.balance)}">${ledgerBalanceText(x.balance)}</td></tr>`).join('')}<tr class="closing"><td>${fmtDate(r.to||today())}</td><td colspan="2">Closing Balance</td><td class="right">${money(debit)}</td><td class="right">${money(credit)}</td><td class="right tally-balance ${ledgerBalanceClass(closing)}">${ledgerBalanceText(closing)}</td></tr></tbody></table></div>
+      ${!period.length?'<p class="muted">No ledger movements in the selected period.</p>':''}<p style="text-align:center;margin-top:24px;color:#777;font-size:10px">Generated by FestBook · Powered by HoneyB Solutions · ${new Date().toLocaleString('en-IN')}</p></div>`;
   }
 
   function renderSettings(){
@@ -765,7 +832,7 @@
 
   async function saveSettings(e){e.preventDefault();await dbPut("settings",{id:"app",ownerName:$("#settingOwner").value.trim(),currency:$("#settingCurrency").value,defaultAccount:$("#settingAccount").value.trim(),updatedAt:new Date().toISOString()});await reloadState();renderAll();toast("Settings saved")}
   function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
-  function downloadBackup(){const data={app:"FestBook",version:"1.2.4",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
+  function downloadBackup(){const data={app:"FestBook",version:"1.2.7",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
   async function restoreBackup(e){const file=e.target.files[0];e.target.value="";if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.app!=="FestBook"||!obj.data)throw new Error("Not a FestBook backup");if(!confirm("Restore this backup? Existing FestBook data on this device will be replaced."))return;for(const s of STORES)await dbClear(s);for(const s of STORES)for(const item of(obj.data[s]||[]))await dbPut(s,item);state.activeFunctionId=null;await reloadState();renderAll();toast("Backup restored successfully")}catch(err){toast("Restore failed: "+err.message,true)}}
   async function clearInvitationData(){
     const f=activeFunction();if(!f){toast("Select a function first",true);return}
@@ -777,20 +844,15 @@
   async function resetAllData(){if(!confirm("Permanently delete ALL FestBook data from this device?"))return;if(!confirm("Please confirm again. This cannot be undone unless you have a backup."))return;for(const s of STORES)await dbClear(s);for(const name of DEFAULT_HEADS)await dbPut("heads",{id:uid(),name,active:true,builtIn:true,createdAt:new Date().toISOString()});localStorage.removeItem("festbook.activeFunctionId");state.activeFunctionId=null;await reloadState();renderAll();toast("All data deleted")}
 
   function exportCSV(){
-    const fid=$("#reportFunction").value||state.activeFunctionId,f=byId(state.functions,fid);if(!f){toast("Select a function",true);return}
-    const from=$("#reportFrom").value,to=$("#reportTo").value;
-    const ex=state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled"),allPayments=state.payments.filter(p=>p.functionId===fid),filteredPayments=allPayments.filter(p=>(!from||p.date>=from)&&(!to||p.date<=to));
-    const headRows=state.heads.map(h=>{const hx=ex.filter(e=>e.headId===h.id),paid=hx.reduce((a,e)=>a+paymentTotalFor(e.id),0),forecast=hx.reduce((a,e)=>a+expenseBase(e),0);return{name:h.name,entries:hx.length,estimated:hx.filter(e=>e.entryType!=="Quick").reduce((a,e)=>a+num(e.estimatedAmount),0),forecast,paid,balance:Math.max(0,forecast-paid)}}).filter(x=>x.entries);
-    const vendorMap=new Map();ex.filter(e=>e.entryType!=="Quick").forEach(e=>{const key=e.vendorId||"__unassigned__",v=e.vendorId?byId(state.vendors,e.vendorId):null;if(!vendorMap.has(key))vendorMap.set(key,{name:v?.name||"No Vendor / Unassigned",type:v?.type||"Unassigned",entries:0,cost:0,paid:0,balance:0});const r=vendorMap.get(key),cost=expenseBase(e),paid=paymentTotalFor(e.id);r.entries++;r.cost+=cost;r.paid+=paid;r.balance+=Math.max(0,cost-paid)});const vendorRows=[...vendorMap.values()];
-    const rows=[["Function",f.name],["Event Date",f.eventDate],["Venue",f.venue||""],[],["VENDOR / PERSON LEDGER SUMMARY"],["Vendor / Person","Type","Entries","Total Expense","Payments Made","Balance to Pay"]];
-    vendorRows.sort((a,b)=>b.balance-a.balance||a.name.localeCompare(b.name)).forEach(v=>rows.push([v.name,v.type,v.entries,v.cost,v.paid,v.balance]));
-    rows.push([], ["EXPENSE HEAD LEDGER SUMMARY"],["Expense Head","Entries","Original Estimate","Current Expense","Payments Made","Balance to Pay"]);
-    headRows.sort((a,b)=>b.forecast-a.forecast||a.name.localeCompare(b.name)).forEach(h=>rows.push([h.name,h.entries,h.estimated,h.forecast,h.paid,h.balance]));
-    rows.push([], ["EXPENSE DETAILS"],["Expense Code","Description","Expense Head","Type","Vendor","Status","Original Estimate","Current Cost","Paid","Balance","Due / Date","Notes"]);
-    ex.forEach(e=>{const paid=paymentTotalFor(e.id);rows.push([code('EXP',state.expenses,e.id),e.description,byId(state.heads,e.headId)?.name||"",e.entryType==="Quick"?"Quick Direct":"Planned",e.entryType==="Quick"?"":byId(state.vendors,e.vendorId)?.name||"",expenseWorkflowStatus(e),e.entryType==="Quick"?"":e.estimatedAmount,expenseBase(e),paid,Math.max(0,expenseBase(e)-paid),e.entryType==="Quick"?(e.expenseDate||""):(e.dueDate||""),e.notes||""])});
-    rows.push([], ["PAYMENT HISTORY",from||to?`${from||"Start"} to ${to||"Today"}`:"All dates"],["Payment Date","Expense","Vendor","Type","Mode","Account","Reference","Amount","Remarks"]);
-    filteredPayments.forEach(p=>{const e=byId(state.expenses,p.expenseId);rows.push([p.date,e?.description||"",e?.entryType==="Quick"?"":byId(state.vendors,e?.vendorId)?.name||"",e?.entryType==="Quick"?"Direct Expense":p.type,p.mode,p.account||"",p.reference||"",p.type==='Refund'?-p.amount:p.amount,p.notes||""])});
-    const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');download(`FestBook_${f.name.replace(/[^a-z0-9]+/gi,'_')}_${today()}.csv`,csv,"text/csv;charset=utf-8");toast("CSV ledger report exported")
+    if(!reportGenerated){toast("Generate a report first",true);return}
+    const r=reportSelection();if(!r.f||!r.itemId||!r.expenses.length){toast("Generate a report first",true);return}
+    const rows=[["FestBook Report"],["Function",r.f.name],["Report By",r.group==="vendor"?"Vendor / Person":"Expense Head"],["Selected Ledger",r.title],["Format",r.output==="ledger"?"Ledger Entries (Tally Style)":"Summary Report"],["From",r.from||"All"],["To",r.to||"All"],[]];
+    if(r.output==="ledger"){
+      const allTx=ledgerTransactions(r.expenses),before=r.from?allTx.filter(x=>x.date<r.from):[],period=allTx.filter(x=>(!r.from||x.date>=r.from)&&(!r.to||x.date<=r.to));let running=before.reduce((s,x)=>s+x.debit-x.credit,0);rows.push(["Date","Particulars","Reference","Debit","Credit","Balance"]);if(r.from)rows.push([r.from,"Opening Balance","","","",running]);period.forEach(x=>{running+=x.debit-x.credit;rows.push([x.date,`${x.particular}${x.sub?' · '+x.sub:''}`,x.ref||"",x.debit||"",x.credit||"",running])});rows.push([r.to||today(),"Closing Balance","","","",running]);
+    }else{
+      const totalCost=r.expenses.reduce((s,e)=>s+expenseBase(e),0),totalPaid=r.expenses.reduce((s,e)=>s+paymentTotalFor(e.id),0);rows.push(["Current Expense",totalCost],["Payments Made",totalPaid],["Balance to Pay",Math.max(0,totalCost-totalPaid)],[],["EXPENSE DETAILS"],["Description","Expense Head","Type","Vendor","Workflow","Original Estimate","Current Cost","Paid","Balance"]);r.expenses.forEach(e=>{const paid=paymentTotalFor(e.id);rows.push([e.description,byId(state.heads,e.headId)?.name||"",e.entryType==="Quick"?"Quick Direct":"Planned",e.entryType==="Quick"?"":byId(state.vendors,e.vendorId)?.name||"",expenseWorkflowStatus(e),e.entryType==="Quick"?"":e.estimatedAmount,expenseBase(e),paid,Math.max(0,expenseBase(e)-paid)])});const ids=new Set(r.expenses.map(e=>e.id)),payments=state.payments.filter(p=>ids.has(p.expenseId)&&(!r.from||p.date>=r.from)&&(!r.to||p.date<=r.to));rows.push([], ["PAYMENT HISTORY"],["Date","Expense","Type","Mode","Account","Reference","Amount"]);payments.forEach(p=>{const e=byId(state.expenses,p.expenseId);rows.push([p.date,e?.description||"",e?.entryType==="Quick"?"Direct Expense":p.type,p.mode||"",p.account||"",p.reference||"",p.type==='Refund'?-p.amount:p.amount])});
+    }
+    const csv='\ufeff'+rows.map(row=>row.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n'),safe=r.title.replace(/[^a-z0-9]+/gi,'_');download(`FestBook_${safe}_${r.output}_${today()}.csv`,csv,"text/csv;charset=utf-8");toast("Current report exported")
   }
 
   async function installApp(){if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;$("#installBtn").style.display="none"}else alert("Install FestBook:\n\nAndroid / Windows: open browser menu and choose Install app or Add to Home screen.\n\niPhone / iPad: open in Safari, tap Share, then Add to Home Screen.")}
