@@ -1,4 +1,4 @@
-const CACHE_NAME = "festbook-v1.2.7-ledger-pdf-share";
+const CACHE_NAME = "festbook-v1.2.8-ledger-layout-clean";
 const APP_SHELL = [
   "./",
   "./index.html",
