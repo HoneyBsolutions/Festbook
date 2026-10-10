@@ -1,4 +1,4 @@
-const CACHE_NAME = "festbook-v1.2.9-refundable-deposit-settlement";
+const CACHE_NAME = "festbook-v1.3.1-digi-separate-module";
 const APP_SHELL = [
   "./",
   "./index.html",
