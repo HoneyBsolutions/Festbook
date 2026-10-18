@@ -76,6 +76,24 @@
     .settle-facts div{background:#f7f4ed;border-radius:9px;padding:10px;min-width:0}.settle-facts small{display:block;font-size:11px;color:var(--muted)}.settle-facts b{display:block;margin-top:3px;overflow-wrap:anywhere}
     .settle-item .actions{margin-top:13px}.settle-item .btn{flex:1 1 auto}
     .metric.amber{border-top:4px solid var(--amber)}.metric.green{border-top:4px solid var(--green)}.metric.red{border-top:4px solid var(--red)}.metric.blue{border-top:4px solid var(--blue)}.metric.purple{border-top:4px solid var(--purple)}
+    .nav-count{margin-left:auto;background:#f5a800;color:#271f0c;border-radius:999px;padding:2px 7px;font-size:11px;font-weight:800;min-width:23px;text-align:center}
+    .pending-shortcut{display:flex;width:100%;align-items:center;gap:13px;padding:12px 15px;background:#fff;border:1px solid #e7e2d7;border-left:5px solid var(--amber);border-radius:14px;color:var(--ink);text-align:left;margin:-3px 0 18px;box-shadow:0 4px 15px rgba(69,54,23,.04)}
+    .pending-shortcut .pending-icon{font-size:27px;flex:none;line-height:1}
+    .pending-shortcut .pending-label{flex:1;min-width:0}
+    .pending-shortcut b{display:block;font-size:15px}.pending-shortcut small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+    .pending-shortcut .pending-arrow{font-weight:800;font-size:20px;color:var(--amber-dark)}
+    .pending-shortcut:focus-visible,.pending-quote-card button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+    .pending-quote-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:17px}
+    .pending-quote-metrics .metric{border-top:4px solid var(--amber)}
+    .pending-quote-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,325px),1fr));gap:13px}
+    .pending-quote-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:15px;padding:17px;min-width:0}
+    .pending-quote-card h3{font-size:18px;margin:8px 0 5px;overflow-wrap:anywhere}
+    .pending-quote-card .pending-vendor{color:var(--muted);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+    .pending-quote-amounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+    .pending-quote-amounts div{background:#f7f4ed;padding:11px;border-radius:11px;min-width:0}
+    .pending-quote-amounts small{display:block;font-size:11px;color:var(--muted)}
+    .pending-quote-amounts strong{display:block;margin-top:5px;font-size:17px;overflow-wrap:anywhere}
+    .pending-quote-card .actions .btn{flex:1 1 auto}
     .inv-summary-grid{display:grid;grid-template-columns:1fr 1fr minmax(180px,.72fr);gap:13px;margin-bottom:20px}
     .inv-summary-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 14px rgba(69,54,23,.035);min-width:0}
     .inv-summary-card.people{border-top:4px solid var(--amber)}.inv-summary-card.invitations{border-top:4px solid var(--blue)}.inv-summary-card.expected{border-top:4px solid var(--purple)}
@@ -134,10 +152,20 @@
     }
     @media(max-width:560px){
       .metric-grid{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric strong{font-size:17px}.inv-summary-grid{grid-template-columns:1fr;gap:9px}.inv-summary-card{padding:13px}.inv-summary-card.expected{grid-column:auto}.inv-summary-title strong{font-size:23px}.top-title{min-width:auto}.top-title h1{font-size:18px}.function-switch{max-width:46vw}.content{padding:13px}.page-head{display:block}.page-head .actions{margin-top:13px}.form-grid{grid-template-columns:1fr}.form-grid .span-2{grid-column:auto}.filterbar{grid-template-columns:1fr}.quick-actions{grid-template-columns:1fr 1fr}.report-sheet{padding:15px}.report-summary{grid-template-columns:1fr 1fr}.tally-summary{grid-template-columns:1fr 1fr}.report-selected{display:block}.report-builder .filterbar{grid-template-columns:1fr!important}.modal-backdrop{padding:8px}.modal{max-height:96vh;border-radius:14px}
+      .pending-quote-card .actions{display:grid;grid-template-columns:1fr 1fr}.pending-quote-card .actions .btn:first-child{grid-column:1/-1}
       .invitation-desktop{display:none}.invitation-mobile-list{display:grid;gap:11px}.invite-card-secondary{grid-template-columns:1fr 1fr}.area-board{grid-template-columns:1fr 1fr}.invite-workbar{top:62px}.area-card{padding:10px}.area-card.selected{padding:9px}.workflow-steps{grid-template-columns:1fr}.quote-summary{grid-template-columns:1fr 1fr}.awaiting-quote{align-items:flex-start;flex-direction:column}.digi-preview{grid-template-columns:100px 1fr}.digi-preview img{width:100px;max-height:150px}.ledger-table{display:none}.ledger-card-list{display:grid}
     }
+    .final-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .final-check{display:flex;gap:9px;align-items:center;margin-top:12px;font-size:13px;font-weight:650;cursor:pointer}.final-check input{width:18px;height:18px;flex:none;accent-color:var(--green)}
+    .final-report-sheet{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;max-width:1100px;margin:0 auto}
+    .final-report-title{text-align:center;border-bottom:2px solid #272727;padding:8px 0 18px;margin-bottom:16px}.final-report-title h2{margin:0 0 6px;font-size:25px}.final-report-title p{margin:4px 0;color:var(--muted)}
+    .final-section{padding:14px 0 20px;border-bottom:1px solid var(--line);break-inside:auto}.final-section h3{font-size:19px;margin:0 0 12px;padding:10px 12px;border-left:5px solid var(--amber);background:#f7f4ed}.final-section h4{font-size:14px;margin:19px 0 8px}
+    .final-pill{display:inline-flex;padding:6px 10px;border-radius:8px;background:#eef6ff;color:#27547c;font-weight:750;font-size:12px;margin:9px 0}.final-pill.warning{background:#fff1d3;color:#775209}
+    .final-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px;margin:11px 0 18px}.final-cards>div{padding:12px;background:#f7f5ef;border-radius:9px;min-width:0}.final-cards span{display:block;color:var(--muted);font-size:11px}.final-cards b{display:block;margin-top:5px;font-size:15px;overflow-wrap:anywhere}
+    .final-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px}.final-meta p{margin:5px 0;overflow-wrap:anywhere}.final-meta b{color:#4b5563}.final-report-sheet table{min-width:580px}.final-report-sheet th{background:#eeeae1}.final-report-sheet tr.total td{font-weight:800;background:#f9f0d6}.final-subtitle{font-size:12px;color:var(--muted);margin:7px 0 12px}.final-quiet{color:var(--muted);font-size:12px}.final-signatures{display:grid;grid-template-columns:1fr 1fr;gap:35px;padding-top:40px}.final-signatures span{display:block;border-top:1px solid #aaa;padding-top:7px;font-size:12px}.final-annexure{border-bottom:1px dashed #ddd;padding-top:16px}.final-annexure h4{margin:8px 0}.final-note{font-size:12px;color:#69501a;background:#fff6de;border-radius:9px;padding:12px;margin:12px 0}
+    @media(max-width:560px){.final-options{grid-template-columns:1fr}.final-report-sheet{padding:13px}.final-meta{grid-template-columns:1fr}.final-report-title h2{font-size:21px}.final-section h3{font-size:16px}.final-cards{grid-template-columns:1fr 1fr}}
     @media print{
-      body{background:#fff}.sidebar,.topbar,.page-head,.filterbar,.no-print,.overlay,.toast{display:none!important}.app,.main{display:block!important}.content{padding:0;max-width:none}.view{display:none!important}#view-reports{display:block!important}.report-sheet{border:0;box-shadow:none;padding:0}.table-wrap{overflow:visible;border-color:#bbb}table{min-width:0}th,td{padding:7px 6px;font-size:10px}.report-summary{grid-template-columns:repeat(5,1fr)}.ledger-card-list{display:none!important}.ledger-table{display:block!important}@page{size:A4;margin:12mm}
+      body{background:#fff}.sidebar,.topbar,.page-head,.filterbar,.no-print,.overlay,.toast{display:none!important}.app,.main{display:block!important}.content{padding:0;max-width:none}.view{display:none!important}#view-reports{display:block!important}body.print-final #view-reports{display:none!important}body.print-final #view-finalreport{display:block!important}.final-report-sheet{border:none;padding:0}.final-section{break-inside:auto}.final-section h3,.final-annexure h4{break-after:avoid}.final-annexure{break-before:page}.final-report-sheet table{min-width:0!important;width:100%;font-size:9px}.final-report-sheet td,.final-report-sheet th{overflow-wrap:anywhere}.report-sheet{border:0;box-shadow:none;padding:0}.table-wrap{overflow:visible;border-color:#bbb}table{min-width:0}th,td{padding:7px 6px;font-size:10px}.report-summary{grid-template-columns:repeat(5,1fr)}.ledger-card-list{display:none!important}.ledger-table{display:block!important}@page{size:A4;margin:12mm}
     }
   </style>
 </head>
@@ -150,14 +178,16 @@
         <button data-view="functions"><span class="ico">◆</span>Function Master</button>
         <button data-view="invitations"><span class="ico">✉</span>Invitation Distribution</button>
         <button data-view="expenses"><span class="ico">₹</span>Expense Entry</button>
+        <button data-view="pendingquotes"><span class="ico">⏳</span>Final Quotes Pending <span class="nav-count" id="pendingQuoteNavCount" aria-label="Pending quote count">0</span></button>
         <button data-view="payments"><span class="ico">✓</span>Payments</button>
         <button data-view="balances"><span class="ico">⇄</span>Balances & Settlements</button>
         <button data-view="heads"><span class="ico">▦</span>Expense Heads</button>
         <button data-view="vendors"><span class="ico">♟</span>Vendors / Persons</button>
         <button data-view="reports"><span class="ico">▤</span>Reports</button>
+        <button data-view="finalreport"><span class="ico">▣</span>Final Function Report</button>
         <button data-view="settings"><span class="ico">⚙</span>Settings / Backup</button>
       </nav>
-      <div class="side-footer">Powered by <b>HoneyB Solutions</b><br>Innovation with Simplicity · v1.3.3</div>
+      <div class="side-footer">Powered by <b>HoneyB Solutions</b><br>Innovation with Simplicity · v1.3.5</div>
     </aside>
     <div class="overlay" id="overlay"></div>
     <main class="main">
@@ -210,6 +240,16 @@
           <div id="expenseTable"></div>
         </section>
 
+        <section class="view" id="view-pendingquotes">
+          <div class="page-head"><div><h2>Final Quotes Pending</h2><p>Planned expenses waiting for their final agreed amounts. Review them here without changing the original estimate.</p></div><div class="actions"><button class="btn" onclick="showView('dashboard')">⌂ Dashboard</button><button class="btn" onclick="showView('expenses')">View All Expenses</button></div></div>
+          <div id="pendingQuoteMetrics" class="pending-quote-metrics"></div>
+          <div class="filterbar" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px">
+            <div class="field"><label>Find a pending quote</label><input id="pendingQuoteSearch" placeholder="Expense, vendor or head" oninput="renderPendingFinalQuotes()"></div>
+            <div class="field"><label>Expense Head</label><select id="pendingQuoteHeadFilter" onchange="renderPendingFinalQuotes()"><option value="">All expense heads</option></select></div>
+          </div>
+          <div id="pendingQuoteList"></div>
+        </section>
+
         <section class="view" id="view-payments">
           <div class="page-head"><div><h2>Payments</h2><p>Record advances, final payments and refundable hall/vendor deposits in the same place.</p></div><div class="actions"><button class="btn" onclick="openPaymentForm(null,null,true)">◇ Deposit / Return</button><button class="btn primary" onclick="openPaymentForm()">＋ Record Payment</button></div></div>
           <div class="filterbar">
@@ -259,6 +299,20 @@
           <div id="reportBody"></div>
         </section>
 
+        <section class="view" id="view-finalreport">
+          <div class="page-head"><div><h2>Final Function Statement</h2><p>Six-section financial closing report with vendor ledger annexures, made for PDF sharing or printing.</p></div><div class="actions no-print"><button class="btn dark" onclick="openFinalReportPdfExport()">▤ PDF / Share</button><button class="btn" onclick="printFinalReport()">⎙ Print</button></div></div>
+          <div class="report-builder no-print">
+            <div class="filterbar final-options">
+              <div class="field"><label>Function / Event</label><select id="finalReportFunction"></select></div>
+              <div class="field"><label>Report format</label><select id="finalReportFormat"><option value="complete">Complete six-section report</option><option value="summary">Summary only</option></select></div>
+            </div>
+            <label class="final-check"><input id="finalReportAnnex" type="checkbox" checked> Include individual vendor ledgers as annexures</label>
+            <div class="help">The outstanding section automatically excludes zero-balance vendors. All amounts come from existing FestBook records; no data is changed.</div>
+            <div class="actions" style="margin-top:12px"><button class="btn primary" onclick="renderFinalReport(true)">Generate Final Report</button></div>
+          </div>
+          <div id="finalReportBody" aria-live="polite"><div class="report-placeholder"><b>Ready to prepare the final statement</b>Select the function and press Generate Final Report.</div></div>
+        </section>
+
         <section class="view" id="view-settings">
           <div class="page-head"><div><h2>Settings & Backup</h2><p>Protect your offline records with regular backups.</p></div></div>
           <div class="settings-grid">
@@ -291,7 +345,7 @@
   const state={functions:[],heads:[],vendors:[],expenses:[],payments:[],invitations:[],settings:{},activeFunctionId:null,currentView:"dashboard"};
   let invitationMode="manual";
   let balanceMode="pay";
-  let db, deferredInstallPrompt=null, reportGenerated=false;
+  let db, deferredInstallPrompt=null, reportGenerated=false,finalReportGenerated=false;
 
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
@@ -407,6 +461,10 @@
     $("#reportItem").onchange=()=>{reportGenerated=false;renderReports()};
     $("#reportOutput").onchange=()=>{reportGenerated=false;renderReports()};
     $("#reportFrom").onchange=()=>{if(reportGenerated)renderReports()};$("#reportTo").onchange=()=>{if(reportGenerated)renderReports()};
+    $("#finalReportFunction").onchange=()=>{finalReportGenerated=false;renderFinalReport()};
+    $("#finalReportFormat").onchange=()=>{if(finalReportGenerated)renderFinalReport()};
+    $("#finalReportAnnex").onchange=()=>{if(finalReportGenerated)renderFinalReport()};
+    window.addEventListener("afterprint",()=>document.body.classList.remove("print-final"));
     $("#settingsForm").onsubmit=saveSettings;$("#restoreFile").onchange=restoreBackup;$("#digitalInviteFile").onchange=handleDigitalInviteUpload;
     $("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
@@ -418,11 +476,13 @@
   function showView(name){
     state.currentView=name;$$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
     $$('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
-    const titles={dashboard:"Dashboard",functions:"Function Master",invitations:"Invitation Distribution",expenses:"Expense Entry",payments:"Payments",balances:"Balances & Settlements",heads:"Expense Heads",vendors:"Vendors / Persons",reports:"Reports",settings:"Settings / Backup"};
+    const titles={dashboard:"Dashboard",functions:"Function Master",invitations:"Invitation Distribution",expenses:"Expense Entry",pendingquotes:"Final Quotes Pending",payments:"Payments",balances:"Balances & Settlements",heads:"Expense Heads",vendors:"Vendors / Persons",reports:"Reports",finalreport:"Final Function Report",settings:"Settings / Backup"};
     $("#viewTitle").textContent=titles[name];toggleMenu(false);
     if(name==="reports")renderReports();
+    if(name==="finalreport")renderFinalReport();
     if(name==="invitations")renderInvitations();
     if(name==="balances")renderBalances();
+    if(name==="pendingquotes")renderPendingFinalQuotes();
   }
   function setActiveFunction(id){state.activeFunctionId=id||null;if(id)localStorage.setItem("festbook.activeFunctionId",id);renderAll()}
   function toast(message,error=false){const t=$("#toast");t.textContent=message;t.className="toast show"+(error?" error":"");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.className="toast",2600)}
@@ -431,19 +491,22 @@
   function options(list,value,label="name"){return list.map(x=>`<option value="${esc(x.id)}" ${x.id===value?"selected":""}>${esc(x[label])}</option>`).join("")}
 
   function renderAll(){
-    renderSelectors();renderDashboard();renderFunctions();renderInvitations();renderExpenses();renderPayments();renderBalances();renderHeads();renderVendors();renderReports();renderSettings();
+    renderSelectors();renderDashboard();renderFunctions();renderInvitations();renderExpenses();renderPendingFinalQuotes();renderPayments();renderBalances();renderHeads();renderVendors();renderReports();renderFinalReport();renderSettings();
   }
   function renderSelectors(){
     const activeSel=$("#activeFunctionSelect"), reportSel=$("#reportFunction");
     const opts=state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===state.activeFunctionId?"selected":""}>${esc(f.name)} · ${fmtDate(f.eventDate)}</option>`).join("");
     activeSel.innerHTML=state.functions.length?opts:'<option value="">No function created</option>';
     reportSel.innerHTML=state.functions.length?state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===(reportSel.value||state.activeFunctionId)?"selected":""}>${esc(f.name)}</option>`).join(""):'<option value="">No function</option>';
+    const finalSel=$("#finalReportFunction"),finalOld=finalSel.value;
+    finalSel.innerHTML=state.functions.length?state.functions.map(f=>`<option value="${esc(f.id)}" ${f.id===(finalOld&&state.functions.some(x=>x.id===finalOld)?finalOld:state.activeFunctionId)?"selected":""}>${esc(f.name)}</option>`).join(""):'<option value="">No function</option>';
     $("#expenseHeadFilter").innerHTML='<option value="">All heads</option>'+options(state.heads,$("#expenseHeadFilter").value);
     populateReportItems();
   }
   function openDashboardSection(target){
     if(target==="pay"||target==="receive"){setBalanceMode(target,true);return}
     if(target==="budget"){showView("functions");return}
+    if(target==="pendingquotes"){showView("pendingquotes");return}
     if(target==="paid"){
       ["paymentSearch","paymentFrom","paymentTo"].forEach(id=>{const el=$("#"+id);if(el)el.value=""});
       if($("#paymentModeFilter"))$("#paymentModeFilter").value="";
@@ -510,6 +573,39 @@
     }).join('')}</div>`;
   }
 
+  // Pending final amounts are derived directly from existing planned expenses.
+  // Never duplicate status or alter ledger totals merely by visiting this screen.
+  function pendingFinalQuoteItems(fid=state.activeFunctionId){
+    return state.expenses.filter(e=>e.functionId===fid&&e.status!=="Cancelled"&&e.entryType!=="Quick"&&num(e.finalAmount)<=0)
+      .sort((a,b)=>String(a.expenseDate||a.createdAt||"").localeCompare(String(b.expenseDate||b.createdAt||""))||String(a.id).localeCompare(String(b.id)));
+  }
+  function renderPendingFinalQuotes(){
+    const area=$("#pendingQuoteList"),overview=$("#pendingQuoteMetrics"),badge=$("#pendingQuoteNavCount");
+    if(!area||!overview)return;
+    const f=activeFunction(),all=f?pendingFinalQuoteItems(f.id):[];
+    if(badge){badge.textContent=String(all.length);badge.title=all.length+" final quotes pending"}
+    if(!f){overview.innerHTML="";area.innerHTML='<div class="empty">Create or select a function first.</div>';return}
+    const headSel=$("#pendingQuoteHeadFilter"),previous=headSel?.value||"",ids=new Set(all.map(e=>e.headId)),heads=state.heads.filter(h=>ids.has(h.id));
+    if(headSel){headSel.innerHTML='<option value="">All expense heads</option>'+heads.map(h=>`<option value="${esc(h.id)}">${esc(h.name)}</option>`).join('');headSel.value=heads.some(h=>h.id===previous)?previous:""}
+    const q=$("#pendingQuoteSearch")?.value.trim().toLowerCase()||"",head=headSel?.value||"";
+    const list=all.filter(e=>(!head||e.headId===head)&&(!q||`${e.description||""} ${byId(state.vendors,e.vendorId)?.name||""} ${byId(state.heads,e.headId)?.name||""}`.toLowerCase().includes(q)));
+    const estValue=list.reduce((t,e)=>t+num(e.estimatedAmount),0);
+    overview.innerHTML=`<div class="metric"><span>${q||head?'Matching ':'Total '}Quotes Pending</span><strong>${list.length}</strong></div><div class="metric"><span>Still Estimated Value</span><strong>${money(estValue)}</strong></div>`;
+    if(!list.length){area.innerHTML=`<div class="empty"><div class="big">${all.length?'⌕':'✓'}</div><b>${all.length?'No pending quotes match the filters':'All planned quotes finalised'}</b><p>${all.length?'Change the search or expense head to see other pending quotes.':'There are no planned expenses awaiting a final agreed amount for this function.'}</p>${all.length?'':`<button class="btn" onclick="showView('expenses')">View Expense Entry</button>`}</div>`;return}
+    area.innerHTML='<div class="pending-quote-cards">'+list.map(e=>{
+      const headName=byId(state.heads,e.headId)?.name||'Other Expense',vendor=byId(state.vendors,e.vendorId)?.name||'Vendor not assigned';
+      const advance=cashPaymentTotalFor(e.id);
+      return `<article class="pending-quote-card">
+        <span class="badge amber">⏳ Awaiting Final Quote</span>
+        <h3>${esc(e.description)}</h3>
+        <div class="pending-vendor">${esc(headName)} · ${esc(vendor)}</div>
+        <div class="pending-quote-amounts"><div><small>Original Estimate</small><strong>${money(e.estimatedAmount)}</strong></div><div><small>Payments / Advances</small><strong>${money(advance)}</strong></div></div>
+        <div class="pending-vendor">Booking / enquiry: ${fmtDate(e.expenseDate)}${e.dueDate?` · Payment due: ${fmtDate(e.dueDate)}`:''}</div>
+        <div class="actions" style="margin-top:14px"><button class="btn green" onclick="openFinaliseExpenseForm('${e.id}')">✓ Finalise Quote</button><button class="btn small" onclick="openExpenseForm('${e.id}')">Edit Estimate</button><button class="btn small" onclick="openPaymentForm(null,'${e.id}')">Record Advance</button></div>
+      </article>`;
+    }).join('')+'</div>';
+  }
+
   function functionStats(functionId){
     const ex=state.expenses.filter(e=>e.functionId===functionId&&e.status!=="Cancelled");
     const estimated=ex.filter(e=>e.entryType!=="Quick").reduce((s,e)=>s+num(e.estimatedAmount),0);
@@ -542,12 +638,15 @@
         ${dashMetric('blue','Balance to Receive',st.balanceToReceive,'receive')}
         ${dashMetric(st.remaining<0?'red':'green','Budget Remaining',st.remaining,'budget')}
       </div>
+      <button class="pending-shortcut" type="button" onclick="openDashboardSection('pendingquotes')" aria-label="Open Final Quotes Pending, ${st.awaitingCount} quotes">
+        <span class="pending-icon" aria-hidden="true">⏳</span><span class="pending-label"><b>Final Quotes Pending · ${st.awaitingCount}</b><small>${st.awaitingCount?`${money(st.awaitingValue)} still estimated — tap to review and finalise`:'All planned quotes finalised — tap to review'}</small></span><span class="pending-arrow" aria-hidden="true">→</span>
+      </button>
       <div class="dashboard-grid">
         <div class="card"><div class="card-head"><div><h3>Category-wise current forecast</h3><small>Final amount where available; otherwise estimate; includes quick direct expenses</small></div><button class="btn small" onclick="showView('expenses')">View All</button></div>
           ${grouped.length?`<div class="bar-list">${grouped.map(x=>`<div class="bar-row"><div class="bar-label"><span>${esc(x.name)}</span><b>${money(x.value)}</b></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(2,x.value/max*100)}%"></div></div></div>`).join("")}</div>`:`<div class="empty">No expenses yet.</div>`}
         </div>
         <div style="display:grid;gap:18px">
-          <div class="card"><div class="card-head"><h3>Quick Actions</h3></div><div class="quick-actions"><button class="btn green" onclick="openQuickExpenseForm()">⚡ Quick Expense<small>Petrol, toll, tips...</small></button><button class="btn primary" onclick="openExpenseForm()">＋ Add Estimate<small>Step 1 · planned cost</small></button><button class="btn green" onclick="openPaymentForm()">＋ Payment<small>Advance or balance</small></button><button class="btn" onclick="showView('invitations')">✉ Invitations<small>Pending / invited</small></button><button class="btn" onclick="showView('reports')">▤ Report<small>Print or export</small></button></div></div>
+          <div class="card"><div class="card-head"><h3>Quick Actions</h3></div><div class="quick-actions"><button class="btn green" onclick="openQuickExpenseForm()">⚡ Quick Expense<small>Petrol, toll, tips...</small></button><button class="btn primary" onclick="openExpenseForm()">＋ Add Estimate<small>Step 1 · planned cost</small></button><button class="btn" onclick="showView('pendingquotes')">⏳ Pending Quotes<small>${st.awaitingCount} awaiting final amount</small></button><button class="btn green" onclick="openPaymentForm()">＋ Payment<small>Advance or balance</small></button><button class="btn" onclick="showView('invitations')">✉ Invitations<small>Pending / invited</small></button><button class="btn" onclick="showView('reports')">▤ Report<small>Print or export</small></button></div></div>
           <div class="card"><div class="card-head"><h3>Recent Payments</h3><button class="btn small" onclick="showView('payments')">View All</button></div>${recent.length?recent.map(p=>{const e=byId(state.expenses,p.expenseId),v=byId(state.vendors,e?.vendorId);return`<div class="summary-line"><div><b>${esc(v?.name||e?.description||"Expense")}</b><br><span class="muted">${fmtDate(p.date)} · ${esc(p.mode)}${e?.entryType==="Quick"?" · Quick":""}</span></div><b class="${p.type==='Refund'?'muted':''}">${paymentAmountPrefix(p)}${money(p.amount)}</b></div>`}).join(""):'<div class="empty">No payment recorded.</div>'}</div>
         </div>
       </div>`;
@@ -938,6 +1037,177 @@
       ${!period.length?'<p class="muted">No ledger movements in the selected period.</p>':''}<p style="text-align:center;margin-top:24px;color:#777;font-size:10px">Generated by FestBook · Powered by HoneyB Solutions · ${new Date().toLocaleString('en-IN')}</p></div>`;
   }
 
+  // Final Function Statement: a read-only snapshot built from the existing records.
+  // Expenses include Quick Direct entries exactly once. Deposits are cash movements,
+  // not extra expenses; the vendor settlement engine nets them against charges.
+  function finalReportData(fid){
+    const f=byId(state.functions,fid);if(!f)return null;
+    const st=functionStats(fid),ex=st.expenses.slice(),exIds=new Set(ex.map(e=>e.id));
+    const payments=state.payments.filter(p=>exIds.has(p.expenseId)).sort((a,b)=>String(a.date||"").localeCompare(String(b.date||""))||String(a.id).localeCompare(String(b.id)));
+    const headMap=new Map();ex.forEach(e=>{const name=byId(state.heads,e.headId)?.name||"Uncategorised";if(!headMap.has(name))headMap.set(name,{name,entries:0,estimate:0,current:0,awaiting:0});const h=headMap.get(name);h.entries++;h.estimate+=e.entryType==="Quick"?0:num(e.estimatedAmount);h.current+=expenseBase(e);if(e.entryType!=="Quick"&&num(e.finalAmount)<=0)h.awaiting++});
+    const heads=[...headMap.values()].sort((a,b)=>a.name.localeCompare(b.name));
+    const vendorMap=new Map();ex.filter(e=>e.entryType!=="Quick").forEach(e=>{const v=e.vendorId?byId(state.vendors,e.vendorId):null,key=e.vendorId||"__unassigned__";if(!vendorMap.has(key))vendorMap.set(key,{id:key,name:v?.name||"Unassigned / No vendor",type:v?.type||"",phone:v?.phone||"",expenses:[],estimate:0,current:0,confirmed:0,awaiting:0});const g=vendorMap.get(key);g.expenses.push(e);g.estimate+=num(e.estimatedAmount);g.current+=expenseBase(e);if(num(e.finalAmount)>0)g.confirmed+=num(e.finalAmount);else g.awaiting++});
+    const vendorRows=[...vendorMap.values()].map(v=>{const ps=payments.filter(p=>v.expenses.some(e=>e.id===p.expenseId));const regular=ps.reduce((s,p)=>s+signedPayment(p),0);const dep=v.id==="__unassigned__"?null:vendorSettlementStats(fid,v.id);const depositNet=dep?dep.held:0,net=dep?dep.net:v.current-regular;return{...v,regular,depositNet,toPay:Math.max(0,net),toReceive:Math.max(0,-net),net,ledger:ledgerTransactions(v.expenses)}}).sort((a,b)=>a.name.localeCompare(b.name));
+    // Small Quick Direct expenses are already represented under expense heads and in payment history.
+    // They are intentionally not invented as vendors in a party-facing ledger.
+    const movements=payments.filter(p=>!isDepositApplied(p)).map(p=>{
+      const e=byId(state.expenses,p.expenseId);const isIn=isDepositReturned(p)||p.type==="Refund";
+      const cashless=p.mode==="Adjustment";
+      const category=p.mode==="Cash"?"Cash":cashless?"Non-cash Adjustment":["Bank Transfer","UPI","Cheque","Card"].includes(p.mode)?"Bank / Digital":"Other / Unspecified";
+      const kind=isDepositPaid(p)?"Security Deposit Paid":isDepositReturned(p)?"Deposit Returned":p.type==="Refund"?"Refund Received":e?.entryType==="Quick"?"Quick Direct Expense":p.type||"Payment";
+      return{...p,expense:e,party:e?.vendorId?byId(state.vendors,e.vendorId)?.name||"Vendor":e?.entryType==="Quick"?"Direct Expense":"No Vendor",head:byId(state.heads,e?.headId)?.name||"Uncategorised",category,kind,out:cashless?0:isIn?0:num(p.amount),in:cashless?0:isIn?num(p.amount):0,adjustment:cashless?num(p.amount):0};
+    });
+    const accountMap=new Map();movements.forEach(x=>{const key=x.category+"\u0000"+(x.account?.trim()||"Unspecified account");if(!accountMap.has(key))accountMap.set(key,{category:x.category,account:x.account?.trim()||"Unspecified account",entries:0,out:0,in:0,adjustment:0});const a=accountMap.get(key);a.entries++;a.out+=x.out;a.in+=x.in;a.adjustment+=x.adjustment});
+    const accounts=[...accountMap.values()].sort((a,b)=>a.category.localeCompare(b.category)||a.account.localeCompare(b.account));
+    const outstandingPay=[],outstandingReceive=[];vendorRows.forEach(v=>{if(v.toPay>.005)outstandingPay.push(v);if(v.toReceive>.005)outstandingReceive.push(v)});
+    const unassignedQuick=ex.filter(e=>e.entryType==="Quick");
+    const totalOut=movements.reduce((s,p)=>s+p.out,0),totalIn=movements.reduce((s,p)=>s+p.in,0);
+    return{f,st,ex,payments,heads,vendors:vendorRows,accounts,movements,outstandingPay,outstandingReceive,totalOut,totalIn,netOut:totalOut-totalIn,quickCount:unassignedQuick.length,generatedAt:new Date(),owner:state.settings.ownerName||""};
+  }
+  function finalReportOptions(){return{fid:$("#finalReportFunction")?.value||state.activeFunctionId,complete:$("#finalReportFormat")?.value!=="summary",annexures:!!$("#finalReportAnnex")?.checked}}
+  function finalMoney(v){return money(v)}
+  function finalHtmlTable(cols,rows,footer=null){
+    return`<div class="table-wrap"><table><thead><tr>${cols.map(c=>`<th class="${c.right?'right':''}">${esc(c.label)}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((x,i)=>`<td class="${cols[i].right?'right':''}">${esc(x)}</td>`).join("")}</tr>`).join("")}${footer?`<tr class="total">${footer.map((x,i)=>`<td class="${cols[i].right?'right':''}">${esc(x)}</td>`).join("")}</tr>`:""}</tbody></table></div>`;
+  }
+  function finalCards(items){return`<div class="final-cards">${items.map(([lab,val])=>`<div><span>${esc(lab)}</span><b>${esc(val)}</b></div>`).join("")}</div>`}
+  function finalSection(n,title,body){return`<section class="final-section"><h3>${String(n).padStart(2,'0')} · ${esc(title)}</h3>${body}</section>`}
+  function finalTableCols(labels,rights=[]){return labels.map((label,i)=>({label,right:rights.includes(i)}))}
+  function renderFinalReport(force=false){
+    if(force)finalReportGenerated=true;
+    const box=$("#finalReportBody");if(!box)return;
+    if(!finalReportGenerated){box.innerHTML='<div class="report-placeholder"><b>Final Function Report</b>Select the function and press Generate Final Report. No records will be edited.</div>';return}
+    const o=finalReportOptions(),d=finalReportData(o.fid);if(!d){box.innerHTML='<div class="empty">Create or select a function first.</div>';return}
+    const {f,st}=d,dated=d.generatedAt.toLocaleDateString('en-IN');
+    const stage=st.awaitingCount?`DRAFT - ${st.awaitingCount} quote${st.awaitingCount===1?'':'s'} awaiting finalisation`:'READY FOR FINAL REVIEW - All planned quotes finalised';
+    let html=`<article class="final-report-sheet"><header class="final-report-title"><small>HONEYB FESTBOOK · FUNCTION ACCOUNTS</small><h2>Final Function Statement</h2><p><b>${esc(f.name)}</b> · ${fmtDate(f.eventDate)} · ${esc(f.venue||'Venue not specified')}</p><p>Generated ${esc(dated)} · ${esc(stage)}</p></header>`;
+    const fmt=finalMoney;
+    const master=`<div class="final-meta"><p><b>Function:</b> ${esc(f.name)}</p><p><b>Function type:</b> ${esc(f.type||'—')}</p><p><b>Function date:</b> ${fmtDate(f.eventDate)}</p><p><b>Venue:</b> ${esc(f.venue||'—')}</p><p><b>Planning began:</b> ${fmtDate(f.startDate)}</p><p><b>Master status:</b> ${esc(f.status||'—')}</p><p><b>Organiser / Owner:</b> ${esc(d.owner||'—')}</p></div>${f.notes?`<p class="final-quiet"><b>Master notes:</b> ${esc(f.notes)}</p>`:''}`;
+    html+=finalSection(1,'Function Master & Financial Overview',master+finalCards([['Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Forecast',fmt(st.currentForecast)],['Normal Payments + Applied Deposit',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)]])+`<div class="final-pill ${st.awaitingCount?'warning':''}">${esc(stage)}</div>${st.awaitingCount?`<p class="final-note">${st.awaitingCount} planned expense(s), ${fmt(st.awaitingValue)}, still use estimates. They must not be described as agreed final costs until their quotes are finalised.</p>`:''}`);
+    if(o.complete){
+      const headRows=d.heads.map(h=>[h.name,String(h.entries),fmt(h.estimate),fmt(h.current),h.awaiting?String(h.awaiting):'—']);
+      html+=finalSection(2,'Expense Head-wise Statement',finalHtmlTable(finalTableCols(['Expense Head','Entries','Original Estimate','Current Cost','Awaiting Quotes'],[1,2,3,4]),headRows,['GRAND TOTAL',String(d.ex.length),fmt(st.estimated),fmt(st.currentForecast),String(st.awaitingCount)])+'<p class="final-subtitle">Current Cost = Final quote where entered; otherwise original estimate. Quick Direct expenses are included at actual cost.</p>');
+      const vendRows=d.vendors.map(v=>[v.name,fmt(v.estimate),v.confirmed?fmt(v.confirmed):"—",fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toPay),fmt(v.toReceive)]);
+      const vTotal=key=>d.vendors.reduce((s,v)=>s+num(v[key]),0);
+      html+=finalSection(3,'Vendor / Person-wise Expense & Settlement',finalHtmlTable(finalTableCols(['Vendor / Person','Estimate','Final Agreed','Current Cost','Normal Paid','Deposit Held','To Pay','To Receive'],[1,2,3,4,5,6,7]),vendRows,['TOTAL',fmt(vTotal('estimate')),fmt(vTotal('confirmed')),fmt(vTotal('current')),fmt(vTotal('regular')),fmt(vTotal('depositNet')),fmt(vTotal('toPay')),fmt(vTotal('toReceive'))])+`<p class="final-subtitle">Final Agreed includes only confirmed quotes; Current Cost also includes estimates still awaiting finalisation. Refundable deposits are credits already paid, not new expenses. Quick Direct expenses without vendors appear under Expense Heads and Payment History.</p>`);
+      const aRows=d.accounts.map(a=>[a.category,a.account,String(a.entries),fmt(a.out),fmt(a.in),fmt(a.out-a.in)]),totalAdj=d.accounts.reduce((s,x)=>s+x.adjustment,0);
+      let paymentHtml='<h4>Cash / Bank / Account Totals</h4>'+finalHtmlTable(finalTableCols(['Mode','Account / Bank','Entries','Paid Out','Received Back','Net Out'],[2,3,4,5]),aRows,['TOTAL','',String(d.movements.length),fmt(d.totalOut),fmt(d.totalIn),fmt(d.netOut)]);
+      if(totalAdj>.005)paymentHtml+=`<p class="final-note">Non-cash adjustments: ${fmt(totalAdj)} (not included in cash/bank outflow).</p>`;
+      for(const [group,label] of [['Cash','Cash Payments'],['Bank / Digital','Bank / UPI / Cheque / Card Payments'],['Other / Unspecified','Other Payments'],['Non-cash Adjustment','Non-cash Adjustments']]){
+        const xs=d.movements.filter(p=>p.category===group);if(!xs.length)continue;
+        paymentHtml+=`<h4>${label}</h4>`+finalHtmlTable(finalTableCols(['Date','Paid To / Received From','Expense Head','Account','Entry Type','Out','In'],[5,6]),xs.map(p=>[fmtDate(p.date),p.party,p.head,p.account||p.mode||'—',p.kind,fmt(p.out),fmt(p.in)]),['SUBTOTAL','','','','',fmt(xs.reduce((s,x)=>s+x.out,0)),fmt(xs.reduce((s,x)=>s+x.in,0))]);
+      }
+      html+=finalSection(4,'Payment History & Account-wise Summary',paymentHtml+'<p class="final-subtitle">Deposits paid and returned are included as cash movements but excluded from function expenses. Legacy deposit-allocation markers are not treated as new cash movements.</p>');
+      const balanceColumns=finalTableCols(['Vendor / Person','Current Cost','Normal Paid','Net Deposit Paid','Outstanding'],[1,2,3,4]);
+      let pendingHtml='<h4>Balance to Pay</h4>'+ (d.outstandingPay.length?finalHtmlTable(balanceColumns,d.outstandingPay.map(v=>[v.name,fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toPay)]),['TOTAL','','','',fmt(st.balance)]):'<p class="final-quiet">No vendor balances to pay.</p>');
+      pendingHtml+='<h4>Balance to Receive</h4>'+(d.outstandingReceive.length?finalHtmlTable(balanceColumns.map((x,i)=>i===4?{label:'To Receive',right:true}:x),d.outstandingReceive.map(v=>[v.name,fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toReceive)]),['TOTAL','','','',fmt(st.balanceToReceive)]):'<p class="final-quiet">No vendor amounts to receive.</p>');
+      pendingHtml+='<p class="final-subtitle">Only nonzero outstanding vendor balances are listed. Unassigned balances (if any) are included in the function totals.</p>';
+      html+=finalSection(5,'Balances Payable & Receivable',pendingHtml);
+      const closing=finalCards([['Total Budget',fmt(st.budget)],['Expense Forecast',fmt(st.currentForecast)],['Expenditure Variance',fmt(st.currentForecast-st.budget)],['Cash / Bank Paid Out',fmt(d.totalOut)],['Cash / Bank Received Back',fmt(d.totalIn)],['Net Cash Outflow',fmt(d.netOut)],['Still To Pay',fmt(st.balance)],['Still To Receive',fmt(st.balanceToReceive)]]);
+      html+=finalSection(6,'Closing Reconciliation',closing+`<p class="final-note">Closing checks: forecast is not the same as money paid; refundable security deposits belong to the cash movement and settlement reconciliation, not the expense total. Net cash outflow includes security deposits paid and receipts back. The to-pay and to-receive balances are reported separately by party.</p><div class="final-signatures"><span>Prepared by / Date</span><span>Verified by / Date</span></div>`);
+      if(o.annexures){
+        html+='<section class="final-section"><h3>Annexure · Vendor Transaction Ledgers</h3><p class="final-subtitle">Transaction-by-transaction movement with running payable (Dr) or receivable (Cr) balance. Deposits and refunds use the same settlement rules as the main ledger.</p></section>';
+        d.vendors.forEach(v=>{let running=0;const rows=v.ledger.map(tx=>{running+=tx.debit-tx.credit;return[fmtDate(tx.date),tx.particular+(tx.sub?' - '+tx.sub:''),tx.ref||'—',tx.debit?fmt(tx.debit):'—',tx.credit?fmt(tx.credit):'—',ledgerBalanceText(running)]});
+          html+=`<section class="final-annexure"><h4>${esc(v.name)}</h4><p class="final-subtitle">Original Estimate ${fmt(v.estimate)} · Current Cost ${fmt(v.current)} · Normal Paid ${fmt(v.regular)} · Deposit Held ${fmt(v.depositNet)} · Closing ${esc(ledgerBalanceText(v.net))}</p>`+finalHtmlTable(finalTableCols(['Date','Particulars','Reference','Debit','Credit','Running Balance'],[3,4,5]),rows,['CLOSING','','',fmt(v.ledger.reduce((s,x)=>s+x.debit,0)),fmt(v.ledger.reduce((s,x)=>s+x.credit,0)),ledgerBalanceText(running)])+'</section>';
+        });
+      }
+    }
+    html+=`<p class="final-quiet" style="text-align:center;margin-top:25px">Generated from local FestBook records · HoneyB Solutions · ${esc(dated)}</p></article>`;
+    box.innerHTML=html;
+  }
+  function printFinalReport(){if(!finalReportGenerated)renderFinalReport(true);document.body.classList.add('print-final');window.print()}
+
+  // Browser-native, multi-page A4 PDF writer. Uses only the existing PDF drawing
+  // helpers; no network, plug-in, or paid PDF service is required after install.
+  function createFinalReportPdf(){
+    const o=finalReportOptions(),d=finalReportData(o.fid);if(!d){toast('Select a function first',true);return null}
+    const W=595,H=842,M=34,T=W-2*M,BOTTOM=59;let pages=[],page=null,currentSection='';
+    const fmt=v=>pdfAscii(money(v)),date=v=>v?fmtDate(v):'-';
+    function fresh(title){currentSection=title;page={section:title,content:'',y:H-101};pages.push(page);const p=page;
+      p.content+=pdfFillRect(0,H-42,W,42,.98,.955,.87);
+      p.content+=pdfText(M,H-25,pdfFit('FESTBOOK  |  FINAL FUNCTION STATEMENT',T*.73,12),12,true);
+      p.content+=pdfText(M,H-60,pdfFit(d.f.name,T*.73,11),11,true);
+      p.content+=pdfText(M,H-76,pdfFit(`${date(d.f.eventDate)}  |  ${d.f.venue||'Venue not specified'}`,T,8),8);
+      p.content+=pdfLine(M,H-85,W-M,H-85,.64);
+      p.content+=pdfFillRect(M,p.y-27,T,27,.95,.94,.90);p.content+=pdfText(M+10,p.y-18,pdfFit(title,T-20,12),12,true);p.y-=42;
+    }
+    function ensure(h=23){if(!page)fresh('Function Details');if(page.y-h<BOTTOM)fresh(currentSection+' (continued)')}
+    function line(label,value='',em=false){ensure(21);const y=page.y-5;page.content+=pdfText(M+2,y,pdfFit(label,210,8.2),8.2,em);if(value)page.content+=pdfText(M+218,y,pdfFit(value,T-224,8.4),8.4,em);page.y-=21}
+    function paragraph(text){const words=pdfAscii(text).split(/\s+/);let chunk='';const chunks=[];for(const w of words){if((chunk+' '+w).length>110){chunks.push(chunk);chunk=w}else chunk=chunk?chunk+' '+w:w}if(chunk)chunks.push(chunk);for(const t of chunks){ensure(15);page.content+=pdfText(M+4,page.y-3,pdfFit(t,T-10,7.6),7.6);page.y-=15}page.y-=5}
+    function miniTotals(list){const colW=(T-16)/2;for(let i=0;i<list.length;i+=2){ensure(46);for(let j=0;j<2;j++){const x=M+j*(colW+16),item=list[i+j];if(!item)continue;page.content+=pdfFillRect(x,page.y-40,colW,40,.973,.962,.936);page.content+=pdfStrokeRect(x,page.y-40,colW,40,.88);page.content+=pdfText(x+7,page.y-15,pdfFit(item[0].toUpperCase(),colW-14,7),7,true);page.content+=pdfText(x+7,page.y-31,pdfFit(item[1],colW-14,11),11,true)}page.y-=49}}
+    function subhead(t){ensure(30);page.content+=pdfFillRect(M,page.y-23,T,23,.965,.95,.89);page.content+=pdfText(M+6,page.y-16,pdfFit(t,T-12,9),9,true);page.y-=29}
+    function table(headers,widths,rows,{right=[],foot=null,wrapCols=[]}={}){
+      if(Math.abs(widths.reduce((s,w)=>s+w,0)-T)>.1)throw Error('Final Report PDF column widths do not fit the page');
+      function header(){ensure(43);let x=M;page.content+=pdfFillRect(M,page.y-22,T,22,.90,.90,.90);page.content+=pdfStrokeRect(M,page.y-22,T,22,.72);headers.forEach((t,i)=>{page.content+=pdfText(x+4,page.y-15,pdfFit(t,widths[i]-8,6.8),6.8,true);x+=widths[i]});page.y-=22}
+      function wraps(v,width,maxLines=3){const text=pdfAscii(v);const chars=Math.max(3,Math.floor((width-8)/(6.5*.52)));if(text.length<=chars)return[text];const words=text.split(/\s+/),lines=[];let current='';for(let w of words){while(w.length>chars){if(current){lines.push(current);current=''}lines.push(w.slice(0,chars));w=w.slice(chars)}if(!w)continue;if((current+' '+w).trim().length>chars){if(current)lines.push(current);current=w}else current=(current+' '+w).trim()}if(current)lines.push(current);if(lines.length>maxLines)return[...lines.slice(0,maxLines-1),pdfFit(lines.slice(maxLines-1).join(' '),width-8,6.5)];return lines}
+      header();if(!rows.length){paragraph('No records.');return}
+      function addRow(cells,isFoot=false){
+        const parts=cells.map((v,i)=>wrapCols.includes(i)?wraps(v,widths[i],3):[pdfFit(v,widths[i]-8,isFoot?6.5:6.6)]);
+        const h=Math.max(19,9+Math.max(...parts.map(p=>p.length))*8);
+        if(page.y-h<BOTTOM){fresh(currentSection.replace(/ \(continued\)$/,'')+' (continued)');header()}
+        const y=page.y;let x=M;if(isFoot)page.content+=pdfFillRect(M,y-h,T,h,.98,.946,.83);page.content+=pdfStrokeRect(M,y-h,T,h,.87);
+        parts.forEach((lines,i)=>{const size=isFoot?6.5:6.6;lines.forEach((txt,j)=>{const estimatedWidth=txt.length*size*.48;const drawX=right.includes(i)?x+Math.max(4,widths[i]-estimatedWidth-5):x+4;page.content+=pdfText(drawX,y-13-8*j,txt,size,isFoot)});x+=widths[i]});page.y-=h;
+      }
+      rows.forEach(r=>addRow(r));if(foot)addRow(foot,true);page.y-=10;
+    }
+    function section(num,label){fresh(`${String(num).padStart(2,'0')}  ${label}`)}
+    const st=d.st;
+    section(1,'Function Master and Financial Overview');
+    line('Function Name',d.f.name,true);line('Type / Status',`${d.f.type||'Function'} / ${d.f.status||'Unspecified'}`);line('Event Date / Venue',`${date(d.f.eventDate)} / ${d.f.venue||'-'}`);line('Planning Date',date(d.f.startDate));line('Organiser / Owner',d.owner||'-');
+    if(d.f.notes)paragraph('Master notes: '+d.f.notes);
+    miniTotals([['Total Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Cost / Forecast',fmt(st.currentForecast)],['Settled Against Expenses',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)]]);
+    subhead(st.awaitingCount?`DRAFT - ${st.awaitingCount} expense quote(s) awaiting finalisation`:'READY FOR FINAL REVIEW - All planned quotes finalised');
+    if(st.awaitingCount)paragraph(`${fmt(st.awaitingValue)} is still estimated; it must not be considered confirmed final cost.`);
+    if(o.complete){
+      section(2,'Expense Head-wise Statement');
+      table(['Expense Head','Count','Original Estimate','Current Cost','Awaiting'],[179,42,112,122,72],d.heads.map(h=>[h.name,String(h.entries),fmt(h.estimate),fmt(h.current),h.awaiting?String(h.awaiting):'-']),{right:[1,2,3,4],wrapCols:[0],foot:['TOTAL',String(d.ex.length),fmt(st.estimated),fmt(st.currentForecast),String(st.awaitingCount)]});
+      paragraph('Final quote replaces original estimate where available. Quick Direct expenses are included only at actual cost.');
+      section(3,'Vendor / Person-wise Expense and Settlement');
+      const widthsV=[133,56,56,60,60,56,52,54];
+      table(['Vendor','Estimate','Final','Current','Paid','Deposit','To Pay','To Recv'],widthsV,d.vendors.map(v=>[v.name,fmt(v.estimate),v.confirmed?fmt(v.confirmed):'-',fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toPay),fmt(v.toReceive)]),{right:[1,2,3,4,5,6,7],wrapCols:[0],foot:['TOTAL',fmt(d.vendors.reduce((s,v)=>s+v.estimate,0)),fmt(d.vendors.reduce((s,v)=>s+v.confirmed,0)),fmt(d.vendors.reduce((s,v)=>s+v.current,0)),fmt(d.vendors.reduce((s,v)=>s+v.regular,0)),fmt(d.vendors.reduce((s,v)=>s+v.depositNet,0)),fmt(d.vendors.reduce((s,v)=>s+v.toPay,0)),fmt(d.vendors.reduce((s,v)=>s+v.toReceive,0))]});
+      paragraph('Final includes only agreed amounts; Current Cost also includes estimates pending finalisation. Security deposits are credits already held by vendors, not additional event costs. Quick Direct expenses without vendors appear under Expense Heads and Payment History.');
+      section(4,'Payment History and Account-wise Summary');
+      subhead('Cash / Bank / Account Totals');
+      table(['Channel','Account','Entries','Paid Out','Received','Net Out'],[97,145,52,79,78,76],d.accounts.map(a=>[a.category,a.account,String(a.entries),fmt(a.out),fmt(a.in),fmt(a.out-a.in)]),{right:[2,3,4,5],wrapCols:[0,1],foot:['TOTAL','',String(d.movements.length),fmt(d.totalOut),fmt(d.totalIn),fmt(d.netOut)]});
+      for(const [group,label] of [['Cash','Cash Transactions'],['Bank / Digital','Bank / Digital Transactions'],['Other / Unspecified','Other Transactions'],['Non-cash Adjustment','Non-cash Adjustments']]){
+        const ps=d.movements.filter(x=>x.category===group);if(!ps.length)continue;
+        subhead(label);
+        table(['Date','Party / Description','Head','Account / Type','Paid Out','Received'],[63,133,87,112,66,66],ps.map(p=>[date(p.date),p.party,p.head,(p.account||p.mode||'-')+' / '+p.kind,fmt(p.out),fmt(p.in)]),{right:[4,5],wrapCols:[1,3],foot:['SUBTOTAL','','','',fmt(ps.reduce((s,x)=>s+x.out,0)),fmt(ps.reduce((s,x)=>s+x.in,0))]});
+      }
+      paragraph('Deposit paid and returned affects cash movements and the net settlement, but is not added to the expense cost. Legacy deposit allocations are not new cash transactions.');
+      section(5,'Balances Payable and Receivable');
+      subhead('Balance to Pay - Nonzero Vendors Only');
+      table(['Vendor / Person','Current Cost','Normal Paid','Deposit Net','To Pay'],[167,91,91,90,88],d.outstandingPay.map(v=>[v.name,fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toPay)]),{right:[1,2,3,4],wrapCols:[0],foot:['TOTAL','','','',fmt(d.outstandingPay.reduce((s,v)=>s+v.toPay,0))]});
+      subhead('Balance to Receive - Nonzero Vendors Only');
+      table(['Vendor / Person','Current Cost','Normal Paid','Deposit Net','To Receive'],[167,91,91,90,88],d.outstandingReceive.map(v=>[v.name,fmt(v.current),fmt(v.regular),fmt(v.depositNet),fmt(v.toReceive)]),{right:[1,2,3,4],wrapCols:[0],foot:['TOTAL','','','',fmt(d.outstandingReceive.reduce((s,v)=>s+v.toReceive,0))]});
+      if(st.balance>d.outstandingPay.reduce((s,v)=>s+v.toPay,0)+.005||st.balanceToReceive>d.outstandingReceive.reduce((s,v)=>s+v.toReceive,0)+.005)paragraph('Notice: the function totals also include any unassigned, non-vendor expense balances.');
+      section(6,'Final Closing Reconciliation');
+      miniTotals([['Total Budget',fmt(st.budget)],['Expense Forecast',fmt(st.currentForecast)],['Budget Variance',fmt(st.currentForecast-st.budget)],['Gross Cash / Bank Out',fmt(d.totalOut)],['Money Received Back',fmt(d.totalIn)],['Net Cash Outflow',fmt(d.netOut)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)]]);
+      subhead('Closing Notes');paragraph('Current expense forecast and actual cash outflow are different financial measures. Security deposits must not be added to expenses. Payable and receivable balances are netted at each party, and are displayed separately across different parties.');
+      ensure(110);page.y-=46;line('Prepared By / Date','________________________');page.y-=10;line('Verified By / Date','________________________');
+      if(o.annexures){
+        for(const v of d.vendors){
+          fresh('Annexure - '+v.name);
+          line('Vendor / Person',v.name,true);line('Original Estimate',fmt(v.estimate));line('Current Cost',fmt(v.current));line('Normal Paid / Deposit Held',fmt(v.regular)+' / '+fmt(v.depositNet));line('Net Closing',ledgerBalanceText(v.net),true);
+          let running=0;const lrows=v.ledger.map(t=>{running+=t.debit-t.credit;return[date(t.date),t.particular+(t.sub?' - '+t.sub:''),t.ref||'-',t.debit?fmt(t.debit):'-',t.credit?fmt(t.credit):'-',ledgerBalanceText(running)]});
+          table(['Date','Particulars','Ref','Debit','Credit','Balance'],[59,181,75,70,70,72],lrows,{right:[3,4,5],wrapCols:[1],foot:['CLOSING','', '',fmt(v.ledger.reduce((s,t)=>s+t.debit,0)),fmt(v.ledger.reduce((s,t)=>s+t.credit,0)),ledgerBalanceText(running)]});
+        }
+      }
+    }
+    for(let i=0;i<pages.length;i++){const p=pages[i];p.content+=pdfLine(M,44,W-M,44,.75);p.content+=pdfText(M,29,pdfFit('FestBook / HoneyB Solutions  |  '+d.generatedAt.toLocaleDateString('en-IN'),T-110,7),7);p.content+=pdfText(W-M-85,29,`Page ${i+1} / ${pages.length}`,7,true)}
+    const obj=[];obj[1]='<< /Type /Catalog /Pages 2 0 R >>';obj[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';obj[4]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';const kids=[];
+    for(let i=0;i<pages.length;i++){const pg=5+i*2,ct=pg+1;kids.push(`${pg} 0 R`);const c=pages[i].content;obj[pg]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${ct} 0 R >>`;obj[ct]=`<< /Length ${c.length} >>\nstream\n${c}endstream`}
+    obj[2]=`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${pages.length} >>`;
+    let pdf='%PDF-1.4\n';const offsets=[0];for(let i=1;i<obj.length;i++){offsets[i]=pdf.length;pdf+=`${i} 0 obj\n${obj[i]}\nendobj\n`}const xref=pdf.length;pdf+=`xref\n0 ${obj.length}\n0000000000 65535 f \n`;for(let i=1;i<obj.length;i++)pdf+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';pdf+=`trailer\n<< /Size ${obj.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+    return{blob:new Blob([pdf],{type:'application/pdf'}),name:`FestBook_Final_Statement_${safeFilePart(d.f.name)}_${today()}.pdf`,pages:pages.length,data:d,options:o};
+  }
+  function openFinalReportPdfExport(){
+    if(!finalReportGenerated)renderFinalReport(true);
+    const out=createFinalReportPdf();if(!out)return;window.__festbookFinalPdf=out;
+    openModal('Final Function Report PDF',`<div class="invite-person-box"><strong>${esc(out.data.f.name)}</strong><span>${out.pages} A4 page${out.pages===1?'':'s'} · Six-section ${out.options.complete?'complete':'summary'} statement${out.options.complete&&out.options.annexures?' · Vendor ledgers included':''}</span></div><div class="notice">All values are calculated from the current FestBook records. Security deposits are kept separate from expense costs. ${out.data.st.awaitingCount?`<b>Draft:</b> ${out.data.st.awaitingCount} expense quotes are still estimated.`:'All planned expense quotes have been finalised.'} Use Share / Save to send the PDF.</div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Close</button><button type="button" class="btn" onclick="previewFinalReportPDF()">View PDF</button><button type="button" class="btn primary" onclick="shareFinalReportPDF()">Share / Save PDF</button></div>`);
+  }
+  function previewFinalReportPDF(){const out=window.__festbookFinalPdf;if(!out)return;const url=URL.createObjectURL(out.blob);window.open(url,'_blank');setTimeout(()=>URL.revokeObjectURL(url),60000)}
+  async function shareFinalReportPDF(){const out=window.__festbookFinalPdf;if(!out)return;const file=new File([out.blob],out.name,{type:'application/pdf'});try{if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'FestBook Final Function Statement',text:out.data.f.name,files:[file]});return}}catch(err){if(err?.name==='AbortError')return}const url=URL.createObjectURL(out.blob),a=document.createElement('a');a.href=url;a.download=out.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('Final statement PDF downloaded')}
+
   function renderSettings(){
     $("#settingOwner").value=state.settings.ownerName||"";$("#settingCurrency").value=state.settings.currency||"INR";$("#settingAccount").value=state.settings.defaultAccount||"";
     const f=activeFunction(),list=f?state.invitations.filter(x=>x.functionId===f.id):[],nameEl=$("#invitationClearFunction"),countEl=$("#invitationClearCount"),btn=$("#clearInvitationBtn"),digiBox=$("#digitalInviteSettings"),cfg=f?digitalInviteConfig(f.id):null;
@@ -1078,7 +1348,7 @@
 
   async function saveSettings(e){e.preventDefault();await dbPut("settings",{...state.settings,id:"app",ownerName:$("#settingOwner").value.trim(),currency:$("#settingCurrency").value,defaultAccount:$("#settingAccount").value.trim(),updatedAt:new Date().toISOString()});await reloadState();renderAll();toast("Settings saved")}
   function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
-  function downloadBackup(){const data={app:"FestBook",version:"1.3.3",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
+  function downloadBackup(){const data={app:"FestBook",version:"1.3.5",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
   async function restoreBackup(e){const file=e.target.files[0];e.target.value="";if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.app!=="FestBook"||!obj.data)throw new Error("Not a FestBook backup");if(!confirm("Restore this backup? Existing FestBook data on this device will be replaced."))return;for(const s of STORES)await dbClear(s);for(const s of STORES)for(const item of(obj.data[s]||[]))await dbPut(s,item);state.activeFunctionId=null;await reloadState();renderAll();toast("Backup restored successfully")}catch(err){toast("Restore failed: "+err.message,true)}}
   async function clearInvitationData(){
     const f=activeFunction();if(!f){toast("Select a function first",true);return}
