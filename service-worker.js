@@ -1,4 +1,4 @@
-const CACHE_NAME = "festbook-v1.3.5-pending-final-quotes";
+const CACHE_NAME = "festbook-v1.3.7-final-report-gifts";
 const APP_SHELL = [
   "./",
   "./index.html",

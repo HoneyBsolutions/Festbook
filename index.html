@@ -167,6 +167,27 @@
     @media print{
       body{background:#fff}.sidebar,.topbar,.page-head,.filterbar,.no-print,.overlay,.toast{display:none!important}.app,.main{display:block!important}.content{padding:0;max-width:none}.view{display:none!important}#view-reports{display:block!important}body.print-final #view-reports{display:none!important}body.print-final #view-finalreport{display:block!important}.final-report-sheet{border:none;padding:0}.final-section{break-inside:auto}.final-section h3,.final-annexure h4{break-after:avoid}.final-annexure{break-before:page}.final-report-sheet table{min-width:0!important;width:100%;font-size:9px}.final-report-sheet td,.final-report-sheet th{overflow-wrap:anywhere}.report-sheet{border:0;box-shadow:none;padding:0}.table-wrap{overflow:visible;border-color:#bbb}table{min-width:0}th,td{padding:7px 6px;font-size:10px}.report-summary{grid-template-columns:repeat(5,1fr)}.ledger-card-list{display:none!important}.ledger-table{display:block!important}@page{size:A4;margin:12mm}
     }
+
+    /* Gift & Cash Receipts — separate from Invitation Distribution */
+    .gift-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .gift-summary>div{padding:15px;border-radius:16px;background:#fff;border:1px solid var(--line);min-width:0}
+    .gift-summary small{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+    .gift-summary strong{display:block;font-size:19px;overflow-wrap:anywhere}
+    .gift-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:start}
+    .gift-panel{border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;min-width:0}
+    .gift-panel h3{margin:0 0 10px;font-size:18px}
+    .gift-guest-scroll{max-height:600px;overflow-y:auto;overscroll-behavior:contain}
+    .gift-person{width:100%;padding:12px;border:1px solid var(--line);background:#fff;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;margin:7px 0}
+    .gift-person:hover{border-color:#e4aa18;background:#fffaf1}.gift-person b,.gift-person small{display:block}.gift-person b{font-size:14px;line-height:1.3}.gift-person small{font-size:12px;color:var(--muted);margin-top:4px}
+    .gift-guest-stats{text-align:right;white-space:nowrap;font-size:12px;font-weight:700;color:#087049}.gift-guest-stats span{display:block;color:var(--muted);font-weight:500}
+    .gift-receipt{border:1px solid var(--line);border-radius:13px;padding:13px;margin:9px 0;background:#fff;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .gift-receipt b{font-size:14px}.gift-receipt small{display:block;color:var(--muted);margin-top:5px;line-height:1.4}
+    .gift-receipt img{width:58px;height:58px;object-fit:cover;border:1px solid var(--line);border-radius:9px;margin-top:6px}
+    .gift-receipt .actions{justify-content:flex-end;margin-top:9px}
+    .gift-receipt-value{text-align:right;min-width:100px}.gift-receipt-value strong{display:block;color:#0d7750;white-space:nowrap}
+    .gift-upload-preview{max-width:150px;max-height:180px;object-fit:contain;border:1px solid var(--line);border-radius:10px;margin-top:8px}
+    @media(max-width:850px){.gift-columns{grid-template-columns:1fr}.gift-guest-scroll{max-height:390px}}
+    @media(max-width:560px){.gift-summary{grid-template-columns:1fr 1fr;gap:9px}.gift-summary strong{font-size:16px}.gift-panel{padding:12px}.gift-receipt{flex-direction:column}.gift-receipt-value{text-align:left}.gift-person{padding:11px}}
   </style>
 </head>
 <body>
@@ -177,6 +198,7 @@
         <button class="active" data-view="dashboard"><span class="ico">⌂</span>Dashboard</button>
         <button data-view="functions"><span class="ico">◆</span>Function Master</button>
         <button data-view="invitations"><span class="ico">✉</span>Invitation Distribution</button>
+        <button data-view="gifts"><span class="ico">🎁</span>Gift & Cash Receipts</button>
         <button data-view="expenses"><span class="ico">₹</span>Expense Entry</button>
         <button data-view="pendingquotes"><span class="ico">⏳</span>Final Quotes Pending <span class="nav-count" id="pendingQuoteNavCount" aria-label="Pending quote count">0</span></button>
         <button data-view="payments"><span class="ico">✓</span>Payments</button>
@@ -187,7 +209,7 @@
         <button data-view="finalreport"><span class="ico">▣</span>Final Function Report</button>
         <button data-view="settings"><span class="ico">⚙</span>Settings / Backup</button>
       </nav>
-      <div class="side-footer">Powered by <b>HoneyB Solutions</b><br>Innovation with Simplicity · v1.3.5</div>
+      <div class="side-footer">Powered by <b>HoneyB Solutions</b><br>Innovation with Simplicity · v1.3.7</div>
     </aside>
     <div class="overlay" id="overlay"></div>
     <main class="main">
@@ -222,6 +244,15 @@
             <div class="field"><label>Related to</label><select id="invitationRelatedFilter"><option value="">All relations</option></select></div>
           </div>
           <div id="invitationTable"></div>
+        </section>
+
+        <section class="view" id="view-gifts">
+          <div class="page-head"><div><h2>Gift & Cash Receipts</h2><p>A separate gift register linked to names from the invitation list. Records here never change invitation or Digi Invite status.</p></div><div class="actions"><button class="btn" onclick="exportGiftCSV()">⇩ Export CSV</button><button class="btn" onclick="printGiftRegister()">▤ Print / PDF</button><button class="btn primary" onclick="openGiftReceiptForm()">＋ Record Gift / Cash</button></div></div>
+          <div id="giftSummary" class="gift-summary"></div>
+          <div class="gift-columns">
+            <div class="gift-panel"><h3>Select Guest</h3><div class="filterbar" style="grid-template-columns:1fr 1fr;margin-bottom:10px"><div class="field span-2"><label>Search guest / phone</label><input id="giftGuestSearch" placeholder="Search name, phone or area" oninput="renderGiftReceipts()"></div><div class="field"><label>Area</label><select id="giftAreaFilter" onchange="renderGiftReceipts()"><option value="">All areas</option></select></div><div class="field"><label>Related To</label><select id="giftRelationFilter" onchange="renderGiftReceipts()"><option value="">All relations</option></select></div><div class="field span-2"><label>Receipt status</label><select id="giftGuestStatus" onchange="renderGiftReceipts()"><option value="">All guests</option><option value="received">With gifts recorded</option><option value="pending">Not recorded yet</option></select></div></div><div id="giftGuestCount" class="muted" style="margin-bottom:8px"></div><div id="giftGuestList" class="gift-guest-scroll"></div></div>
+            <div class="gift-panel"><div class="card-head" style="margin-bottom:12px"><h3>Received Gifts & Money</h3><button class="btn small" onclick="openGiftReceiptForm()">＋ Add</button></div><div class="field"><label>Search register</label><input id="giftReceiptSearch" placeholder="Guest, gift item, remarks" oninput="renderGiftReceipts()"></div><div id="giftReceiptList" style="margin-top:12px"></div></div>
+          </div>
         </section>
 
         <section class="view" id="view-expenses">
@@ -300,11 +331,11 @@
         </section>
 
         <section class="view" id="view-finalreport">
-          <div class="page-head"><div><h2>Final Function Statement</h2><p>Six-section financial closing report with vendor ledger annexures, made for PDF sharing or printing.</p></div><div class="actions no-print"><button class="btn dark" onclick="openFinalReportPdfExport()">▤ PDF / Share</button><button class="btn" onclick="printFinalReport()">⎙ Print</button></div></div>
+          <div class="page-head"><div><h2>Final Function Statement</h2><p>Seven-section statement, including Gift & Cash Receipts and vendor ledger annexures, made for PDF sharing or printing.</p></div><div class="actions no-print"><button class="btn dark" onclick="openFinalReportPdfExport()">▤ PDF / Share</button><button class="btn" onclick="printFinalReport()">⎙ Print</button></div></div>
           <div class="report-builder no-print">
             <div class="filterbar final-options">
               <div class="field"><label>Function / Event</label><select id="finalReportFunction"></select></div>
-              <div class="field"><label>Report format</label><select id="finalReportFormat"><option value="complete">Complete six-section report</option><option value="summary">Summary only</option></select></div>
+              <div class="field"><label>Report format</label><select id="finalReportFormat"><option value="complete">Complete seven-section report</option><option value="summary">Summary only</option></select></div>
             </div>
             <label class="final-check"><input id="finalReportAnnex" type="checkbox" checked> Include individual vendor ledgers as annexures</label>
             <div class="help">The outstanding section automatically excludes zero-balance vendors. All amounts come from existing FestBook records; no data is changed.</div>
@@ -339,10 +370,10 @@
   <script src="jszip.min.js"></script>
   <script>
   "use strict";
-  const DB_NAME="HoneyBFestBookDB", DB_VERSION=2;
-  const STORES=["functions","heads","vendors","expenses","payments","invitations","settings"];
+  const DB_NAME="HoneyBFestBookDB", DB_VERSION=3;
+  const STORES=["functions","heads","vendors","expenses","payments","invitations","settings","gifts"];
   const DEFAULT_HEADS=["Hall / Venue","Catering","Decoration","Photography","Invitation","Travel","Gifts","Clothing","Priest / Service","Music","Accommodation","Jewellery","Makeup / Beauty","Printing","Miscellaneous"];
-  const state={functions:[],heads:[],vendors:[],expenses:[],payments:[],invitations:[],settings:{},activeFunctionId:null,currentView:"dashboard"};
+  const state={functions:[],heads:[],vendors:[],expenses:[],payments:[],invitations:[],gifts:[],settings:{},activeFunctionId:null,currentView:"dashboard"};
   let invitationMode="manual";
   let balanceMode="pay";
   let db, deferredInstallPrompt=null, reportGenerated=false,finalReportGenerated=false;
@@ -433,11 +464,12 @@
   }
 
   async function reloadState(){
-    const [functions,heads,vendors,expenses,payments,invitations,settings]=await Promise.all(STORES.map(dbAll));
+    const [functions,heads,vendors,expenses,payments,invitations,settings,gifts]=await Promise.all(["functions","heads","vendors","expenses","payments","invitations","settings","gifts"].map(dbAll));
     state.functions=functions.sort((a,b)=>(b.eventDate||"").localeCompare(a.eventDate||""));
     state.heads=heads.sort((a,b)=>a.name.localeCompare(b.name));state.vendors=vendors.sort((a,b)=>a.name.localeCompare(b.name));
     state.expenses=expenses.sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||""));
     state.payments=payments.sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.createdAt||"").localeCompare(a.createdAt||""));
+    state.gifts=gifts.sort((a,b)=>(b.receivedDate||"").localeCompare(a.receivedDate||"")||(b.createdAt||"").localeCompare(a.createdAt||""));
     state.invitations=invitations.sort((a,b)=>(a.status===b.status?String(a.name||"").localeCompare(String(b.name||"")):a.status==="Pending"?-1:1));
     state.settings=settings.find(x=>x.id==="app")||{id:"app",currency:"INR",ownerName:"",defaultAccount:""};
     const saved=localStorage.getItem("festbook.activeFunctionId");
@@ -476,11 +508,12 @@
   function showView(name){
     state.currentView=name;$$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
     $$('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
-    const titles={dashboard:"Dashboard",functions:"Function Master",invitations:"Invitation Distribution",expenses:"Expense Entry",pendingquotes:"Final Quotes Pending",payments:"Payments",balances:"Balances & Settlements",heads:"Expense Heads",vendors:"Vendors / Persons",reports:"Reports",finalreport:"Final Function Report",settings:"Settings / Backup"};
+    const titles={dashboard:"Dashboard",functions:"Function Master",invitations:"Invitation Distribution",gifts:"Gift & Cash Receipts",expenses:"Expense Entry",pendingquotes:"Final Quotes Pending",payments:"Payments",balances:"Balances & Settlements",heads:"Expense Heads",vendors:"Vendors / Persons",reports:"Reports",finalreport:"Final Function Report",settings:"Settings / Backup"};
     $("#viewTitle").textContent=titles[name];toggleMenu(false);
     if(name==="reports")renderReports();
     if(name==="finalreport")renderFinalReport();
     if(name==="invitations")renderInvitations();
+    if(name==="gifts")renderGiftReceipts();
     if(name==="balances")renderBalances();
     if(name==="pendingquotes")renderPendingFinalQuotes();
   }
@@ -491,7 +524,7 @@
   function options(list,value,label="name"){return list.map(x=>`<option value="${esc(x.id)}" ${x.id===value?"selected":""}>${esc(x[label])}</option>`).join("")}
 
   function renderAll(){
-    renderSelectors();renderDashboard();renderFunctions();renderInvitations();renderExpenses();renderPendingFinalQuotes();renderPayments();renderBalances();renderHeads();renderVendors();renderReports();renderFinalReport();renderSettings();
+    renderSelectors();renderDashboard();renderFunctions();renderInvitations();renderGiftReceipts();renderExpenses();renderPendingFinalQuotes();renderPayments();renderBalances();renderHeads();renderVendors();renderReports();renderFinalReport();renderSettings();
   }
   function renderSelectors(){
     const activeSel=$("#activeFunctionSelect"), reportSel=$("#reportFunction");
@@ -700,6 +733,64 @@
     return [...map.values()].sort((a,b)=>(b.pending>0)-(a.pending>0)||b.pending-a.pending||String(a.area||"ZZZ").localeCompare(String(b.area||"ZZZ")));
   }
   function moveInvitationArea(dir){const areas=invitationAreaStats().filter(a=>a.pending>0),current=$("#invitationAreaFilter").value,idx=areas.findIndex(a=>a.value===current);if(!areas.length)return;const next=areas[(idx<0?0:(idx+dir+areas.length)%areas.length)];selectInvitationArea(encArg(next.value))}
+
+  // Gift records are independent from physical/digital invitation status and expense accounting.
+  const giftForActive=()=>state.gifts.filter(g=>g.functionId===state.activeFunctionId);
+  const giftGuestName=g=>g.guestName||byId(state.invitations,g.invitationId)?.name||"Unlisted guest";
+  const giftUnitValue=g=>num(g.amount);
+  let giftGuestFilterCacheKey="";
+  function renderGiftReceipts(){
+    const metrics=$("#giftSummary"),names=$("#giftGuestList"),receipts=$("#giftReceiptList"),counter=$("#giftGuestCount");if(!metrics||!names||!receipts)return;
+    if(!state.activeFunctionId){metrics.innerHTML="";names.innerHTML='<div class="empty">Create or select a function first.</div>';receipts.innerHTML="";return}
+    const guests=state.invitations.filter(x=>x.functionId===state.activeFunctionId), all=giftForActive();
+    const cash=all.filter(g=>g.kind==="Cash").reduce((n,g)=>n+giftUnitValue(g),0),giftValue=all.filter(g=>g.kind!=="Cash").reduce((n,g)=>n+giftUnitValue(g),0);
+    const unique=new Set(all.map(g=>g.invitationId||("other:"+giftGuestName(g).toLowerCase())));
+    metrics.innerHTML=`<div><small>Cash Received</small><strong>${money(cash)}</strong></div><div><small>Gift Estimated Value</small><strong>${money(giftValue)}</strong></div><div><small>Entries Recorded</small><strong>${all.length}</strong></div><div><small>Givers Recorded</small><strong>${unique.size}</strong></div>`;
+    const areaSel=$("#giftAreaFilter"),relSel=$("#giftRelationFilter"),key=state.activeFunctionId+"|"+guests.map(x=>x.id+":"+(x.area||"")+":"+(x.relatedTo||"")).join("|");
+    if(key!==giftGuestFilterCacheKey){
+      const currentArea=areaSel.value,currentRel=relSel.value;
+      const areas=[...new Set(guests.map(x=>(x.area||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+      const rels=[...new Set(guests.map(x=>(x.relatedTo||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+      areaSel.innerHTML='<option value="">All areas</option>'+areas.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+      relSel.innerHTML='<option value="">All relations</option>'+rels.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+      if(areas.includes(currentArea))areaSel.value=currentArea;if(rels.includes(currentRel))relSel.value=currentRel;
+      giftGuestFilterCacheKey=key;
+    }
+    const query=$("#giftGuestSearch").value.trim().toLowerCase(),area=areaSel.value,rel=relSel.value,status=$("#giftGuestStatus").value;
+    const matches=guests.filter(x=>{
+      const recorded=all.some(g=>g.invitationId===x.id);
+      return (!area||x.area===area)&&(!rel||x.relatedTo===rel)&&(!status||(status==="received"?recorded:!recorded))&&(!query||[x.name,x.phone,x.area,x.relatedTo].some(v=>String(v||"").toLowerCase().includes(query)));
+    }).sort((a,b)=>String(a.name||"").localeCompare(String(b.name||"")));
+    counter.textContent=`${matches.length} guest${matches.length===1?"":"s"} shown of ${guests.length} · Tap a name to record a receipt`;
+    names.innerHTML=matches.length?matches.map(g=>{
+      const recorded=all.filter(x=>x.invitationId===g.id),sum=recorded.reduce((v,x)=>v+giftUnitValue(x),0);
+      return `<button type="button" class="gift-person" onclick="openGiftReceiptForm('${encArg(g.id)}')"><span><b>${esc(g.name)}</b><small>${esc(g.area||"No area")} · ${esc(g.relatedTo||"No relation")}${g.phone?` · ${esc(g.phone)}`:""}</small></span><span class="gift-guest-stats">${recorded.length?`${recorded.length} recorded`:'＋ Add'}${recorded.length?`<span>${money(sum)}</span>`:""}</span></button>`;
+    }).join(""):'<div class="empty">No guests match these filters. You can still add an unlisted giver.</div>';
+    const rQuery=$("#giftReceiptSearch").value.trim().toLowerCase(),rows=all.filter(g=>!rQuery||[giftGuestName(g),g.item,g.remarks,g.kind,g.receivedDate].some(v=>String(v||"").toLowerCase().includes(rQuery)));
+    receipts.innerHTML=rows.length?rows.map(g=>`<div class="gift-receipt"><div style="min-width:0;flex:1"><b>${esc(giftGuestName(g))}</b><small>${esc(g.kind)}${g.kind==='Gift'?` · ${esc(g.item||"Gift item")}`:""} · ${fmtDate(g.receivedDate)}${g.quantity&&g.kind==='Gift'?` · Qty ${esc(g.quantity)}`:""}</small>${g.remarks?`<small>${esc(g.remarks)}</small>`:""}${g.photoData?`<img src="${g.photoData}" alt="Gift photo" role="button" onclick="showGiftPhoto('${encArg(g.id)}')">`:''}</div><div class="gift-receipt-value"><strong>${money(g.amount)}</strong><small>${g.kind==='Cash'?'Cash':'Approx. value'}</small><div class="actions"><button type="button" class="btn small" onclick="openGiftReceiptForm(null,'${encArg(g.id)}')">Edit</button><button type="button" class="btn small danger" onclick="deleteGiftReceipt('${encArg(g.id)}')">Delete</button></div></div></div>`).join(""):'<div class="empty">No gifts or money received recorded yet.</div>';
+  }
+  function showGiftPhoto(encoded){const g=byId(state.gifts,decodeURIComponent(encoded));if(!g?.photoData)return;openModal('Gift Photo',`<div class="invite-person-box"><strong>${esc(giftGuestName(g))}</strong><span>${esc(g.item||g.kind)}</span></div><img style="max-width:100%;max-height:65vh;object-fit:contain;border-radius:12px" src="${g.photoData}" alt="Gift receipt image"><div class="form-footer"><button class="btn" onclick="closeModal()">Close</button></div>`)}
+  async function compressGiftPhoto(file){
+    if(!file)return"";if(!file.type.startsWith("image/"))throw new Error("Select an image file");if(file.size>15*1024*1024)throw new Error("Image larger than 15 MB");
+    const url=URL.createObjectURL(file);try{
+      const img=await new Promise((res,rej)=>{const el=new Image();el.onload=()=>res(el);el.onerror=()=>rej(new Error("Cannot read photo"));el.src=url});
+      const limit=1100,scale=Math.min(1,limit/Math.max(img.naturalWidth,img.naturalHeight)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      return canvas.toDataURL('image/jpeg',.73);
+    }finally{URL.revokeObjectURL(url)}
+  }
+  function giftGuestOptions(selected){const list=state.invitations.filter(x=>x.functionId===state.activeFunctionId).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));return '<option value="">Other / not in invitation list</option>'+list.map(g=>`<option value="${esc(g.id)}" ${g.id===selected?'selected':''}>${esc(g.name)}${g.area?' — '+esc(g.area):''}</option>`).join('')}
+  function openGiftReceiptForm(guestEncoded=null,giftEncoded=null){
+    const existing=giftEncoded?byId(state.gifts,decodeURIComponent(giftEncoded)):null,guestId=existing?.invitationId||(guestEncoded?decodeURIComponent(guestEncoded):""),guest=byId(state.invitations,guestId),kind=existing?.kind||'Cash';
+    openModal(existing?'Edit Received Gift / Money':'Record Gift / Cash Received',`<form id="giftReceiptForm"><div class="form-grid"><div class="field span-2"><label>Guest from invitation list</label><select name="invitationId" id="giftGuestId">${giftGuestOptions(guestId)}</select></div><div class="field span-2"><label>Giver name (for unlisted guest)</label><input name="guestName" id="giftGiverName" value="${esc(existing?.invitationId?'':existing?.guestName||'')}" placeholder="Only when not in guest list"></div><div class="field"><label>Receipt type *</label><select name="kind" id="giftKind"><option value="Cash" ${kind==='Cash'?'selected':''}>Cash / Money</option><option value="Gift" ${kind==='Gift'?'selected':''}>Gift / Item</option></select></div><div class="field"><label>Date received *</label><input name="receivedDate" type="date" required value="${esc(existing?.receivedDate||today())}"></div><div class="field"><label id="giftAmountLabel">Amount received (₹) *</label><input name="amount" type="number" min="0" step="0.01" required value="${existing?esc(existing.amount):''}" placeholder="0.00"></div><div class="field" id="giftQtyField"><label>Gift quantity</label><input name="quantity" type="number" min="1" step="1" value="${esc(existing?.quantity||1)}"></div><div class="field span-2" id="giftItemField"><label>Gift description *</label><input name="item" id="giftItem" value="${esc(existing?.item||'')}" placeholder="e.g. Silver lamp, saree, watch"></div><div class="field span-2"><label>Remarks</label><textarea name="remarks" rows="2" placeholder="Details, note, cash envelope, etc.">${esc(existing?.remarks||'')}</textarea></div><div class="field span-2"><label>Gift photo (optional)</label><input type="file" id="giftPhotoInput" accept="image/*"><small class="muted">Compressed and stored offline with this receipt; many photos increase backup size.</small>${existing?.photoData?`<div id="giftCurrentPhoto"><img class="gift-upload-preview" src="${existing.photoData}" alt="Existing gift photo"><label style="display:block"><input type="checkbox" id="removeGiftPhoto"> Remove current photo</label></div>`:''}</div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button type="submit" class="btn primary">Save Receipt</button></div></form>`);
+    const form=$("#giftReceiptForm"),kindSel=$("#giftKind"),guestSel=$("#giftGuestId"),guestName=$("#giftGiverName");
+    function sync(){const isGift=kindSel.value==='Gift';$("#giftQtyField").style.display=isGift?'':'none';$("#giftItemField").style.display=isGift?'':'none';$("#giftItem").required=isGift;$("#giftAmountLabel").textContent=isGift?'Approximate gift value (₹) *':'Cash received (₹) *';guestName.required=!guestSel.value;guestName.disabled=!!guestSel.value;if(guestSel.value){const x=byId(state.invitations,guestSel.value);guestName.placeholder=x?x.name:''}}
+    kindSel.onchange=sync;guestSel.onchange=sync;sync();
+    form.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(form));const g=byId(state.invitations,d.invitationId),name=g?.name||d.guestName.trim();if(!name){toast('Choose a guest or type giver name',true);return}if(num(d.amount)<0||!Number.isFinite(Number(d.amount))){toast('Enter a valid amount',true);return}const saveBtn=form.querySelector('button[type=submit]');saveBtn.disabled=true;try{let photoData=existing?.photoData||'';if($("#removeGiftPhoto")?.checked)photoData='';const file=$("#giftPhotoInput").files?.[0];if(file)photoData=await compressGiftPhoto(file);await dbPut('gifts',{...existing,id:existing?.id||uid(),functionId:state.activeFunctionId,invitationId:d.invitationId||'',guestName:name,area:g?.area||existing?.area||'',relatedTo:g?.relatedTo||existing?.relatedTo||'',kind:d.kind,receivedDate:d.receivedDate,amount:Number(d.amount),quantity:d.kind==='Gift'?Math.max(1,Math.round(num(d.quantity))):0,item:d.kind==='Gift'?d.item.trim():'',remarks:d.remarks.trim(),photoData,createdAt:existing?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});await reloadState();closeModal();renderGiftReceipts();toast('Gift / cash receipt saved')}catch(err){toast('Cannot save receipt: '+err.message,true);saveBtn.disabled=false}}
+  }
+  async function deleteGiftReceipt(encoded){const id=decodeURIComponent(encoded);if(!confirm('Delete this gift / cash receipt? Invitation details will be preserved.'))return;await dbRemove('gifts',id);await reloadState();renderGiftReceipts();toast('Receipt deleted')}
+  function giftCSVValue(v){const t=String(v??'');return /[",\n\r]/.test(t)?'"'+t.replace(/"/g,'""')+'"':t}
+  function exportGiftCSV(){const f=activeFunction();if(!f){toast('Select a function first',true);return}const rows=[['Date','Giver / Guest','Area','Related To','Type','Gift / Item','Quantity','Cash Amount','Estimated Gift Value','Remarks','Phone']];giftForActive().forEach(g=>{const x=byId(state.invitations,g.invitationId);rows.push([g.receivedDate,giftGuestName(g),x?.area||g.area||'',x?.relatedTo||g.relatedTo||'',g.kind,g.item||'',g.quantity||'',g.kind==='Cash'?g.amount:'',g.kind==='Gift'?g.amount:'',g.remarks||'',x?.phone||''])});download(`FestBook_Gift_Receipts_${today()}.csv`,'\uFEFF'+rows.map(r=>r.map(giftCSVValue).join(',')).join('\r\n'),'text/csv;charset=utf-8');toast('Gift register exported')}
+  function printGiftRegister(){const f=activeFunction();if(!f){toast('Select a function first',true);return}const rows=giftForActive(),cash=rows.filter(g=>g.kind==='Cash').reduce((n,g)=>n+num(g.amount),0),gift=rows.filter(g=>g.kind==='Gift').reduce((n,g)=>n+num(g.amount),0),w=window.open('','_blank');if(!w){toast('Allow pop-ups to print or save as PDF',true);return}w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>FestBook Gift Register</title><style>body{font:12px Arial,sans-serif;margin:20px;color:#222}h1{margin:0 0 5px}p{margin:5px 0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ccc;padding:6px;text-align:left;word-break:break-word}th{background:#eee}td.num{text-align:right} @page{size:A4 landscape;margin:12mm}</style></head><body><h1>FestBook - Gift & Cash Receipts</h1><p>Function: ${esc(f.name)} | Report: ${new Date().toLocaleDateString('en-IN')}</p><p><b>Cash: ${money(cash)}</b> &nbsp; <b>Estimated Gift Value: ${money(gift)}</b> &nbsp; Entries: ${rows.length}</p><table><thead><tr><th>Date</th><th>Name</th><th>Area</th><th>Type</th><th>Item / Remarks</th><th>Qty</th><th>Amount / Approx. Value</th></tr></thead><tbody>${rows.map(g=>`<tr><td>${esc(fmtDate(g.receivedDate))}</td><td>${esc(giftGuestName(g))}</td><td>${esc(g.area||'')}</td><td>${esc(g.kind)}</td><td>${esc([g.item,g.remarks].filter(Boolean).join(' - '))}</td><td class="num">${g.kind==='Gift'?num(g.quantity):'-'}</td><td class="num">${money(g.amount)}</td></tr>`).join('')}</tbody></table><p>Estimated gift values are informational and are not cash receipts or expense payments.</p></body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),300)}
 
   function renderInvitations(){
     const metrics=$("#invitationMetrics"),box=$("#invitationTable"),board=$("#invitationAreaBoard"),work=$("#invitationAreaWorkbar");if(!metrics||!box)return;
@@ -1060,9 +1151,15 @@
     const accountMap=new Map();movements.forEach(x=>{const key=x.category+"\u0000"+(x.account?.trim()||"Unspecified account");if(!accountMap.has(key))accountMap.set(key,{category:x.category,account:x.account?.trim()||"Unspecified account",entries:0,out:0,in:0,adjustment:0});const a=accountMap.get(key);a.entries++;a.out+=x.out;a.in+=x.in;a.adjustment+=x.adjustment});
     const accounts=[...accountMap.values()].sort((a,b)=>a.category.localeCompare(b.category)||a.account.localeCompare(b.account));
     const outstandingPay=[],outstandingReceive=[];vendorRows.forEach(v=>{if(v.toPay>.005)outstandingPay.push(v);if(v.toReceive>.005)outstandingReceive.push(v)});
+    // Gift income and estimated physical gift values are disclosure-only.
+    // Never mix them with the function's expenses, vendor payments or deposits.
+    const gifts=state.gifts.filter(g=>g.functionId===fid).slice().sort((a,b)=>String(a.receivedDate||'').localeCompare(String(b.receivedDate||''))||String(a.id).localeCompare(String(b.id)));
+    const giftRows=gifts.map(g=>{const guest=byId(state.invitations,g.invitationId);return{...g,giver:g.guestName||guest?.name||'Unlisted guest',area:guest?.area||g.area||'',relation:guest?.relatedTo||g.relatedTo||'',cash:g.kind==='Cash',gift:g.kind==='Gift',hasPhoto:!!g.photoData}});
+    const giftCash=giftRows.filter(g=>g.cash),giftItems=giftRows.filter(g=>g.gift);
+    const giftSummary={cashAmount:giftCash.reduce((n,g)=>n+num(g.amount),0),giftValue:giftItems.reduce((n,g)=>n+num(g.amount),0),cashCount:giftCash.length,giftCount:giftItems.length,giftQuantity:giftItems.reduce((n,g)=>n+num(g.quantity||1),0),giverCount:new Set(giftRows.map(g=>g.invitationId||('unlisted:'+String(g.giver).trim().toLowerCase()))).size,photoCount:giftRows.filter(g=>g.hasPhoto).length};
     const unassignedQuick=ex.filter(e=>e.entryType==="Quick");
     const totalOut=movements.reduce((s,p)=>s+p.out,0),totalIn=movements.reduce((s,p)=>s+p.in,0);
-    return{f,st,ex,payments,heads,vendors:vendorRows,accounts,movements,outstandingPay,outstandingReceive,totalOut,totalIn,netOut:totalOut-totalIn,quickCount:unassignedQuick.length,generatedAt:new Date(),owner:state.settings.ownerName||""};
+    return{f,st,ex,payments,heads,vendors:vendorRows,accounts,movements,outstandingPay,outstandingReceive,totalOut,totalIn,netOut:totalOut-totalIn,quickCount:unassignedQuick.length,giftCash,giftItems,giftSummary,generatedAt:new Date(),owner:state.settings.ownerName||""};
   }
   function finalReportOptions(){return{fid:$("#finalReportFunction")?.value||state.activeFunctionId,complete:$("#finalReportFormat")?.value!=="summary",annexures:!!$("#finalReportAnnex")?.checked}}
   function finalMoney(v){return money(v)}
@@ -1082,7 +1179,7 @@
     let html=`<article class="final-report-sheet"><header class="final-report-title"><small>HONEYB FESTBOOK · FUNCTION ACCOUNTS</small><h2>Final Function Statement</h2><p><b>${esc(f.name)}</b> · ${fmtDate(f.eventDate)} · ${esc(f.venue||'Venue not specified')}</p><p>Generated ${esc(dated)} · ${esc(stage)}</p></header>`;
     const fmt=finalMoney;
     const master=`<div class="final-meta"><p><b>Function:</b> ${esc(f.name)}</p><p><b>Function type:</b> ${esc(f.type||'—')}</p><p><b>Function date:</b> ${fmtDate(f.eventDate)}</p><p><b>Venue:</b> ${esc(f.venue||'—')}</p><p><b>Planning began:</b> ${fmtDate(f.startDate)}</p><p><b>Master status:</b> ${esc(f.status||'—')}</p><p><b>Organiser / Owner:</b> ${esc(d.owner||'—')}</p></div>${f.notes?`<p class="final-quiet"><b>Master notes:</b> ${esc(f.notes)}</p>`:''}`;
-    html+=finalSection(1,'Function Master & Financial Overview',master+finalCards([['Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Forecast',fmt(st.currentForecast)],['Normal Payments + Applied Deposit',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)]])+`<div class="final-pill ${st.awaitingCount?'warning':''}">${esc(stage)}</div>${st.awaitingCount?`<p class="final-note">${st.awaitingCount} planned expense(s), ${fmt(st.awaitingValue)}, still use estimates. They must not be described as agreed final costs until their quotes are finalised.</p>`:''}`);
+    html+=finalSection(1,'Function Master & Financial Overview',master+finalCards([['Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Forecast',fmt(st.currentForecast)],['Normal Payments + Applied Deposit',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)],['Cash Gifts Received (separate)',fmt(d.giftSummary.cashAmount)],['Estimated Physical Gifts (separate)',fmt(d.giftSummary.giftValue)]])+`<div class="final-pill ${st.awaitingCount?'warning':''}">${esc(stage)}</div>${st.awaitingCount?`<p class="final-note">${st.awaitingCount} planned expense(s), ${fmt(st.awaitingValue)}, still use estimates. They must not be described as agreed final costs until their quotes are finalised.</p>`:''}`);
     if(o.complete){
       const headRows=d.heads.map(h=>[h.name,String(h.entries),fmt(h.estimate),fmt(h.current),h.awaiting?String(h.awaiting):'—']);
       html+=finalSection(2,'Expense Head-wise Statement',finalHtmlTable(finalTableCols(['Expense Head','Entries','Original Estimate','Current Cost','Awaiting Quotes'],[1,2,3,4]),headRows,['GRAND TOTAL',String(d.ex.length),fmt(st.estimated),fmt(st.currentForecast),String(st.awaitingCount)])+'<p class="final-subtitle">Current Cost = Final quote where entered; otherwise original estimate. Quick Direct expenses are included at actual cost.</p>');
@@ -1104,6 +1201,10 @@
       html+=finalSection(5,'Balances Payable & Receivable',pendingHtml);
       const closing=finalCards([['Total Budget',fmt(st.budget)],['Expense Forecast',fmt(st.currentForecast)],['Expenditure Variance',fmt(st.currentForecast-st.budget)],['Cash / Bank Paid Out',fmt(d.totalOut)],['Cash / Bank Received Back',fmt(d.totalIn)],['Net Cash Outflow',fmt(d.netOut)],['Still To Pay',fmt(st.balance)],['Still To Receive',fmt(st.balanceToReceive)]]);
       html+=finalSection(6,'Closing Reconciliation',closing+`<p class="final-note">Closing checks: forecast is not the same as money paid; refundable security deposits belong to the cash movement and settlement reconciliation, not the expense total. Net cash outflow includes security deposits paid and receipts back. The to-pay and to-receive balances are reported separately by party.</p><div class="final-signatures"><span>Prepared by / Date</span><span>Verified by / Date</span></div>`);
+      const giftTotals=finalCards([['Cash Gifts Received',fmt(d.giftSummary.cashAmount)],['Estimated Physical Gift Value',fmt(d.giftSummary.giftValue)],['Cash Receipts',String(d.giftSummary.cashCount)],['Physical Gift Entries',String(d.giftSummary.giftCount)],['Physical Gift Quantity',String(d.giftSummary.giftQuantity)],['Distinct Givers',String(d.giftSummary.giverCount)]]);
+      const giftCashTable=d.giftCash.length?finalHtmlTable(finalTableCols(['Date','Giver / Guest','Area','Amount Received','Remarks'],[3]),d.giftCash.map(g=>[fmtDate(g.receivedDate),g.giver,g.area||'—',fmt(g.amount),g.remarks||'—']),['CASH TOTAL','', '',fmt(d.giftSummary.cashAmount),'']):'<p class="final-quiet">No cash gifts recorded for this function.</p>';
+      const giftItemTable=d.giftItems.length?finalHtmlTable(finalTableCols(['Date','Giver / Guest','Gift / Item','Qty','Approx. Value','Remarks / Photo'],[3,4]),d.giftItems.map(g=>[fmtDate(g.receivedDate),g.giver,g.item||'Gift item',String(num(g.quantity||1)),fmt(g.amount),[g.remarks,g.hasPhoto?'Photo saved in Gift Register':''].filter(Boolean).join(' · ')||'—']),['GIFT TOTAL','', '',String(d.giftSummary.giftQuantity),fmt(d.giftSummary.giftValue),'']):'<p class="final-quiet">No physical gifts recorded for this function.</p>';
+      html+=finalSection(7,'Gift & Cash Receipts Register',giftTotals+'<h4>Money / Cash Received</h4>'+giftCashTable+'<h4>Physical Gifts Received</h4>'+giftItemTable+'<p class="final-subtitle">Gift values are approximate, informational valuations. Cash received as gifts is not a vendor refund or an expense payment. Neither cash gifts nor physical gift values are deducted from function costs, payable balances or the budget variance. Gift photos remain in the separate Gift & Cash Receipts module and in backups; photos are not embedded in the final PDF.</p>');
       if(o.annexures){
         html+='<section class="final-section"><h3>Annexure · Vendor Transaction Ledgers</h3><p class="final-subtitle">Transaction-by-transaction movement with running payable (Dr) or receivable (Cr) balance. Deposits and refunds use the same settlement rules as the main ledger.</p></section>';
         d.vendors.forEach(v=>{let running=0;const rows=v.ledger.map(tx=>{running+=tx.debit-tx.credit;return[fmtDate(tx.date),tx.particular+(tx.sub?' - '+tx.sub:''),tx.ref||'—',tx.debit?fmt(tx.debit):'—',tx.credit?fmt(tx.credit):'—',ledgerBalanceText(running)]});
@@ -1154,7 +1255,7 @@
     section(1,'Function Master and Financial Overview');
     line('Function Name',d.f.name,true);line('Type / Status',`${d.f.type||'Function'} / ${d.f.status||'Unspecified'}`);line('Event Date / Venue',`${date(d.f.eventDate)} / ${d.f.venue||'-'}`);line('Planning Date',date(d.f.startDate));line('Organiser / Owner',d.owner||'-');
     if(d.f.notes)paragraph('Master notes: '+d.f.notes);
-    miniTotals([['Total Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Cost / Forecast',fmt(st.currentForecast)],['Settled Against Expenses',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)]]);
+    miniTotals([['Total Budget',fmt(st.budget)],['Original Estimate',fmt(st.estimated)],['Current Cost / Forecast',fmt(st.currentForecast)],['Settled Against Expenses',fmt(st.paid)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)],['Budget Variance',fmt(st.currentForecast-st.budget)],['Cash Gifts (Separate)',fmt(d.giftSummary.cashAmount)],['Approx. Gift Value',fmt(d.giftSummary.giftValue)]]);
     subhead(st.awaitingCount?`DRAFT - ${st.awaitingCount} expense quote(s) awaiting finalisation`:'READY FOR FINAL REVIEW - All planned quotes finalised');
     if(st.awaitingCount)paragraph(`${fmt(st.awaitingValue)} is still estimated; it must not be considered confirmed final cost.`);
     if(o.complete){
@@ -1184,6 +1285,13 @@
       miniTotals([['Total Budget',fmt(st.budget)],['Expense Forecast',fmt(st.currentForecast)],['Budget Variance',fmt(st.currentForecast-st.budget)],['Gross Cash / Bank Out',fmt(d.totalOut)],['Money Received Back',fmt(d.totalIn)],['Net Cash Outflow',fmt(d.netOut)],['Balance to Pay',fmt(st.balance)],['Balance to Receive',fmt(st.balanceToReceive)]]);
       subhead('Closing Notes');paragraph('Current expense forecast and actual cash outflow are different financial measures. Security deposits must not be added to expenses. Payable and receivable balances are netted at each party, and are displayed separately across different parties.');
       ensure(110);page.y-=46;line('Prepared By / Date','________________________');page.y-=10;line('Verified By / Date','________________________');
+      section(7,'Gift and Cash Receipts Register');
+      miniTotals([['Cash Gifts Received',fmt(d.giftSummary.cashAmount)],['Approx. Physical Gifts',fmt(d.giftSummary.giftValue)],['Cash Gift Entries',String(d.giftSummary.cashCount)],['Physical Gift Entries',String(d.giftSummary.giftCount)],['Number of Givers',String(d.giftSummary.giverCount)],['Gift Quantity',String(d.giftSummary.giftQuantity)]]);
+      subhead('Cash / Money Gifts Received');
+      table(['Date','Giver / Guest','Area','Remarks','Cash Amount'],[67,130,90,143,97],d.giftCash.map(g=>[date(g.receivedDate),g.giver,g.area||'-',g.remarks||'-',fmt(g.amount)]),{right:[4],wrapCols:[1,3],foot:['TOTAL','','','',fmt(d.giftSummary.cashAmount)]});
+      subhead('Physical Gifts Received');
+      table(['Date','Giver / Guest','Gift / Item','Qty','Approx. Value','Remarks / Photo'],[61,107,125,32,85,117],d.giftItems.map(g=>[date(g.receivedDate),g.giver,g.item||'Gift item',String(num(g.quantity||1)),fmt(g.amount),[g.remarks,g.hasPhoto?'Photo on file':''].filter(Boolean).join(' - ')||'-']),{right:[3,4],wrapCols:[1,2,5],foot:['TOTAL','','',String(d.giftSummary.giftQuantity),fmt(d.giftSummary.giftValue),'']});
+      paragraph('Important: cash gifts received and estimated physical gift values are separate from budget, expenses, vendor payments and refundable deposit returns. Values are informational. Gift photos are available in the Gift and Cash Receipts module but are not embedded in this statement PDF.');
       if(o.annexures){
         for(const v of d.vendors){
           fresh('Annexure - '+v.name);
@@ -1203,7 +1311,7 @@
   function openFinalReportPdfExport(){
     if(!finalReportGenerated)renderFinalReport(true);
     const out=createFinalReportPdf();if(!out)return;window.__festbookFinalPdf=out;
-    openModal('Final Function Report PDF',`<div class="invite-person-box"><strong>${esc(out.data.f.name)}</strong><span>${out.pages} A4 page${out.pages===1?'':'s'} · Six-section ${out.options.complete?'complete':'summary'} statement${out.options.complete&&out.options.annexures?' · Vendor ledgers included':''}</span></div><div class="notice">All values are calculated from the current FestBook records. Security deposits are kept separate from expense costs. ${out.data.st.awaitingCount?`<b>Draft:</b> ${out.data.st.awaitingCount} expense quotes are still estimated.`:'All planned expense quotes have been finalised.'} Use Share / Save to send the PDF.</div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Close</button><button type="button" class="btn" onclick="previewFinalReportPDF()">View PDF</button><button type="button" class="btn primary" onclick="shareFinalReportPDF()">Share / Save PDF</button></div>`);
+    openModal('Final Function Report PDF',`<div class="invite-person-box"><strong>${esc(out.data.f.name)}</strong><span>${out.pages} A4 page${out.pages===1?'':'s'} · ${out.options.complete?'Seven-section complete':'Summary'} statement${out.options.complete&&out.options.annexures?' · Vendor ledgers included':''}</span></div><div class="notice">All values are calculated from the current FestBook records. Security deposits are kept separate from expense costs. ${out.data.st.awaitingCount?`<b>Draft:</b> ${out.data.st.awaitingCount} expense quotes are still estimated.`:'All planned expense quotes have been finalised.'} Use Share / Save to send the PDF.</div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Close</button><button type="button" class="btn" onclick="previewFinalReportPDF()">View PDF</button><button type="button" class="btn primary" onclick="shareFinalReportPDF()">Share / Save PDF</button></div>`);
   }
   function previewFinalReportPDF(){const out=window.__festbookFinalPdf;if(!out)return;const url=URL.createObjectURL(out.blob);window.open(url,'_blank');setTimeout(()=>URL.revokeObjectURL(url),60000)}
   async function shareFinalReportPDF(){const out=window.__festbookFinalPdf;if(!out)return;const file=new File([out.blob],out.name,{type:'application/pdf'});try{if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'FestBook Final Function Statement',text:out.data.f.name,files:[file]});return}}catch(err){if(err?.name==='AbortError')return}const url=URL.createObjectURL(out.blob),a=document.createElement('a');a.href=url;a.download=out.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('Final statement PDF downloaded')}
@@ -1340,7 +1448,7 @@
   function openHeadForm(id=null){const h=id?byId(state.heads,id):null;openModal(h?"Edit Expense Head":"Add Expense Head",`<form id="headForm"><div class="field"><label>Expense head name *</label><input name="name" required value="${esc(h?.name||'')}" placeholder="e.g. Flower decoration"></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save</button></div></form>`);$("#headForm").onsubmit=async e=>{e.preventDefault();const name=new FormData(e.target).get('name').trim();if(state.heads.some(x=>x.name.toLowerCase()===name.toLowerCase()&&x.id!==h?.id)){toast("This expense head already exists",true);return}await dbPut("heads",{...h,id:h?.id||uid(),name,active:true,builtIn:h?.builtIn||false,createdAt:h?.createdAt||new Date().toISOString()});await reloadState();closeModal();renderAll();toast("Expense head saved")}}
   function openVendorForm(id=null,returnToExpense=false){const v=id?byId(state.vendors,id):null;openModal(v?"Edit Vendor / Person":"Add Vendor / Person",`<form id="vendorForm"><div class="form-grid"><div class="field"><label>Name *</label><input name="name" required value="${esc(v?.name||'')}"></div><div class="field"><label>Type</label><select name="type"><option ${v?.type==='Vendor'?'selected':''}>Vendor</option><option ${v?.type==='Person'?'selected':''}>Person</option><option ${v?.type==='Hall / Venue'?'selected':''}>Hall / Venue</option><option ${v?.type==='Caterer'?'selected':''}>Caterer</option><option ${v?.type==='Service Provider'?'selected':''}>Service Provider</option></select></div><div class="field"><label>Phone</label><input name="phone" inputmode="tel" value="${esc(v?.phone||'')}"></div><div class="field"><label>GST / Reference</label><input name="reference" value="${esc(v?.reference||'')}"></div><div class="field span-2"><label>Address</label><textarea name="address">${esc(v?.address||'')}</textarea></div><div class="field span-2"><label>Notes</label><textarea name="notes">${esc(v?.notes||'')}</textarea></div></div><div class="form-footer"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary">Save Vendor</button></div></form>`);$("#vendorForm").onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),record={...v,id:v?.id||uid(),...d,createdAt:v?.createdAt||new Date().toISOString()};await dbPut("vendors",record);await reloadState();closeModal();renderAll();toast("Vendor saved");if(returnToExpense)setTimeout(()=>openExpenseForm(),150)}}
 
-  async function deleteFunction(id){const f=byId(state.functions,id);if(!confirm(`Delete “${f.name}” and all its expenses, payments and invitation entries? This cannot be undone.`))return;for(const p of state.payments.filter(x=>x.functionId===id))await dbRemove("payments",p.id);for(const e of state.expenses.filter(x=>x.functionId===id))await dbRemove("expenses",e.id);for(const x of state.invitations.filter(x=>x.functionId===id))await dbRemove("invitations",x.id);await dbRemove("functions",id);const map={...(state.settings.digitalInvites||{})};if(map[id]){delete map[id];await dbPut("settings",{...state.settings,id:"app",digitalInvites:map,updatedAt:new Date().toISOString()})}state.activeFunctionId=null;await reloadState();renderAll();toast("Function deleted")}
+  async function deleteFunction(id){const f=byId(state.functions,id);if(!confirm(`Delete “${f.name}” and all its expenses, payments and invitation entries? This cannot be undone.`))return;for(const p of state.payments.filter(x=>x.functionId===id))await dbRemove("payments",p.id);for(const e of state.expenses.filter(x=>x.functionId===id))await dbRemove("expenses",e.id);for(const x of state.invitations.filter(x=>x.functionId===id))await dbRemove("invitations",x.id);for(const g of state.gifts.filter(x=>x.functionId===id))await dbRemove("gifts",g.id);await dbRemove("functions",id);const map={...(state.settings.digitalInvites||{})};if(map[id]){delete map[id];await dbPut("settings",{...state.settings,id:"app",digitalInvites:map,updatedAt:new Date().toISOString()})}state.activeFunctionId=null;await reloadState();renderAll();toast("Function deleted")}
   async function deleteExpense(id){const count=state.payments.filter(p=>p.expenseId===id).length;if(!confirm(`Delete this expense${count?` and its ${count} payment(s)`:''}?`))return;for(const p of state.payments.filter(x=>x.expenseId===id))await dbRemove("payments",p.id);await dbRemove("expenses",id);await reloadState();renderAll();toast("Expense deleted")}
   async function deletePayment(id){if(!confirm("Delete this payment entry?"))return;await dbRemove("payments",id);await reloadState();renderAll();toast("Payment deleted")}
   async function deleteHead(id){if(state.expenses.some(e=>e.headId===id)){toast("This head is in use and cannot be deleted",true);return}if(!confirm("Delete this expense head?"))return;await dbRemove("heads",id);await reloadState();renderAll();toast("Expense head deleted")}
@@ -1348,7 +1456,7 @@
 
   async function saveSettings(e){e.preventDefault();await dbPut("settings",{...state.settings,id:"app",ownerName:$("#settingOwner").value.trim(),currency:$("#settingCurrency").value,defaultAccount:$("#settingAccount").value.trim(),updatedAt:new Date().toISOString()});await reloadState();renderAll();toast("Settings saved")}
   function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
-  function downloadBackup(){const data={app:"FestBook",version:"1.3.5",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings]}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
+  function downloadBackup(){const data={app:"FestBook",version:"1.3.7",exportedAt:new Date().toISOString(),data:{functions:state.functions,heads:state.heads,vendors:state.vendors,expenses:state.expenses,payments:state.payments,invitations:state.invitations,settings:[state.settings],gifts:state.gifts}};download(`FestBook_Backup_${today()}.json`,JSON.stringify(data,null,2),"application/json");toast("Backup downloaded")}
   async function restoreBackup(e){const file=e.target.files[0];e.target.value="";if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.app!=="FestBook"||!obj.data)throw new Error("Not a FestBook backup");if(!confirm("Restore this backup? Existing FestBook data on this device will be replaced."))return;for(const s of STORES)await dbClear(s);for(const s of STORES)for(const item of(obj.data[s]||[]))await dbPut(s,item);state.activeFunctionId=null;await reloadState();renderAll();toast("Backup restored successfully")}catch(err){toast("Restore failed: "+err.message,true)}}
   async function clearInvitationData(){
     const f=activeFunction();if(!f){toast("Select a function first",true);return}
